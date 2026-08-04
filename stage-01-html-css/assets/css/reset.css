@@ -1,0 +1,79 @@
+/*
+=====================================================
+CSS Reset
+-----------------------------------------------------
+Removes browser default styles to provide a
+consistent starting point.
+=====================================================
+*/
+
+/* Universal selector */
+*,
+*::before,
+*::after {
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+/* Root */
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+/* Body */
+
+body {
+
+    min-height: 100vh;
+
+    text-rendering: optimizeLegibility;
+
+}
+
+/* Images */
+
+img {
+
+    display: block;
+
+    max-width: 100%;
+
+}
+
+/* Lists */
+
+ul,
+ol {
+
+    list-style: none;
+
+}
+
+/* Links */
+
+a {
+
+    text-decoration: none;
+
+    color: inherit;
+
+}
+
+/* Form Elements */
+
+button,
+input,
+textarea,
+select {
+
+    font: inherit;
+
+}

@@ -1,0 +1,118 @@
+/*
+=====================================================
+Global Styles
+-----------------------------------------------------
+Defines the default appearance of common HTML
+elements using the design system variables.
+=====================================================
+*/
+
+body {
+
+    font-family: var(--font-family);
+
+    font-size: var(--font-size-md);
+
+    font-weight: var(--font-weight-normal);
+
+    line-height: 1.5;
+
+    color: var(--color-text);
+
+    background: var(--color-background);
+
+}
+
+/*
+=====================================================
+Headings
+=====================================================
+*/
+
+h1 {
+
+    font-size: var(--font-size-2xl);
+
+    font-weight: var(--font-weight-bold);
+
+}
+
+h2 {
+
+    font-size: var(--font-size-xl);
+
+    font-weight: var(--font-weight-semibold);
+
+}
+
+h3 {
+
+    font-size: var(--font-size-lg);
+
+    font-weight: var(--font-weight-semibold);
+
+}
+
+/*
+=====================================================
+Paragraphs
+=====================================================
+*/
+
+p {
+
+    color: var(--color-text-light);
+
+}
+
+/*
+=====================================================
+Buttons
+=====================================================
+*/
+
+button {
+
+    cursor: pointer;
+
+    border: none;
+
+    border-radius: var(--radius-md);
+
+    padding: var(--space-sm) var(--space-lg);
+
+}
+
+/*
+=====================================================
+Inputs
+=====================================================
+*/
+
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: var(--space-sm);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-sm);
+
+}
+
+/*
+=====================================================
+Tables
+=====================================================
+*/
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
