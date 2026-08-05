@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration</title>
+
+    <link rel="stylesheet" href="../assets/css/variables.css" />
+    <link rel="stylesheet" href="../assets/css/reset.css" />
+    <link rel="stylesheet" href="../assets/css/global.css" />
+
+    <!-- Page Styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main>
+      <section class="auth-card">
+        <header class="auth-header">
+          <h2 class="logo">Logo</h2>
+
+          <h1>Create Account</h1>
+
+          <p>Create your account to get started.</p>
+        </header>
+
+        <form class="auth-form" action="#" method="post">
+
+          <!-- First & Last Name -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="Enter your first name"
+                required
+                autofocus
+                autocomplete="given-name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Enter your last name"
+                required
+                autocomplete="family-name"
+              />
+            </div>
+          </div>
+
+          <!-- Username -->
+          <div class="form-group">
+            <label for="username">Username</label>
+
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Choose a username"
+              required
+              minlength="3"
+              maxlength="20"
+              autocomplete="username"
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email Address</label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@example.com"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <!-- Password Row -->
+          <div class="form-row">
+
+            <div class="form-group">
+              <label for="password">Password</label>
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+                minlength="8"
+                autocomplete="new-password"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                required
+                minlength="8"
+                autocomplete="new-password"
+              />
+            </div>
+
+          </div>
+
+          <!-- Birth Date -->
+          <div class="form-group">
+            <label for="birthDate">Birth Date</label>
+
+            <input
+              type="date"
+              id="birthDate"
+              name="birthDate"
+              required
+            />
+          </div>
+
+          <!-- Gender -->
+          <fieldset class="form-group">
+            <legend>Gender</legend>
+
+            <div class="radio-group">
+
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  required
+                />
+                Male
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                />
+                Female
+              </label>
+
+            </div>
+          </fieldset>
+
+          <!-- Terms -->
+          <div class="terms-group">
+
+            <input
+              type="checkbox"
+              id="terms"
+              name="terms"
+              required
+            />
+
+            <label for="terms">
+              I agree to the
+              <a href="#">Terms &amp; Conditions</a>
+            </label>
+
+          </div>
+
+          <button class="auth-button" type="submit">
+            Register
+          </button>
+
+          <p class="login-link">
+            Already have an account?
+            <a href="../login-page/index.html">Login</a>
+          </p>
+
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
