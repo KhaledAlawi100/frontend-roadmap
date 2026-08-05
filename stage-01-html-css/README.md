@@ -28,11 +28,7 @@ By the end of this stage, I have built a collection of responsive pages while ap
 # Project Structure
 
 ```text
-stage-01-html-css/
-│
-├── admin-dashboard/
-│   ├── index.html
-│   └── style.css
+frontend-roadmap/
 │
 ├── assets/
 │   ├── css/
@@ -42,26 +38,34 @@ stage-01-html-css/
 │   │
 │   ├── icons/
 │   │
-│   └── images/
-│       ├── admin-dashboard.png
-│       ├── avatar.png
-│       ├── login-page.png
-│       ├── profile-edit.png
-│       └── registration-page.png
+│   ├── images/
+│   │   └── avatar.png
+│   │
+│   └── screenshots/
+│       └── stage-01/
+│           ├── admin-dashboard.png
+│           ├── login-page.png
+│           ├── profile-edit.png
+│           └── registration-page.png
 │
-├── login-page/
-│   ├── index.html
-│   └── style.css
-│
-├── profile-edit/
-│   ├── index.html
-│   └── style.css
-│
-├── registration-page/
-│   ├── index.html
-│   └── style.css
-│
-└── README.md
+└── stage-01-html-css/
+    ├── admin-dashboard/
+    │   ├── index.html
+    │   └── style.css
+    │
+    ├── login-page/
+    │   ├── index.html
+    │   └── style.css
+    │
+    ├── profile-edit/
+    │   ├── index.html
+    │   └── style.css
+    │
+    ├── registration-page/
+    │   ├── index.html
+    │   └── style.css
+    │
+    └── README.md
 ```
 
 ---
@@ -275,15 +279,15 @@ stage-01-html-css/
 
 # Progress
 
-| Sprint | Status |
-|---------|--------|
-| Design System | ✅ Complete |
-| Login Page | ✅ Complete |
-| Registration Page | ✅ Complete |
-| Profile Edit | ✅ Complete |
-| Dashboard Skeleton | ✅ Complete |
-| Statistics Cards | ✅ Complete |
-| Recent Users Table | ✅ Complete |
+| Sprint               | Status      |
+| -------------------- | ----------- |
+| Design System        | ✅ Complete |
+| Login Page           | ✅ Complete |
+| Registration Page    | ✅ Complete |
+| Profile Edit         | ✅ Complete |
+| Dashboard Skeleton   | ✅ Complete |
+| Statistics Cards     | ✅ Complete |
+| Recent Users Table   | ✅ Complete |
 | Polish & Refactoring | ✅ Complete |
 
 ---
@@ -344,19 +348,17 @@ After completing this stage, I can confidently:
 
 ## Login Page
 
-![Login Page](assets/images/login-page.png)
-
----
+## ![Login Page](../assets/screenshots/stage-01/login-page.png)
 
 ## Registration Page
 
-![Registration Page](assets/images/registration-page.png)
+![Registration Page](../assets/screenshots/stage-01/registration-page.png)
 
 ---
 
 ## Profile Edit
 
-![Profile Edit](assets/images/profile-edit.png)
+![Profile Edit](../assets/screenshots/stage-01/profile-edit.png)
 
 ---
 
@@ -368,7 +370,7 @@ Includes:
 - Statistics Cards
 - Recent Users Table
 
-![Admin Dashboard](assets/images/admin-dashboard.png)
+![Admin Dashboard](../assets/screenshots/stage-01/admin-dashboard.png)
 
 ---
 
