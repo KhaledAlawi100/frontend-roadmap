@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../assets/css/variables.css" />
+    <link rel="stylesheet" href="../assets/css/reset.css" />
+    <link rel="stylesheet" href="../assets/css/global.css" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- ==========================
+         Header
+    =========================== -->
+    <header class="dashboard-header">
+      <div class="logo">
+        <h1>Logo</h1>
+      </div>
+
+      <div class="search-bar">
+        <input
+          class="search-input"
+          type="search"
+          placeholder="Search..."
+          aria-label="Search"
+        />
+      </div>
+
+      <div class="header-actions">
+        <button
+          class="notification-btn"
+          type="button"
+          aria-label="Notifications"
+        >
+          🔔
+        </button>
+
+        <div class="profile">
+          <span class="profile-name"> Khaled </span>
+
+          <img
+            class="profile-avatar"
+            src="../assets/images/avatar.png"
+            alt="Profile picture"
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- ==========================
+         Dashboard Layout
+    =========================== -->
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="sidebar-nav" aria-label="Main Navigation">
+          <ul>
+            <li>
+              <a href="#" class="active">Dashboard</a>
+            </li>
+
+            <li>
+              <a href="#">Users</a>
+            </li>
+
+            <li>
+              <a href="#">Products</a>
+            </li>
+
+            <li>
+              <a href="#">Orders</a>
+            </li>
+
+            <li>
+              <a href="#">Settings</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="dashboard-main">
+        <section class="dashboard-content">
+          <h2>Dashboard</h2>
+
+          <p>Welcome back, Khaled.</p>
+        </section>
+      </main>
+    </div>
+
+    <!-- ==========================
+         Footer
+    =========================== -->
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Project Dashboard</p>
+
+      <p>Version 1.0.0</p>
+    </footer>
+  </body>
+</html>

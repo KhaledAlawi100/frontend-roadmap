@@ -6,7 +6,7 @@ This stage focuses on mastering the HTML and CSS fundamentals that modern fronte
 
 Instead of learning every HTML tag or CSS property, the goal is to master the **20% of concepts that provide 80% of real-world productivity** through hands-on projects.
 
-By the end of this stage, I built four responsive pages while following semantic HTML, reusable CSS, and modern frontend best practices.
+By the end of this stage, I will have built four responsive pages while following semantic HTML, reusable CSS, and modern frontend best practices.
 
 ---
 
@@ -72,8 +72,8 @@ A reusable design system shared across every page.
 - Spacing Scale
 - Border Radius
 - Shadows
-- Global Styles
 - CSS Reset
+- Global Styles
 
 ---
 
@@ -81,7 +81,7 @@ A reusable design system shared across every page.
 
 ### Features
 
-- Responsive login card
+- Responsive login page
 - Email & Password fields
 - Remember Me checkbox
 - Forgot Password link
@@ -107,7 +107,7 @@ A reusable design system shared across every page.
 - First Name
 - Last Name
 - Username
-- Email Address
+- Email
 - Password
 - Confirm Password
 - Birth Date
@@ -121,9 +121,9 @@ A reusable design system shared across every page.
 - Radio Buttons
 - Checkboxes
 - Fieldset & Legend
-- HTML Validation
+- Native Validation
 - Responsive Two-Column Layout
-- Reusable Form Components
+- Reusable Components
 
 ---
 
@@ -136,7 +136,7 @@ A reusable design system shared across every page.
 - Username
 - Email Address
 - Phone Number
-- Bio (Textarea)
+- Bio Textarea
 - Save Changes Button
 
 ### Concepts Practiced
@@ -145,8 +145,32 @@ A reusable design system shared across every page.
 - Textarea
 - Custom File Button Styling
 - Responsive Forms
-- Form Organization
-- Reusable Components
+- Reusable Form Components
+
+---
+
+## ✅ Sprint 5 — Dashboard Skeleton
+
+### Features
+
+- Semantic Dashboard Layout
+- Header
+- Sidebar Navigation
+- Main Content Area
+- Footer
+- Search Bar
+- Notification Button
+- User Profile Section
+- Responsive Flexbox Layout
+
+### Concepts Practiced
+
+- Semantic Layout
+- Flexbox
+- Navigation
+- Layout Organization
+- Component Separation
+- Reusable Styling
 
 ---
 
@@ -158,7 +182,11 @@ A reusable design system shared across every page.
 | Login Page | ✅ Complete |
 | Registration Page | ✅ Complete |
 | Profile Edit | ✅ Complete |
-| Admin Dashboard | ⏳ Pending |
+| Dashboard Skeleton | ✅ Complete |
+| Statistics Cards | ⏳ Next |
+| Recent Users Table | ⏳ Pending |
+| Polish & Refactoring | ⏳ Pending |
+| Documentation | ⏳ Pending |
 
 ---
 
@@ -173,46 +201,47 @@ A reusable design system shared across every page.
 
 # Skills Gained
 
-After completing this stage, I can confidently:
+After completing the current sprints, I can confidently:
 
 - Build semantic HTML pages
-- Create accessible and responsive forms
+- Create accessible forms
 - Apply native HTML validation
-- Use Flexbox to build modern layouts
-- Create reusable design systems with CSS Variables
+- Build responsive layouts with Flexbox
+- Create reusable design systems
 - Organize CSS into reusable modules
+- Build multi-section page layouts
 - Structure frontend projects professionally
-- Follow modern frontend development best practices
+- Follow modern frontend best practices
 
 ---
 
-# Upcoming Work
+# Next Sprint
 
-## Sprint 5 — Static Admin Dashboard
+## Sprint 6 — Dashboard Statistics Cards
 
-The final project of Stage 01 will combine everything learned throughout this stage into a complete responsive dashboard.
+The next milestone is building the dashboard statistics section.
 
-### Planned Features
+### Planned Cards
 
-- Header
-- Sidebar Navigation
-- Dashboard Content
-- Statistics Cards
-- Recent Users Table
-- Footer
+- Users
+- Revenue
+- Orders
+- Products
 
-This project will serve as the capstone project for Stage 01.
+Each card will contain:
+
+- Title
+- Number
+- Small description
+
+Concepts:
+
+- Card Layout
+- Consistent Spacing
+- Flexbox
+- Reusable Components
 
 ---
-
-# Author
-
-**Khaled Alawi**
-
-Software Engineering Student
-
-Learning Path:
-Java • Spring Boot • React • Full-Stack Development
 
 # Screenshots
 
@@ -228,6 +257,18 @@ Java • Spring Boot • React • Full-Stack Development
 
 ![Profile Edit](assets/images/profile-edit.png)
 
-## Admin Dashboard
+## Dashboard Skeleton
 
 ![Dashboard](assets/images/admin-dashboard.png)
+
+---
+
+# Author
+
+**Khaled Alawi**
+
+Software Engineering Student
+
+Learning Path:
+
+**Java • Spring Boot • React • Full-Stack Development**
