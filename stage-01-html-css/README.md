@@ -1,23 +1,25 @@
-# Stage 01 — Modern HTML & CSS Refresh
+# Stage 01 — Modern HTML & CSS
 
 ## Overview
 
-This stage focuses on refreshing the HTML and CSS skills that are used daily by modern React developers.
+This stage focuses on mastering the HTML and CSS fundamentals that modern frontend developers use every day.
 
-The objective is not to learn every HTML and CSS feature, but to master the **20% of concepts that provide 80% of real-world productivity**.
+Instead of learning every HTML tag or CSS property, the goal is to master the **20% of concepts that provide 80% of real-world productivity** through hands-on projects.
+
+By the end of this stage, I built four responsive pages while following semantic HTML, reusable CSS, and modern frontend best practices.
 
 ---
 
-## Learning Objectives
+# Learning Objectives
 
 - Write semantic HTML
 - Build accessible forms
 - Apply native HTML validation
 - Understand the CSS Box Model
-- Build layouts with Flexbox
-- Use CSS Variables for a reusable design system
-- Create responsive pages
-- Write clean and maintainable HTML & CSS
+- Build layouts using Flexbox
+- Create a reusable Design System with CSS Variables
+- Build responsive pages
+- Organize HTML & CSS using clean project structure
 
 ---
 
@@ -58,36 +60,33 @@ stage-01-html-css/
 
 # Completed Features
 
-## ✅ Design System
+## ✅ Sprint 1 — Design System
 
-A reusable design system shared across all pages.
+A reusable design system shared across every page.
 
 ### Includes
 
+- CSS Variables
 - Color Palette
-- Typography
+- Typography Scale
 - Spacing Scale
 - Border Radius
 - Shadows
-- CSS Variables
 - Global Styles
 - CSS Reset
 
 ---
 
-## ✅ Login Page
+## ✅ Sprint 2 — Login Page
 
 ### Features
 
 - Responsive login card
-- Semantic HTML
-- Email input
-- Password input
+- Email & Password fields
 - Remember Me checkbox
 - Forgot Password link
-- HTML validation
-- Flexbox layout
-- Responsive design
+- Native HTML validation
+- Responsive Flexbox layout
 
 ### Concepts Practiced
 
@@ -101,7 +100,7 @@ A reusable design system shared across all pages.
 
 ---
 
-## ✅ Registration Page
+## ✅ Sprint 3 — Registration Page
 
 ### Features
 
@@ -114,17 +113,40 @@ A reusable design system shared across all pages.
 - Birth Date
 - Gender
 - Terms & Conditions
-- Login link
+- Login Link
 
 ### Concepts Practiced
 
-- Advanced forms
-- Radio buttons
+- Advanced Forms
+- Radio Buttons
 - Checkboxes
 - Fieldset & Legend
-- Form validation
-- Two-column responsive layout
-- Reusable form components
+- HTML Validation
+- Responsive Two-Column Layout
+- Reusable Form Components
+
+---
+
+## ✅ Sprint 4 — Profile Edit
+
+### Features
+
+- Profile Picture Upload
+- Full Name
+- Username
+- Email Address
+- Phone Number
+- Bio (Textarea)
+- Save Changes Button
+
+### Concepts Practiced
+
+- File Input
+- Textarea
+- Custom File Button Styling
+- Responsive Forms
+- Form Organization
+- Reusable Components
 
 ---
 
@@ -135,7 +157,7 @@ A reusable design system shared across all pages.
 | Design System | ✅ Complete |
 | Login Page | ✅ Complete |
 | Registration Page | ✅ Complete |
-| Profile Edit | ⏳ In Progress |
+| Profile Edit | ✅ Complete |
 | Admin Dashboard | ⏳ Pending |
 
 ---
@@ -151,32 +173,61 @@ A reusable design system shared across all pages.
 
 # Skills Gained
 
-By completing this stage, I can confidently:
+After completing this stage, I can confidently:
 
 - Build semantic HTML pages
-- Create accessible forms
+- Create accessible and responsive forms
 - Apply native HTML validation
-- Build responsive layouts using Flexbox
-- Create reusable design systems with CSS variables
-- Organize HTML and CSS using clean project structure
+- Use Flexbox to build modern layouts
+- Create reusable design systems with CSS Variables
+- Organize CSS into reusable modules
+- Structure frontend projects professionally
 - Follow modern frontend development best practices
 
 ---
 
-# Next Step
+# Upcoming Work
 
-Continue with:
+## Sprint 5 — Static Admin Dashboard
 
-**Sprint 4 — Profile Edit Page**
+The final project of Stage 01 will combine everything learned throughout this stage into a complete responsive dashboard.
 
-This page will introduce larger forms, reusable layouts, and better preparation for the final Admin Dashboard project.
+### Planned Features
+
+- Header
+- Sidebar Navigation
+- Dashboard Content
+- Statistics Cards
+- Recent Users Table
+- Footer
+
+This project will serve as the capstone project for Stage 01.
 
 ---
 
-## Author
+# Author
 
 **Khaled Alawi**
 
-Software Engineering Graduate
+Software Engineering Student
 
-Java Spring Boot & React Full-Stack Roadmap
+Learning Path:
+Java • Spring Boot • React • Full-Stack Development
+
+# Screenshots
+
+## Login Page
+
+![Login](assets/images/login-page.png)
+
+## Registration Page
+
+![Registration](assets/images/registration-page.png)
+
+## Profile Edit
+
+![Profile Edit](assets/images/profile-edit.png)
+
+## Admin Dashboard
+
+![Dashboard](assets/images/admin-dashboard.png)
