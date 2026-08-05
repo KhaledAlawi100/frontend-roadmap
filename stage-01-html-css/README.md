@@ -6,7 +6,7 @@ This stage focuses on mastering the HTML and CSS fundamentals that modern fronte
 
 Instead of learning every HTML tag or CSS property, the goal is to master the **20% of concepts that provide 80% of real-world productivity** through hands-on projects.
 
-By the end of this stage, I will have built four responsive pages while following semantic HTML, reusable CSS, and modern frontend best practices.
+By the end of this stage, I will have built a collection of responsive pages while applying semantic HTML, reusable CSS, Flexbox, and modern frontend best practices.
 
 ---
 
@@ -19,7 +19,7 @@ By the end of this stage, I will have built four responsive pages while followin
 - Build layouts using Flexbox
 - Create a reusable Design System with CSS Variables
 - Build responsive pages
-- Organize HTML & CSS using clean project structure
+- Organize HTML and CSS using a clean project structure
 
 ---
 
@@ -28,20 +28,26 @@ By the end of this stage, I will have built four responsive pages while followin
 ```text
 stage-01-html-css/
 │
-├── assets/
-│   ├── css/
-│   │   ├── variables.css
-│   │   ├── reset.css
-│   │   └── global.css
-│   │
-│   ├── images/
-│   └── icons/
-│
-├── login-page/
+├── admin-dashboard/
 │   ├── index.html
 │   └── style.css
 │
-├── registration-page/
+├── assets/
+│   ├── css/
+│   │   ├── global.css
+│   │   ├── reset.css
+│   │   └── variables.css
+│   │
+│   ├── icons/
+│   │
+│   └── images/
+│       ├── admin-dashboard.png
+│       ├── avatar.png
+│       ├── login-page.png
+│       ├── profile-edit.png
+│       └── registration-page.png
+│
+├── login-page/
 │   ├── index.html
 │   └── style.css
 │
@@ -49,7 +55,7 @@ stage-01-html-css/
 │   ├── index.html
 │   └── style.css
 │
-├── admin-dashboard/
+├── registration-page/
 │   ├── index.html
 │   └── style.css
 │
@@ -62,9 +68,7 @@ stage-01-html-css/
 
 ## ✅ Sprint 1 — Design System
 
-A reusable design system shared across every page.
-
-### Includes
+### Features
 
 - CSS Variables
 - Color Palette
@@ -75,18 +79,24 @@ A reusable design system shared across every page.
 - CSS Reset
 - Global Styles
 
+### Concepts Practiced
+
+- Design Tokens
+- Reusable Styling
+- CSS Architecture
+
 ---
 
 ## ✅ Sprint 2 — Login Page
 
 ### Features
 
-- Responsive login page
-- Email & Password fields
-- Remember Me checkbox
-- Forgot Password link
-- Native HTML validation
-- Responsive Flexbox layout
+- Responsive Login Page
+- Email & Password Fields
+- Remember Me Checkbox
+- Forgot Password Link
+- Native HTML Validation
+- Responsive Flexbox Layout
 
 ### Concepts Practiced
 
@@ -107,7 +117,7 @@ A reusable design system shared across every page.
 - First Name
 - Last Name
 - Username
-- Email
+- Email Address
 - Password
 - Confirm Password
 - Birth Date
@@ -145,7 +155,8 @@ A reusable design system shared across every page.
 - Textarea
 - Custom File Button Styling
 - Responsive Forms
-- Reusable Form Components
+- Form Organization
+- Reusable Components
 
 ---
 
@@ -161,32 +172,53 @@ A reusable design system shared across every page.
 - Search Bar
 - Notification Button
 - User Profile Section
-- Responsive Flexbox Layout
 
 ### Concepts Practiced
 
 - Semantic Layout
 - Flexbox
-- Navigation
-- Layout Organization
 - Component Separation
-- Reusable Styling
+- Navigation Design
+- Responsive Layout Structure
+
+---
+
+## ✅ Sprint 6 — Dashboard Statistics Cards
+
+### Features
+
+- Users Statistics Card
+- Revenue Statistics Card
+- Orders Statistics Card
+- Products Statistics Card
+- Responsive Card Layout
+- Card Hover Animation
+- Consistent Typography & Spacing
+
+### Concepts Practiced
+
+- Card Components
+- Flexbox Layout
+- Visual Hierarchy
+- Responsive Design
+- Reusable UI Components
+- CSS Transitions
 
 ---
 
 # Progress
 
-| Sprint | Status |
-|---------|--------|
-| Design System | ✅ Complete |
-| Login Page | ✅ Complete |
-| Registration Page | ✅ Complete |
-| Profile Edit | ✅ Complete |
-| Dashboard Skeleton | ✅ Complete |
-| Statistics Cards | ⏳ Next |
-| Recent Users Table | ⏳ Pending |
-| Polish & Refactoring | ⏳ Pending |
-| Documentation | ⏳ Pending |
+| Sprint               | Status      |
+| -------------------- | ----------- |
+| Design System        | ✅ Complete |
+| Login Page           | ✅ Complete |
+| Registration Page    | ✅ Complete |
+| Profile Edit         | ✅ Complete |
+| Dashboard Skeleton   | ✅ Complete |
+| Statistics Cards     | ✅ Complete |
+| Recent Users Table   | ⏳ Next     |
+| Polish & Refactoring | ⏳ Pending  |
+| Documentation        | ⏳ Pending  |
 
 ---
 
@@ -206,40 +238,37 @@ After completing the current sprints, I can confidently:
 - Build semantic HTML pages
 - Create accessible forms
 - Apply native HTML validation
-- Build responsive layouts with Flexbox
-- Create reusable design systems
+- Build responsive layouts using Flexbox
+- Create reusable UI components
+- Build reusable design systems using CSS Variables
+- Design responsive dashboard layouts
 - Organize CSS into reusable modules
-- Build multi-section page layouts
-- Structure frontend projects professionally
-- Follow modern frontend best practices
+- Follow modern frontend development best practices
 
 ---
 
 # Next Sprint
 
-## Sprint 6 — Dashboard Statistics Cards
+## Sprint 7 — Recent Users Table
 
-The next milestone is building the dashboard statistics section.
+The next milestone is implementing a responsive users table inside the dashboard.
 
-### Planned Cards
+### Planned Features
 
-- Users
-- Revenue
-- Orders
-- Products
+- User Avatar
+- Name
+- Email
+- Role
+- Status
+- 5–10 Sample Users
 
-Each card will contain:
+### Concepts
 
-- Title
-- Number
-- Small description
-
-Concepts:
-
-- Card Layout
-- Consistent Spacing
-- Flexbox
-- Reusable Components
+- Semantic Tables
+- Typography
+- Alignment
+- Table Styling
+- Responsive Data Layout
 
 ---
 
@@ -247,17 +276,23 @@ Concepts:
 
 ## Login Page
 
-![Login](assets/images/login-page.png)
+![Login Page](assets/images/login-page.png)
+
+---
 
 ## Registration Page
 
-![Registration](assets/images/registration-page.png)
+![Registration Page](assets/images/registration-page.png)
+
+---
 
 ## Profile Edit
 
 ![Profile Edit](assets/images/profile-edit.png)
 
-## Dashboard Skeleton
+---
+
+## Dashboard
 
 ![Dashboard](assets/images/admin-dashboard.png)
 
@@ -269,6 +304,6 @@ Concepts:
 
 Software Engineering Student
 
-Learning Path:
+### Learning Path
 
-**Java • Spring Boot • React • Full-Stack Development**
+Java • Spring Boot • React • Full-Stack Development
