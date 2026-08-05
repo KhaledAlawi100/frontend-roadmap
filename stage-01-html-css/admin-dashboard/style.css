@@ -105,18 +105,23 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.notification-btn:hover {
-  background: var(--color-background);
-}
+.notification-btn:focus-visible {
+  outline: 3px solid var(--color-primary);
 
+  outline-offset: 2px;
+}
 /* Profile */
 
 .profile {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  transition: opacity 0.3s ease;
 
   cursor: pointer;
+}
+.profile:hover {
+  opacity: 0.8;
 }
 
 .profile-name {
@@ -192,6 +197,12 @@ body {
   background: var(--color-background);
 }
 
+.page-title {
+  font-size: var(--font-size-3xl);
+ 
+  font-weight: var(--font-weight-bold);
+}
+
 .dashboard-content {
   display: flex;
   flex-direction: column;
@@ -221,6 +232,13 @@ body {
 /* ==========================
    Statistics
 ========================== */
+
+.section-title{
+  font-size: var(--font-size-2xl);
+
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-md);
+}
 
 .stats-grid {
   display: flex;
@@ -254,7 +272,7 @@ body {
 
 .dashboard-card:hover {
   transform: translateY(-4px);
-
+  cursor: pointer;
   box-shadow: var(--shadow-lg);
 }
 
@@ -365,7 +383,7 @@ body {
   font-weight: var(--font-weight-bold);
 }
 
-.users-table td img {
+.table-avatar {
   width: 40px;
   height: 40px;
 
@@ -382,17 +400,17 @@ body {
   font-weight: var(--font-weight-medium);
 }
 
-.users-table td .status.active {
+.status.active {
   background: var(--color-success);
   color: white;
 }
 
-.users-table td .status.inactive {
+.status.inactive {
   background: var(--color-danger);
   color: white;
 }
 
-.users-table td .status.pending {
+.status.pending {
   background: var(--color-warning);
   color: white;
 }

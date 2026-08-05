@@ -219,18 +219,11 @@ main {
   cursor: pointer;
 }
 
-fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
-}
-
-fieldset legend {
+.form-group legend {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--space-md);
 }
-
 /* ==========================
    Responsive
 ========================== */

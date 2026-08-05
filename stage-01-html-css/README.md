@@ -6,7 +6,7 @@ This stage focuses on mastering the HTML and CSS fundamentals that modern fronte
 
 Instead of learning every HTML tag or CSS property, the goal is to master the **20% of concepts that provide 80% of real-world productivity** through hands-on projects.
 
-By the end of this stage, I have built a collection of responsive pages while applying semantic HTML, reusable CSS, Flexbox, and modern frontend best practices.
+By the end of this stage, I have built a collection of responsive pages while applying semantic HTML, reusable CSS, Flexbox, responsive design, accessibility, and modern frontend best practices.
 
 ---
 
@@ -20,6 +20,8 @@ By the end of this stage, I have built a collection of responsive pages while ap
 - Create a reusable Design System with CSS Variables
 - Build responsive pages
 - Organize HTML and CSS using a clean project structure
+- Build reusable UI components
+- Improve code consistency through refactoring
 
 ---
 
@@ -82,6 +84,7 @@ stage-01-html-css/
 ### Concepts Practiced
 
 - Design Tokens
+- CSS Variables
 - Reusable Styling
 - CSS Architecture
 
@@ -92,21 +95,22 @@ stage-01-html-css/
 ### Features
 
 - Responsive Login Page
-- Email & Password Fields
+- Email & Password Inputs
 - Remember Me Checkbox
 - Forgot Password Link
 - Native HTML Validation
-- Responsive Flexbox Layout
+- Accessible Form Labels
+- Keyboard Focus States
 
 ### Concepts Practiced
 
 - Semantic HTML
 - Forms
-- Labels
+- Accessibility
 - Validation
 - Box Model
 - Flexbox
-- CSS Variables
+- Responsive Design
 
 ---
 
@@ -114,14 +118,13 @@ stage-01-html-css/
 
 ### Features
 
-- First Name
-- Last Name
+- Registration Form
+- First & Last Name
 - Username
-- Email Address
-- Password
-- Confirm Password
+- Email
+- Password & Confirmation
 - Birth Date
-- Gender
+- Gender Selection
 - Terms & Conditions
 - Login Link
 
@@ -132,7 +135,7 @@ stage-01-html-css/
 - Checkboxes
 - Fieldset & Legend
 - Native Validation
-- Responsive Two-Column Layout
+- Responsive Layouts
 - Reusable Components
 
 ---
@@ -144,19 +147,19 @@ stage-01-html-css/
 - Profile Picture Upload
 - Full Name
 - Username
-- Email Address
+- Email
 - Phone Number
 - Bio Textarea
 - Save Changes Button
 
 ### Concepts Practiced
 
-- File Input
+- File Upload
 - Textarea
-- Custom File Button Styling
+- Custom File Input Styling
 - Responsive Forms
-- Form Organization
-- Reusable Components
+- Focus States
+- Component Reusability
 
 ---
 
@@ -167,7 +170,7 @@ stage-01-html-css/
 - Semantic Dashboard Layout
 - Header
 - Sidebar Navigation
-- Main Content Area
+- Main Content
 - Footer
 - Search Bar
 - Notification Button
@@ -176,32 +179,30 @@ stage-01-html-css/
 ### Concepts Practiced
 
 - Semantic Layout
+- Navigation
 - Flexbox
+- Responsive Structure
 - Component Separation
-- Navigation Design
-- Responsive Layout Structure
 
 ---
 
-## ✅ Sprint 6 — Dashboard Statistics Cards
+## ✅ Sprint 6 — Statistics Cards
 
 ### Features
 
-- Users Statistics Card
-- Revenue Statistics Card
-- Orders Statistics Card
-- Products Statistics Card
-- Responsive Card Layout
-- Card Hover Animation
-- Consistent Typography & Spacing
+- Users Card
+- Revenue Card
+- Orders Card
+- Products Card
+- Hover Animations
+- Responsive Card Grid
 
 ### Concepts Practiced
 
 - Card Components
-- Flexbox Layout
 - Visual Hierarchy
+- Flexbox Layout
 - Responsive Design
-- Reusable UI Components
 - CSS Transitions
 
 ---
@@ -210,41 +211,80 @@ stage-01-html-css/
 
 ### Features
 
-- Recent Users Table
-- User Avatar Column
-- Name, Email, Role and Status Columns
-- Multiple Sample Users
+- Responsive Users Table
+- User Avatars
+- Name
+- Email
+- Role
 - Status Badges
-- Responsive Table Container
 - Hover Effects
-- Horizontal Scroll Support on Small Screens
+- Horizontal Scrolling on Small Screens
 
 ### Concepts Practiced
 
 - Semantic Tables
-- Typography
 - Table Alignment
+- Badge Components
 - Responsive Tables
 - Overflow Handling
-- Badge Components
 - Data Presentation
-- UI Consistency
+
+---
+
+## ✅ Sprint 8 — Polish & Refactoring
+
+### Improvements
+
+#### HTML
+
+- Improved semantic structure
+- Better heading hierarchy
+- Added missing accessibility attributes
+- Added table caption
+- Added column scopes
+- Improved image alt text
+
+#### CSS
+
+- Removed duplicated styles
+- Improved selector specificity
+- Better naming consistency
+- Improved component organization
+- Reused design tokens consistently
+- Cleaner transitions and hover states
+
+#### UI
+
+- Improved spacing consistency
+- Better typography hierarchy
+- Better table alignment
+- Improved visual consistency
+- Refined hover effects
+- Improved responsive behavior
+
+### Concepts Practiced
+
+- Code Refactoring
+- Accessibility Review
+- Semantic HTML
+- Maintainable CSS
+- Component Consistency
+- Production Readiness
 
 ---
 
 # Progress
 
-| Sprint               | Status      |
-| -------------------- | ----------- |
-| Design System        | ✅ Complete |
-| Login Page           | ✅ Complete |
-| Registration Page    | ✅ Complete |
-| Profile Edit         | ✅ Complete |
-| Dashboard Skeleton   | ✅ Complete |
-| Statistics Cards     | ✅ Complete |
-| Recent Users Table   | ✅ Complete |
-| Polish & Refactoring | ⏳ Next     |
-| Documentation        | ⏳ Pending  |
+| Sprint | Status |
+|---------|--------|
+| Design System | ✅ Complete |
+| Login Page | ✅ Complete |
+| Registration Page | ✅ Complete |
+| Profile Edit | ✅ Complete |
+| Dashboard Skeleton | ✅ Complete |
+| Statistics Cards | ✅ Complete |
+| Recent Users Table | ✅ Complete |
+| Polish & Refactoring | ✅ Complete |
 
 ---
 
@@ -259,49 +299,44 @@ stage-01-html-css/
 
 # Skills Gained
 
-After completing the current sprints, I can confidently:
+After completing this stage, I can confidently:
 
-- Build semantic HTML pages
+- Build semantic HTML documents
 - Create accessible forms
-- Apply native HTML validation
+- Apply native browser validation
 - Build responsive layouts using Flexbox
 - Create reusable UI components
-- Design responsive dashboard interfaces
-- Build reusable card components
-- Create responsive data tables
-- Organize CSS into reusable modules
-- Apply consistent spacing and typography
+- Design reusable Design Systems with CSS Variables
+- Build responsive dashboards
+- Build responsive data tables
+- Write maintainable CSS
+- Organize frontend projects
+- Improve code quality through refactoring
 - Follow modern frontend development best practices
 
 ---
 
-# Next Sprint
+# Project Highlights
 
-## Sprint 8 — Polish & Refactoring
+✔ Semantic HTML
 
-The next milestone focuses on preparing the project as if it were ready for production.
+✔ Responsive Layouts
 
-### Planned Tasks
+✔ Accessible Forms
 
-#### HTML
+✔ Reusable CSS Architecture
 
-- Improve semantic structure
-- Review accessibility
-- Verify labels and headings
+✔ CSS Variables Design System
 
-#### CSS
+✔ Responsive Dashboard
 
-- Refactor repeated styles
-- Improve naming consistency
-- Review spacing system
-- Improve variable usage
+✔ Statistics Cards
 
-#### UI
+✔ Recent Users Table
 
-- Improve alignment
-- Refine whitespace
-- Polish typography
-- Improve color consistency
+✔ Component-Based Styling
+
+✔ Production-Oriented Code Organization
 
 ---
 

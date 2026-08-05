@@ -24,7 +24,12 @@
           <p>Update your profile information.</p>
         </header>
 
-        <form class="profile-form" action="#" method="post">
+        <form
+          class="profile-form"
+          action="#"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <div class="form-group">
             <label for="avatar"> Profile Picture </label>
 
@@ -46,6 +51,7 @@
               placeholder="Enter your full name"
               required
               autocomplete="name"
+              autofocus
             />
           </div>
 
@@ -59,8 +65,8 @@
               name="username"
               placeholder="Choose a username"
               required
-              minlength="3"
-              maxlength="20"
+              pattern="[A-Za-z0-9_]{3,20}"
+              title="3-20 characters. Letters, numbers and underscores only."
               autocomplete="username"
             />
           </div>
@@ -79,15 +85,18 @@
             />
           </div>
 
+          <!-- Phone Number -->
+
           <div class="form-group">
             <label for="phone">Phone Number</label>
-
             <input
               type="tel"
               id="phone"
               name="phone"
               placeholder="+966 5X XXX XXXX"
               autocomplete="tel"
+              pattern="[0-9+\s()-]{8,20}"
+              title="Enter a valid phone number."
             />
           </div>
 
