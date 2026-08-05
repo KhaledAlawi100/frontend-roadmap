@@ -287,6 +287,117 @@ body {
 }
 
 /* ==========================
+   Table
+========================== */
+
+.users-section {
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-md);
+}
+
+.table-card {
+  width: 100%;
+  overflow-x: auto;
+
+  padding: var(--space-xl);
+
+  background: var(--color-surface);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-md);
+}
+
+.users-table td,
+.users-table th {
+  vertical-align: middle;
+}
+
+.users-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.users-table caption {
+  position: absolute;
+  left: -9999px;
+}
+
+.users-table thead {
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+  text-align: left;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.users-table th {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-primary);
+  color: white;
+}
+
+.users-table tbody {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+.users-table td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.users-table tbody tr {
+  transition:
+    background-color 0.35s ease,
+    color 0.25s ease;
+}
+
+.users-table tbody tr:hover {
+  background: var(--color-secondary);
+}
+
+.users-table tbody tr:hover td {
+  color: white;
+  font-weight: var(--font-weight-bold);
+}
+
+.users-table td img {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+}
+
+.users-table td .status {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.users-table td .status.active {
+  background: var(--color-success);
+  color: white;
+}
+
+.users-table td .status.inactive {
+  background: var(--color-danger);
+  color: white;
+}
+
+.users-table td .status.pending {
+  background: var(--color-warning);
+  color: white;
+}
+
+/* ==========================
    Footer
 ========================== */
 
@@ -328,6 +439,10 @@ body {
 
   .search-input {
     max-width: none;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-text-secondary);
   }
 
   .sidebar {

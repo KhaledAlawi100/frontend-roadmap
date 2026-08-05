@@ -6,7 +6,7 @@ This stage focuses on mastering the HTML and CSS fundamentals that modern fronte
 
 Instead of learning every HTML tag or CSS property, the goal is to master the **20% of concepts that provide 80% of real-world productivity** through hands-on projects.
 
-By the end of this stage, I will have built a collection of responsive pages while applying semantic HTML, reusable CSS, Flexbox, and modern frontend best practices.
+By the end of this stage, I have built a collection of responsive pages while applying semantic HTML, reusable CSS, Flexbox, and modern frontend best practices.
 
 ---
 
@@ -206,6 +206,32 @@ stage-01-html-css/
 
 ---
 
+## ✅ Sprint 7 — Recent Users Table
+
+### Features
+
+- Recent Users Table
+- User Avatar Column
+- Name, Email, Role and Status Columns
+- Multiple Sample Users
+- Status Badges
+- Responsive Table Container
+- Hover Effects
+- Horizontal Scroll Support on Small Screens
+
+### Concepts Practiced
+
+- Semantic Tables
+- Typography
+- Table Alignment
+- Responsive Tables
+- Overflow Handling
+- Badge Components
+- Data Presentation
+- UI Consistency
+
+---
+
 # Progress
 
 | Sprint               | Status      |
@@ -216,8 +242,8 @@ stage-01-html-css/
 | Profile Edit         | ✅ Complete |
 | Dashboard Skeleton   | ✅ Complete |
 | Statistics Cards     | ✅ Complete |
-| Recent Users Table   | ⏳ Next     |
-| Polish & Refactoring | ⏳ Pending  |
+| Recent Users Table   | ✅ Complete |
+| Polish & Refactoring | ⏳ Next     |
 | Documentation        | ⏳ Pending  |
 
 ---
@@ -240,35 +266,42 @@ After completing the current sprints, I can confidently:
 - Apply native HTML validation
 - Build responsive layouts using Flexbox
 - Create reusable UI components
-- Build reusable design systems using CSS Variables
-- Design responsive dashboard layouts
+- Design responsive dashboard interfaces
+- Build reusable card components
+- Create responsive data tables
 - Organize CSS into reusable modules
+- Apply consistent spacing and typography
 - Follow modern frontend development best practices
 
 ---
 
 # Next Sprint
 
-## Sprint 7 — Recent Users Table
+## Sprint 8 — Polish & Refactoring
 
-The next milestone is implementing a responsive users table inside the dashboard.
+The next milestone focuses on preparing the project as if it were ready for production.
 
-### Planned Features
+### Planned Tasks
 
-- User Avatar
-- Name
-- Email
-- Role
-- Status
-- 5–10 Sample Users
+#### HTML
 
-### Concepts
+- Improve semantic structure
+- Review accessibility
+- Verify labels and headings
 
-- Semantic Tables
-- Typography
-- Alignment
-- Table Styling
-- Responsive Data Layout
+#### CSS
+
+- Refactor repeated styles
+- Improve naming consistency
+- Review spacing system
+- Improve variable usage
+
+#### UI
+
+- Improve alignment
+- Refine whitespace
+- Polish typography
+- Improve color consistency
 
 ---
 
@@ -292,9 +325,15 @@ The next milestone is implementing a responsive users table inside the dashboard
 
 ---
 
-## Dashboard
+## Admin Dashboard
 
-![Dashboard](assets/images/admin-dashboard.png)
+Includes:
+
+- Dashboard Layout
+- Statistics Cards
+- Recent Users Table
+
+![Admin Dashboard](assets/images/admin-dashboard.png)
 
 ---
 
