@@ -1,0 +1,164 @@
+/* ==========================
+   Header
+========================== */
+
+.header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ==========================
+   Navigation
+========================== */
+
+.nav {
+  max-width: 1200px;
+  margin-inline: auto;
+
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+/* ==========================
+   Logo
+========================== */
+
+.logo {
+  color: var(--color-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+/* ==========================
+   Navigation Links
+========================== */
+.nav-list {
+  display: flex;
+
+  align-items: center;
+
+  gap: var(--space-xl);
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+.nav-list a:hover,
+.nav-list a.active {
+  color: white;
+  background: var(--color-primary);
+}
+
+/* ==========================
+   Action Buttons
+========================== */
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.btn {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-lg);
+
+  font-weight: var(--font-weight-semibold);
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* ==========================
+   Tablet
+========================== */
+
+@media (max-width: 768px) {
+  .nav {
+    flex-wrap: wrap;
+  }
+  .nav-list {
+    gap: var(--space-md);
+  }
+
+  .action-buttons {
+    gap: var(--space-sm);
+  }
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media (max-width: 480px) {
+  .nav {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .logo {
+    text-align: center;
+  }
+
+  .nav-list {
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+  }
+
+  .nav-list a {
+    width: 100%;
+
+    text-align: center;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+
+    width: 100%;
+  }
+
+  .btn {
+    text-align: center;
+
+    width: 100%;
+  }
+}
