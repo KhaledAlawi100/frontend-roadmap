@@ -1,0 +1,103 @@
+/* ==========================
+   Contact Section
+========================== */
+
+.contact {
+  padding: var(--space-3xl) var(--space-xl);
+
+  background: var(--color-surface);
+}
+
+/* ==========================
+   Grid
+========================== */
+
+.contact-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: var(--space-3xl);
+
+  align-items: start;
+}
+
+/* ==========================
+   Contact Info
+========================== */
+
+.contact-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: var(--space-xl);
+}
+
+.info-item {
+  padding: var(--space-lg);
+
+  background: white;
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.info-item h3 {
+  margin-bottom: var(--space-sm);
+
+  color: var(--color-primary);
+}
+
+/* ==========================
+   Form
+========================== */
+
+.contact-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: var(--space-lg);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+
+  padding: var(--space-md);
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-md);
+
+  font: inherit;
+
+  resize: vertical;
+}
+
+.contact-form textarea {
+  min-height: 180px;
+}
+
+.contact-form .btn {
+  align-self: flex-start;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
