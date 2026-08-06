@@ -131,3 +131,133 @@ Later stages will add:
 
 **Hero Section**
 
+
+# Sprint 3 — Company Features
+
+## Goal
+
+Build a responsive company features section using CSS Grid.
+
+The focus of this sprint is learning how to create responsive grid layouts using modern CSS Grid techniques while building reusable feature cards with a clean and scalable structure.
+
+---
+
+## Features
+
+### Section Header
+
+- Section title
+- Section description
+
+### Feature Cards
+
+Each feature card contains:
+
+- Icon
+- Feature title
+- Feature description
+
+### Grid Layout
+
+- Desktop: 2 × 2 grid
+- Tablet: Responsive two-column layout
+- Mobile: Single-column layout
+
+### Card Design
+
+- Rounded corners
+- Shadow
+- Hover animation
+- Consistent spacing
+- Centered content
+
+---
+
+## Concepts Practiced
+
+### CSS Grid
+
+- `display: grid`
+- `grid-template-columns`
+- `repeat()`
+- `auto-fit`
+- `minmax()`
+- `gap`
+
+### Responsive Design
+
+- Responsive grid layouts
+- Flexible columns
+- Automatic layout adaptation
+- Responsive spacing
+
+### Card Components
+
+- Reusable card design
+- Hover effects
+- Visual hierarchy
+- Consistent spacing
+
+### Semantic HTML
+
+- `section`
+- `header`
+- `article`
+- `h2`
+- `h3`
+- `p`
+
+---
+
+## Skills Learned
+
+After completing this sprint I can:
+
+- Build responsive layouts using CSS Grid
+- Create flexible grids with `repeat()`
+- Build adaptive layouts using `auto-fit`
+- Control responsive sizing with `minmax()`
+- Design reusable feature cards
+- Combine Grid with Flexbox when appropriate
+- Build responsive sections without complex media queries
+- Organize reusable UI components
+
+---
+
+## Folder Structure
+
+```text
+stage-02-modern-css/
+│
+├── index.html
+├── style.css
+├── README.md
+│
+└── sections/
+    ├── navigation.css
+    ├── hero.css
+    ├── features.css
+    ├── about.css
+    ├── pricing.css
+    ├── contact.css
+    └── footer.css
+```
+
+---
+
+## Future Improvements
+
+Later stages will add:
+
+- Feature icons using SVGs
+- Interactive hover animations
+- Gradient icon backgrounds
+- Scroll reveal animations
+- Statistics section
+- Dark mode support
+- CSS custom properties for themes
+- JavaScript-powered animations
+
+---
+
+

@@ -1,0 +1,165 @@
+/* ==========================
+   Features Section
+========================== */
+
+.features {
+  padding: var(--space-3xl) var(--space-xl);
+}
+
+/* ==========================
+   Container
+========================== */
+
+.container {
+  max-width: 1200px;
+
+  margin: 0 auto;
+}
+
+/* ==========================
+   Section Header
+========================== */
+
+.section-header {
+  text-align: center;
+
+  margin-bottom: var(--space-3xl);
+}
+
+.section-header h2 {
+  font-size: var(--font-size-3xl);
+
+  font-weight: var(--font-weight-bold);
+
+  margin-bottom: var(--space-md);
+}
+
+.section-header p {
+  max-width: 650px;
+
+  margin: 0 auto;
+
+  color: var(--color-text-secondary);
+
+  line-height: 1.7;
+}
+
+/* ==========================
+   Features Grid
+========================== */
+
+.features-grid {
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(280px, 1fr)
+  );
+
+  gap: var(--space-xl);
+}
+
+/* ==========================
+   Feature Card
+========================== */
+
+.feature-card {
+  padding: var(--space-2xl);
+
+  background: var(--color-surface);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-md);
+
+  text-align: center;
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==========================
+   Icon
+========================== */
+
+.feature-icon {
+  width: 70px;
+
+  height: 70px;
+
+  margin: 0 auto var(--space-lg);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 2rem;
+
+  border-radius: 50%;
+
+  background: var(--color-primary);
+
+  color: white;
+}
+
+/* ==========================
+   Title
+========================== */
+
+.feature-card h3 {
+  margin-bottom: var(--space-md);
+
+  font-size: var(--font-size-xl);
+
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ==========================
+   Description
+========================== */
+
+.feature-card p {
+  color: var(--color-text-secondary);
+
+  line-height: 1.7;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+  .features {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .feature-card {
+    padding: var(--space-xl);
+  }
+
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+
+    font-size: 1.6rem;
+  }
+}
