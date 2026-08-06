@@ -368,3 +368,129 @@ Later stages will add:
 - JavaScript-powered counting animation
 
 ---
+
+# Sprint 5 — Team Section
+
+## Goal
+
+Build a fully responsive team section using CSS Grid and reusable card components.
+
+The focus of this sprint is mastering responsive grid layouts, image presentation, reusable cards, and maintaining a clean, consistent design across different screen sizes.
+
+---
+
+## Features
+
+### Team Introduction
+
+- Section heading
+- Supporting description
+
+### Team Members
+
+Each team member includes:
+
+- Profile picture
+- Full name
+- Job position
+- Social media links
+
+### Responsive Layout
+
+- Desktop: Four columns
+- Tablet: Automatically adapts to two columns
+- Mobile: Single-column layout using responsive Grid
+
+---
+
+## Concepts Practiced
+
+### CSS Grid
+
+- `display: grid`
+- `grid-template-columns`
+- `repeat()`
+- `auto-fit`
+- `minmax()`
+- `gap`
+
+### Responsive Design
+
+- Fluid grid layouts
+- Responsive card sizing
+- Automatic column adjustment
+- Flexible spacing
+
+### Card Components
+
+- Reusable card design
+- Flexbox inside Grid items
+- Hover effects
+- Consistent spacing
+- Card shadows
+
+### Images
+
+- Circular profile images
+- `object-fit: cover`
+- Responsive sizing
+- Image alignment
+
+### Accessibility
+
+- Descriptive `alt` text
+- `aria-label` for social media links
+
+---
+
+## Skills Learned
+
+After completing this sprint I can:
+
+- Build responsive Grid layouts
+- Use `auto-fit` and `minmax()` effectively
+- Create reusable card components
+- Combine Grid and Flexbox in the same layout
+- Build responsive team sections
+- Create responsive image cards
+- Improve accessibility with semantic HTML
+- Build layouts that automatically adapt to different screen sizes
+
+---
+
+## Folder Structure
+
+```text
+stage-02-modern-css/
+│
+├── index.html
+├── style.css
+├── README.md
+│
+└── sections/
+    ├── navigation.css
+    ├── hero.css
+    ├── about.css      ← Team Section
+    ├── services.css
+    ├── pricing.css
+    ├── contact.css
+    └── footer.css
+```
+
+---
+
+## Future Improvements
+
+Later stages will add:
+
+- Real social media icons
+- Team member profile pages
+- Card animations
+- Dark mode support
+- Team filtering
+- Interactive hover overlays
+- Lazy-loaded profile images
+
+---
+
+## Screenshot
