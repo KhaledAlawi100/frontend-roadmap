@@ -1,0 +1,137 @@
+/* ==========================
+   Hero Section
+========================== */
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+  padding: var(--space-3xl) var(--space-xl);
+}
+
+/* ==========================
+   Hero Content
+========================== */
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-xl);
+}
+
+.hero-content h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  color: var(--color-text);
+  max-width: 12ch;
+}
+.hero-content p {
+  max-width: 60ch;
+  font-size: var(--font-size-lg);
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================
+   Hero Buttons
+========================== */
+
+.hero-actions {
+  display: flex;
+
+  gap: var(--space-lg);
+
+  flex-wrap: wrap;
+}
+
+/* ==========================
+   Hero Image
+========================== */
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image img {
+  width: 100%;
+
+  max-width: 520px;
+  height: auto;
+
+  object-fit: contain;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+
+    text-align: center;
+
+    justify-content: center;
+
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .hero-content {
+    align-items: center;
+  }
+
+  .hero-content p {
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-image {
+    order: 2;
+  }
+
+  .hero-image img {
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    gap: var(--space-xl);
+  }
+
+  .hero-content h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero-content p {
+    font-size: var(--font-size-md);
+  }
+
+  .hero-actions {
+    width: 100%;
+
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-image img {
+    max-width: 280px;
+  }
+}

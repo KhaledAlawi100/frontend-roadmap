@@ -1,25 +1,32 @@
-# Sprint 1 — Responsive Navigation
+# Sprint 2 — Hero Section
 
 ## Goal
 
-Build a fully responsive navigation bar using modern CSS layout techniques without JavaScript.
+Build a modern, responsive landing page hero section using Flexbox and responsive design principles.
 
-The focus of this sprint is mastering Flexbox, responsive containers, spacing, and media queries while following semantic HTML and reusable CSS practices.
+The focus of this sprint is creating a professional hero layout that adapts smoothly across desktop, tablet, and mobile devices while keeping the HTML semantic and the CSS modular.
 
 ---
 
 ## Features
 
-- Company logo
-- Navigation menu
-- Login button
-- Get Started button
-- Desktop layout
-- Tablet layout
-- Mobile layout
-- Responsive container
-- Active navigation item
-- Hover effects
+### Left Section
+
+- Main heading
+- Supporting description
+- Primary Call-to-Action button
+- Secondary button
+
+### Right Section
+
+- Responsive hero image
+- Image scales correctly on different screen sizes
+
+### Responsive Layout
+
+- Desktop: Text and image displayed side by side
+- Tablet: Optimized spacing and sizing
+- Mobile: Content stacked vertically
 
 ---
 
@@ -27,33 +34,43 @@ The focus of this sprint is mastering Flexbox, responsive containers, spacing, a
 
 ### Flexbox
 
-- display: flex
-- justify-content
-- align-items
-- gap
-- flex-direction
-- flex-wrap
+- `display: flex`
+- `flex-direction`
+- `justify-content`
+- `align-items`
+- `gap`
+- `flex-wrap`
 
 ### Responsive Design
 
-- Mobile-first thinking
-- Responsive containers
-- Flexible spacing
-- Fluid layouts
+- Mobile-first responsive thinking
+- Flexible layouts
+- Responsive spacing
+- Responsive typography
+- Responsive images
 
-### Media Queries
+### Images
 
-- Tablet breakpoint
-- Mobile breakpoint
-- Layout adaptation
+- `max-width`
+- `width: 100%`
+- `height: auto`
+- Image scaling without distortion
+
+### Layout
+
+- Two-column hero layout
+- Content alignment
+- Consistent spacing
+- Visual hierarchy
 
 ### Semantic HTML
 
-- header
-- nav
-- ul
-- li
-- a
+- `section`
+- `div`
+- `h1`
+- `p`
+- `img`
+- `a`
 
 ---
 
@@ -61,13 +78,35 @@ The focus of this sprint is mastering Flexbox, responsive containers, spacing, a
 
 After completing this sprint I can:
 
-- Build responsive navigation bars
-- Create flexible layouts with Flexbox
-- Align items professionally
-- Build responsive containers
-- Apply media queries correctly
-- Organize navigation using semantic HTML
-- Create reusable navigation components
+- Build professional landing page hero sections
+- Create responsive two-column layouts
+- Align content using Flexbox
+- Build responsive image layouts
+- Use `max-width` correctly
+- Create reusable hero components
+- Build layouts that work across multiple screen sizes
+- Improve visual hierarchy using spacing and typography
+
+---
+
+## Folder Structure
+
+```text
+stage-02-modern-css/
+│
+├── index.html
+├── style.css
+├── README.md
+│
+└── sections/
+    ├── navigation.css
+    ├── hero.css
+    ├── about.css
+    ├── services.css
+    ├── pricing.css
+    ├── contact.css
+    └── footer.css
+```
 
 ---
 
@@ -75,9 +114,20 @@ After completing this sprint I can:
 
 Later stages will add:
 
-- Hamburger menu
-- Mobile navigation drawer
-- Active page detection
-- Dark mode
-- Dropdown menus
-- Keyboard navigation
+- Animated hero section
+- Background illustrations
+- Decorative shapes
+- Gradient backgrounds
+- Scroll indicator
+- Dark mode support
+- CSS Grid integration
+- JavaScript interactions
+- Smooth scrolling
+- Responsive navigation toggle
+
+---
+
+## Screenshot
+
+**Hero Section**
+
