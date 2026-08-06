@@ -653,3 +653,140 @@ git push origin main
 | Sprint 4 — Statistics Section    | ✅ Complete |
 | Sprint 5 — Team Section          | ✅ Complete |
 | **Sprint 6 — Pricing Section**   | ✅ Complete |
+
+
+# Sprint 7 — Testimonials
+
+## Goal
+
+Build a responsive testimonials section using CSS Grid and reusable card components.
+
+The focus of this sprint is creating clean testimonial cards that automatically adapt to different screen sizes while maintaining consistent spacing, alignment, and typography.
+
+---
+
+## Features
+
+### Testimonial Card
+
+Each testimonial includes:
+
+- Customer avatar
+- Customer name
+- Company name
+- Customer review
+
+### Responsive Layout
+
+- Desktop: 3-column grid
+- Tablet: 2-column grid
+- Mobile: 1-column layout
+
+### Card Design
+
+- Rounded corners
+- Soft shadows
+- Hover animation
+- Circular avatars
+- Centered content
+
+---
+
+## Concepts Practiced
+
+### CSS Grid
+
+- `display: grid`
+- `grid-template-columns`
+- `repeat()`
+- `auto-fit`
+- `minmax()`
+- `gap`
+
+### Card Components
+
+- Reusable card layout
+- Consistent spacing
+- Visual hierarchy
+- Hover effects
+
+### Images
+
+- Circular avatars
+- `object-fit: cover`
+- Responsive sizing
+
+### Typography
+
+- Name hierarchy
+- Company styling
+- Readable review text
+- Text alignment
+
+### Responsive Design
+
+- Desktop layout
+- Tablet layout
+- Mobile layout
+- Adaptive grid sizing
+
+---
+
+## Skills Learned
+
+After completing this sprint I can:
+
+- Build responsive card layouts with CSS Grid
+- Create reusable testimonial components
+- Style circular profile images
+- Build adaptive layouts using `auto-fit` and `minmax()`
+- Improve UI with subtle hover animations
+- Create consistent spacing across components
+- Organize complex sections using reusable CSS modules
+
+---
+
+## Folder Structure
+
+```text
+stage-02-modern-css/
+│
+├── index.html
+├── style.css
+├── README.md
+│
+└── sections/
+    ├── navigation.css
+    ├── hero.css
+    ├── services.css
+    ├── statistics.css
+    ├── team.css
+    ├── pricing.css
+    ├── testimonials.css   ← Current Sprint
+    ├── about.css
+    ├── contact.css
+    └── footer.css
+```
+
+---
+
+## Future Improvements
+
+Later stages will add:
+
+- Star ratings
+- Company logos
+- Quote icons
+- Carousel/slider
+- Auto-sliding testimonials
+- Dark mode support
+- Animation on scroll
+- Real customer data from an API
+
+---
+
+## Screenshot
+
+**Testimonials Section**
+
+_Add a screenshot after completing the sprint._
