@@ -494,3 +494,162 @@ Later stages will add:
 ---
 
 ## Screenshot
+
+# Sprint 6 — Pricing Section
+
+## Goal
+
+Build a modern pricing section using CSS Grid and reusable card components.
+
+The focus of this sprint is creating responsive pricing cards with proper spacing, visual hierarchy, hover effects, and a featured plan that naturally draws the user's attention.
+
+---
+
+## Features
+
+### Pricing Plans
+
+- Starter Plan
+- Professional Plan (Featured)
+- Enterprise Plan
+
+### Card Content
+
+- Plan name
+- Monthly price
+- Short description
+- Feature list
+- Call-to-Action button
+
+### Responsive Layout
+
+- Desktop: Three columns
+- Tablet: Two columns (then one)
+- Mobile: Single stacked column
+
+---
+
+## Concepts Practiced
+
+### CSS Grid
+
+- `display: grid`
+- `grid-template-columns`
+- `repeat()`
+- `auto-fit`
+- `minmax()`
+- `gap`
+
+### Card Layout
+
+- Reusable card component
+- Featured card styling
+- Visual hierarchy
+- Consistent spacing
+- Border emphasis
+
+### Hover Effects
+
+- `transform`
+- `transition`
+- `box-shadow`
+
+### Typography
+
+- Price hierarchy
+- Plan titles
+- Feature list readability
+- Call-to-action emphasis
+
+### Responsive Design
+
+- Fluid grid layouts
+- Responsive cards
+- Flexible spacing
+- Mobile-first thinking
+
+---
+
+## Skills Learned
+
+After completing this sprint I can:
+
+- Build responsive pricing sections
+- Create reusable card layouts
+- Use CSS Grid for business layouts
+- Highlight featured content effectively
+- Apply smooth hover animations
+- Create consistent visual hierarchy
+- Build responsive pricing tables without frameworks
+
+---
+
+## Folder Structure
+
+```text
+stage-02-modern-css/
+│
+├── index.html
+├── style.css
+├── README.md
+│
+└── sections/
+    ├── navigation.css
+    ├── hero.css
+    ├── about.css
+    ├── services.css
+    ├── pricing.css
+    ├── contact.css
+    └── footer.css
+```
+
+---
+
+## Future Improvements
+
+Later stages will add:
+
+- Monthly / Yearly pricing toggle
+- Feature comparison table
+- Animated card entrance
+- Popular plan badge
+- Icons for each feature
+- Gradient backgrounds
+- Better accessibility
+- JavaScript interactions
+- Dark mode support
+
+---
+
+## Screenshot
+
+**Pricing Section**
+
+> Add a screenshot after completing the sprint.
+
+```
+assets/screenshots/stage-02/pricing-section.png
+```
+
+---
+
+## Git Commit
+
+```bash
+git add .
+git commit -m "Complete Sprint 6 - Responsive pricing section using CSS Grid"
+git push origin main
+```
+
+---
+
+## Sprint Status
+
+| Sprint                           | Status      |
+| -------------------------------- | ----------- |
+| Sprint 1 — Responsive Navigation | ✅ Complete |
+| Sprint 2 — Hero Section          | ✅ Complete |
+| Sprint 3 — Company Features      | ✅ Complete |
+| Sprint 4 — Statistics Section    | ✅ Complete |
+| Sprint 5 — Team Section          | ✅ Complete |
+| **Sprint 6 — Pricing Section**   | ✅ Complete |
