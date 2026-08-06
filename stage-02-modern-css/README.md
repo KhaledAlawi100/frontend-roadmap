@@ -131,7 +131,6 @@ Later stages will add:
 
 **Hero Section**
 
-
 # Sprint 3 — Company Features
 
 ## Goal
@@ -260,4 +259,112 @@ Later stages will add:
 
 ---
 
+# Sprint 4 — Statistics Section
 
+## Goal
+
+Build a responsive statistics section using **CSS Grid** to display key company metrics.
+
+The focus of this sprint is learning how to build responsive multi-column layouts using CSS Grid while creating reusable UI components with clean spacing, alignment, and responsive behavior.
+
+---
+
+## Features
+
+### Statistics Cards
+
+- Customers statistic
+- Satisfaction statistic
+- Countries statistic
+- Uptime statistic
+
+### Responsive Grid Layout
+
+- Desktop: 4 columns
+- Tablet: 2 columns
+- Mobile: 1 column
+
+### Card Design
+
+- Large highlighted numbers
+- Supporting labels
+- Centered content
+- Hover animation
+- Consistent spacing
+
+---
+
+## Concepts Practiced
+
+### CSS Grid
+
+- `display: grid`
+- `grid-template-columns`
+- `repeat()`
+- `gap`
+
+### Responsive Design
+
+- Responsive breakpoints
+- Grid adaptation across screen sizes
+- Flexible layouts
+
+### UI Components
+
+- Reusable statistic cards
+- Visual hierarchy
+- Card hover effects
+- Consistent spacing
+
+---
+
+## Skills Learned
+
+After completing this sprint, I can:
+
+- Build responsive layouts using CSS Grid
+- Create multi-column grid layouts
+- Use `repeat()` effectively
+- Combine Grid and Flexbox in the same project
+- Build reusable card components
+- Create responsive dashboard sections
+- Apply modern hover effects
+- Organize responsive layouts professionally
+
+---
+
+## Folder Structure
+
+```text
+stage-02-modern-css/
+│
+├── index.html
+├── style.css
+├── README.md
+│
+└── sections/
+    ├── navigation.css
+    ├── hero.css
+    ├── services.css
+    ├── statistics.css
+    ├── about.css
+    ├── pricing.css
+    ├── contact.css
+    └── footer.css
+```
+
+---
+
+## Future Improvements
+
+Later stages will add:
+
+- Animated statistic counters
+- Icons for each statistic
+- Scroll-triggered animations
+- Background illustrations
+- Gradient backgrounds
+- Improved accessibility
+- JavaScript-powered counting animation
+
+---

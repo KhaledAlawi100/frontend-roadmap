@@ -1,0 +1,88 @@
+/* ==========================
+   Statistics Section
+========================== */
+
+.statistics {
+  padding: var(--space-3xl) var(--space-xl);
+
+  background: var(--color-primary);
+}
+
+/* ==========================
+   Grid
+========================== */
+
+.statistics-grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: var(--space-md);
+}
+
+/* ==========================
+   Card
+========================== */
+
+.stat-card {
+  padding: var(--space-2xl);
+  background: rgba(255, 255, 255, 0.1);
+
+  border-radius: var(--radius-lg);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Number */
+
+.stat-card h2 {
+  font-size: var(--font-size-3xl);
+
+  margin-bottom: var(--space-md);
+
+  font-weight: var(--font-weight-bold);
+}
+
+/* Label */
+
+.stat-card p {
+  font-size: var(--font-size-lg);
+  opacity: 0.85;
+  text-transform: uppercase;
+  color: inherit;
+
+  letter-spacing: 1px;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+  .statistics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .statistics-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
