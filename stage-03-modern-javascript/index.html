@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Search and discover movies using MovieFinder."
+    />
+
+    <title>MovieFinder</title>
+
+    <!-- Existing project design system -->
+    <link rel="stylesheet" href="../assets/css/variables.css" />
+
+    <link rel="stylesheet" href="../assets/css/reset.css" />
+
+    <link rel="stylesheet" href="../assets/css/global.css" />
+
+    <!-- Stage 3 styles -->
+    <link rel="stylesheet" href="css/main.css" />
+
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+
+  <body>
+    <!-- ==========================
+         Header
+    =========================== -->
+
+    <header class="site-header">
+      <div class="container">
+        <h1 class="logo">🎬 MovieFinder</h1>
+
+        <p class="subtitle">Search and discover your favorite movies.</p>
+      </div>
+    </header>
+
+    <main>
+      <!-- ==========================
+           Search Section
+      =========================== -->
+
+      <section class="search-section">
+        <div class="container">
+          <form id="search-form" class="search-form">
+            <label for="search-input"> Search for a movie </label>
+
+            <div class="search-controls">
+              <input
+                type="search"
+                id="search-input"
+                name="query"
+                placeholder="e.g. Inception"
+                autocomplete="off"
+              />
+
+              <button
+                id="search-button"
+                disabled
+                type="submit"
+                class="btn btn-primary"
+              >
+                Search
+              </button>
+              <button id="clear-button" type="button" class="btn btn-secondary">
+                Clear
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ==========================
+           Results Section
+      =========================== -->
+
+      <section class="results-section">
+        <div class="container">
+          <header class="section-header">
+            <h2>Movie Results</h2>
+          </header>
+
+          <p class="search-message">Please enter a movie name.</p>
+
+          <!-- JavaScript will render movies here -->
+
+          <div id="movie-results" class="movie-results"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- JavaScript -->
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

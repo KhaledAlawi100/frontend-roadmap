@@ -1,0 +1,127 @@
+/* ==========================
+   Application
+========================== */
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+/* ==========================
+   Header
+========================== */
+
+.site-header {
+  padding: var(--space-3xl) var(--space-xl);
+
+  text-align: center;
+
+  background: var(--color-primary);
+
+  color: white;
+}
+
+.logo {
+  margin-bottom: var(--space-sm);
+
+  font-size: 2.5rem;
+
+  font-weight: var(--font-weight-bold);
+}
+
+.subtitle {
+  color: white;
+
+  opacity: 0.9;
+
+  font-size: var(--font-size-lg);
+}
+
+/* ==========================
+   Search
+========================== */
+
+.search-section {
+  padding: var(--space-3xl) var(--space-xl);
+}
+
+.search-form {
+  max-width: 700px;
+
+  margin: 0 auto;
+}
+
+.search-form label {
+  display: block;
+
+  margin-bottom: var(--space-sm);
+
+  font-weight: var(--font-weight-semibold);
+}
+
+.search-controls {
+  display: flex;
+
+  gap: var(--space-md);
+}
+
+.search-controls input {
+  flex: 1;
+
+  padding: var(--space-md);
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+
+  font: inherit;
+}
+
+.search-controls input:focus {
+  outline: none;
+
+  border-color: var(--color-primary);
+}
+
+/* ==========================
+   Results
+========================== */
+
+.results-section {
+  padding: 0 var(--space-xl) var(--space-3xl);
+  display: flex;
+  flex-direction: column;
+}
+
+.search-message {
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+.search-message.error {
+  color:var(--color-error);
+}
+
+.section-header {
+  margin-bottom: var(--space-xl);
+
+  text-align: center;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 600px) {
+  .search-controls {
+    flex-direction: column;
+  }
+
+  .search-controls .btn {
+    width: 100%;
+  }
+
+  .logo {
+    font-size: 2rem;
+  }
+}
