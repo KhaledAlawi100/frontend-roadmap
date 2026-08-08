@@ -1,7 +1,13 @@
 import { createMovieCard } from "./movieCard.js";
+import { isMovieInFavorites } from "../services/movieService.js";
 
-export function renderMovieList(movies, container) {
-  const movieCards = movies.map(createMovieCard);
+export function renderMovieList(movies, container, favorites = []) {
+  container.innerHTML = "";
 
-  container.innerHTML = movieCards.join("");
+  movies.forEach((movie) => {
+    const isFavorite = isMovieInFavorites(favorites, movie.id);
+
+    container.innerHTML += createMovieCard(movie, isFavorite);
+  });
+  
 }

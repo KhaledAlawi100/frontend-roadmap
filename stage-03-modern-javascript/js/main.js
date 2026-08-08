@@ -7,9 +7,17 @@ import {
   filterMovies,
   sortMovies,
   calculateMovieStatistics,
+  findMovieById,
+  isMovieInFavorites,
+  addFavorite,
+  removeFavorite,
 } from "./services/movieService.js";
 
 console.log("MovieFinder started!");
+
+// ==========================
+// DOM Elements
+// ==========================
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
@@ -23,9 +31,9 @@ const movieCount = document.getElementById("movie-count");
 const averageRating = document.getElementById("average-rating");
 const highestRating = document.getElementById("highest-rating");
 
-/* ==========================
-   Search
-========================== */
+// ==========================
+// Search
+// ==========================
 
 async function handleSearch(query) {
   if (!query) {
@@ -36,23 +44,25 @@ async function handleSearch(query) {
   setSearchingState(query);
 
   try {
-    const movies = await searchMovies(query);
+    const movies = await searchMovies(appState.searchQuery);
 
     appState.movies = movies;
     appState.error = null;
 
     const { movies: processedMovies, statistics } = processMovies(
-      movies,
-      query,
+      appState.movies,
+      appState.searchQuery,
       sortSelect.value,
     );
 
     if (processedMovies.length === 0) {
-      showEmptyResults(query);
+      showEmptyResults(appState.searchQuery);
       return;
     }
 
-    showSearchMessage(`Found ${statistics.count} movies for "${query}".`);
+    showSearchMessage(
+      `Found ${statistics.count} movies for "${appState.searchQuery}".`,
+    );
 
     renderSearchResults(processedMovies, statistics);
   } catch (error) {
@@ -64,9 +74,9 @@ async function handleSearch(query) {
   }
 }
 
-/* ==========================
-   Movie Processing
-========================== */
+// ==========================
+// Movie Processing
+// ==========================
 
 function processMovies(movies, searchQuery, sortOption) {
   const filteredMovies = filterMovies(movies, searchQuery);
@@ -81,12 +91,12 @@ function processMovies(movies, searchQuery, sortOption) {
   };
 }
 
-/* ==========================
-   Rendering
-========================== */
+// ==========================
+// Rendering
+// ==========================
 
 function renderSearchResults(movies, statistics) {
-  renderMovieList(movies, resultsContainer);
+  renderMovieList(movies, resultsContainer, appState.favorites);
 
   movieCount.textContent = statistics.count;
 
@@ -95,9 +105,9 @@ function renderSearchResults(movies, statistics) {
   highestRating.textContent = statistics.highestRating.toFixed(1);
 }
 
-/* ==========================
-   UI State Helpers
-========================== */
+// ==========================
+// UI State Helpers
+// ==========================
 
 function setSearchingState(query) {
   appState.searchQuery = query;
@@ -111,12 +121,20 @@ function showSearchMessage(message) {
   searchMessage.textContent = message;
 }
 
+function resetMovieStatistics() {
+  movieCount.textContent = "0";
+  averageRating.textContent = "0.0";
+  highestRating.textContent = "0.0";
+}
+
 function showEmptyResults(query) {
   showSearchMessage(`No movies found for "${query}".`);
 
   searchMessage.classList.add("error");
 
   resultsContainer.innerHTML = "";
+
+  resetMovieStatistics();
 }
 
 function handleSearchError(error) {
@@ -127,12 +145,17 @@ function handleSearchError(error) {
   searchMessage.classList.add("error");
 
   resultsContainer.innerHTML = "";
+
+  resetMovieStatistics();
 }
 
 function resetSearchUI() {
   searchInput.value = "";
 
   appState.searchQuery = "";
+  appState.movies = [];
+  appState.isLoading = false;
+  appState.error = null;
 
   resultsContainer.innerHTML = "";
 
@@ -141,14 +164,52 @@ function resetSearchUI() {
   searchButton.disabled = true;
 
   searchMessage.classList.remove("error");
-  movieCount.textContent = "0";
-  averageRating.textContent = "0.0";
-  highestRating.textContent = "0.0";
+
+  resetMovieStatistics();
 }
 
-/* ==========================
-   Event Handlers
-========================== */
+function refreshMovieResults() {
+  const { movies, searchQuery } = appState;
+
+  const { movies: processedMovies, statistics } = processMovies(
+    movies,
+    searchQuery,
+    sortSelect.value,
+  );
+
+  renderSearchResults(processedMovies, statistics);
+}
+
+// ==========================
+// Event Handlers
+// ==========================
+
+resultsContainer.addEventListener("click", (event) => {
+  const favoriteButton = event.target.closest(".favorite-button");
+
+  if (!favoriteButton) {
+    return;
+  }
+
+  const movieId = Number(favoriteButton.dataset.movieId);
+
+  const movie = findMovieById(appState.movies, movieId);
+
+  if (!movie) {
+    return;
+  }
+
+  if (isMovieInFavorites(appState.favorites, movieId)) {
+    appState.favorites = removeFavorite(appState.favorites, movieId);
+  } else {
+    appState.favorites = addFavorite(appState.favorites, movie);
+  }
+
+  console.log("Favorites:", appState.favorites);
+
+  refreshMovieResults();
+});
+
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -164,6 +225,7 @@ clearButton.addEventListener("click", () => {
   resetSearchUI();
 });
 
+
 searchInput.addEventListener("input", () => {
   searchMessage.classList.remove("error");
 
@@ -178,14 +240,4 @@ searchInput.addEventListener("input", () => {
   }
 });
 
-sortSelect.addEventListener("change", () => {
-  const { movies, searchQuery } = appState;
-
-  const { movies: sortedMovies, statistics } = processMovies(
-    movies,
-    searchQuery,
-    sortSelect.value,
-  );
-
-  renderSearchResults(sortedMovies, statistics);
-});
+sortSelect.addEventListener("change", refreshMovieResults);

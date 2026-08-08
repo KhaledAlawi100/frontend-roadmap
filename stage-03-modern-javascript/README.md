@@ -364,18 +364,6 @@ Practice:
 
 ---
 
-## Sprint 6 — Production Polish
-
-Improve:
-
-- Loading UI
-- Error UI
-- Empty states
-- Accessibility
-- Responsive design
-- Form validation
-- Code organization
-- Reusable functions
 
 ---
 
@@ -627,3 +615,306 @@ It now communicates with a real backend application through HTTP.
 This is the first complete frontend → backend integration in the project.
 
 ---
+
+# Sprint 5 — Application State + Favorites
+
+### Completed
+
+Implemented application state and a movie favorites system.
+
+The application now maintains a centralized state object containing:
+
+- Current search query
+- Movies returned from the API
+- Favorite movies
+- Loading state
+- Error state
+
+Example:
+
+```js
+const appState = {
+  searchQuery: "",
+  favorites: [],
+  movies: [],
+  isLoading: false,
+  error: null,
+};
+```
+
+### Application State
+
+The application uses a shared state object:
+
+```text
+appState
+   │
+   ├── searchQuery
+   ├── movies
+   ├── favorites
+   ├── isLoading
+   └── error
+```
+
+This allows different parts of the application to work with the same application data.
+
+For example:
+
+```js
+appState.movies = movies;
+appState.searchQuery = query;
+appState.favorites = [...favorites];
+```
+
+### Favorites
+
+Users can add and remove movies from their favorites.
+
+The application checks whether a movie is already in the favorites collection before deciding whether to add or remove it.
+
+```js
+isMovieInFavorites(appState.favorites, movieId);
+```
+
+If the movie is already a favorite:
+
+```js
+appState.favorites = removeFavorite(appState.favorites, movieId);
+```
+
+Otherwise:
+
+```js
+appState.favorites = addFavorite(appState.favorites, movie);
+```
+
+### Array Methods Practiced
+
+#### `find()`
+
+Used to locate a movie by its ID.
+
+```js
+const movie = findMovieById(appState.movies, movieId);
+```
+
+Internally:
+
+```js
+return movies.find((movie) => movie.id === movieId);
+```
+
+#### `some()`
+
+Used to check whether a movie already exists in the favorites collection.
+
+```js
+return favorites.some((movie) => movie.id === movieId);
+```
+
+#### `filter()`
+
+Used to remove a movie from favorites without modifying the original array.
+
+```js
+return favorites.filter((movie) => movie.id !== movieId);
+```
+
+#### Spread Operator
+
+Used to create a new favorites array when adding a movie.
+
+```js
+return [...favorites, movie];
+```
+
+This keeps the original array unchanged.
+
+### Event Delegation
+
+Favorite buttons are dynamically generated when movie cards are rendered.
+
+Instead of attaching an event listener to every favorite button, the application uses event delegation on the movie results container.
+
+```js
+resultsContainer.addEventListener("click", (event) => {
+  const favoriteButton = event.target.closest(".favorite-button");
+
+  if (!favoriteButton) {
+    return;
+  }
+
+  // Handle favorite
+});
+```
+
+This is useful because movie cards can be re-rendered after:
+
+- Searching
+- Sorting
+- Adding a favorite
+- Removing a favorite
+
+The parent container keeps the event listener.
+
+### Closures
+
+Closures were practiced naturally through event handlers.
+
+The event-handler functions maintain access to variables and application state from their surrounding scope.
+
+Rather than studying closures separately, they were encountered while building real application behavior.
+
+### Refactoring
+
+The main JavaScript file was refactored to keep responsibilities separated.
+
+The application now follows:
+
+```text
+User Action
+    ↓
+Event Handler
+    ↓
+Application State
+    ↓
+Movie Service
+    ↓
+Process Movies
+    ↓
+Render Results
+```
+
+Movie-related operations remain inside:
+
+```text
+js/services/movieService.js
+```
+
+Application state remains inside:
+
+```text
+js/state/appState.js
+```
+
+Rendering remains inside:
+
+```text
+js/components/
+```
+
+API communication remains inside:
+
+```text
+js/api/
+```
+
+Application orchestration remains inside:
+
+```text
+js/main.js
+```
+
+### Current Architecture
+
+```text
+Browser
+   │
+   ├── Search
+   │
+   ├── Sort
+   │
+   └── Favorites
+   │
+   ▼
+main.js
+   │
+   ├── appState.js
+   │
+   ├── movieService.js
+   │
+   ├── movieApi.js
+   │
+   └── movieList.js
+   │
+   ▼
+Spring Boot REST API
+   │
+   ▼
+Database
+```
+
+### JavaScript Concepts Practiced
+
+- Application state
+- Objects
+- Arrays
+- Spread operator
+- `find()`
+- `some()`
+- `filter()`
+- Event delegation
+- Event listeners
+- Closures
+- ES modules
+- State-driven rendering
+- Separation of concerns
+- Immutability concepts
+
+---
+
+# Stage 3 Completion
+
+With this sprint completed, **Stage 3 — Modern JavaScript** is now complete.
+
+The MovieFinder application now demonstrates practical usage of:
+
+- Modern JavaScript
+- ES modules
+- DOM manipulation
+- Array methods
+- Application state
+- Async JavaScript
+- Promises
+- `async / await`
+- Fetch API
+- REST API communication
+- JSON
+- Error handling
+- Event delegation
+- Favorites
+- State-driven rendering
+- Separation of concerns
+
+The project now provides a practical bridge from:
+
+```text
+HTML + CSS
+      ↓
+Modern JavaScript
+      ↓
+Spring Boot REST API
+      ↓
+Application State
+      ↓
+React
+```
+
+---
+
+# Screenshots
+
+
+
+## Favorites
+
+Movies can be added to and removed from the favorites list.
+
+[View Screenshot](../assets/screenshots/stage-03/favorites.png)
+
+## No Results
+
+
+```
+
+```

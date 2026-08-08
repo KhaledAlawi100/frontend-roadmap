@@ -65,3 +65,11 @@ export function isMovieInFavorites(favorites, movieId) {
 export function areMoviesHighlyRated(movies) {
   return movies.every((movie) => movie.rating >= 8);
 }
+
+export function addFavorite(favorites, movie) {
+  return [...favorites, movie];
+}
+
+export function removeFavorite(favorites, movieId) {
+  return favorites.filter((movie) => movie.id !== movieId);
+}
