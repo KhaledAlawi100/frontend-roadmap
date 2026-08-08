@@ -466,3 +466,164 @@ The application displays the number of movies, average rating, and highest ratin
 ## No Results
 
 ![No Results](../assets/screenshots/stage-03/sprint-02-no-results.png)
+
+# Sprint 4 — Async JavaScript + Real API
+
+### Completed
+
+Replaced the local mock movie API with a real **Spring Boot REST API**.
+
+The frontend now communicates with the backend using the **Fetch API**.
+
+### Architecture
+
+```text
+Browser
+   │
+   │ HTTP Request
+   ▼
+JavaScript
+   │
+   │ fetch()
+   ▼
+Spring Boot REST API
+   │
+   ▼
+Database
+```
+
+### Backend
+
+A Spring Boot application was added inside the Stage 3 project:
+
+```text
+stage-03-modern-javascript/
+│
+├── index.html
+├── css/
+├── js/
+│
+└── movie-api/
+    ├── Dockerfile
+    ├── pom.xml
+    └── src/
+        └── main/
+            ├── java/
+            └── resources/
+```
+
+The backend provides the movie REST API used by the frontend.
+
+### Frontend API
+
+The previous mock implementation was replaced with an HTTP request using `fetch()`.
+
+```js
+export async function searchMovies(query) {
+  const response = await fetch(
+    `http://localhost:8080/api/movies?search=${encodeURIComponent(query)}`,
+  );
+
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+```
+
+### Concepts Practiced
+
+- `fetch()`
+- Promises
+- `async`
+- `await`
+- HTTP requests
+- JSON
+- REST APIs
+- `response.ok`
+- Error handling
+- `try / catch / finally`
+- URL encoding
+- Frontend ↔ Backend communication
+- CORS
+
+### CORS
+
+Since the frontend and backend run on different origins during development, CORS configuration was added to Spring Boot.
+
+```text
+Frontend
+http://127.0.0.1:5500
+        │
+        │ HTTP
+        ▼
+Backend
+http://localhost:8080
+```
+
+The backend allows requests from the frontend development server.
+
+### Docker
+
+The Spring Boot backend includes a `Dockerfile` so the backend can be built and run easily using Docker.
+
+From the `movie-api` directory:
+
+```bash
+docker build -t movie-api .
+```
+
+Run the backend:
+
+```bash
+docker run -p 8080:8080 movie-api
+```
+
+The API will then be available at:
+
+```text
+http://localhost:8080
+```
+
+### Data Flow
+
+```text
+User enters search
+        ↓
+Search Form
+        ↓
+handleSearch()
+        ↓
+searchMovies()
+        ↓
+fetch()
+        ↓
+Spring Boot API
+        ↓
+Database
+        ↓
+JSON Response
+        ↓
+JavaScript
+        ↓
+filterMovies()
+        ↓
+sortMovies()
+        ↓
+calculateMovieStatistics()
+        ↓
+renderSearchResults()
+        ↓
+Movie Cards
+```
+
+### Result
+
+The MovieFinder frontend is no longer dependent on a local JavaScript movie array.
+
+It now communicates with a real backend application through HTTP.
+
+This is the first complete frontend → backend integration in the project.
+
+---
