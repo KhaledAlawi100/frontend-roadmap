@@ -43,8 +43,10 @@
            Search Section
       =========================== -->
 
-      <section class="search-section">
+      <section class="search-section" aria-labelledby="search-section-header">
         <div class="container">
+          <h2 id="search-heading" class="visually-hidden">Search Movies</h2>
+
           <form id="search-form" class="search-form">
             <label for="search-input"> Search for a movie </label>
 
@@ -77,16 +79,56 @@
            Results Section
       =========================== -->
 
-      <section class="results-section">
+      <section class="results-section" aria-labelledby="results-section-header">
         <div class="container">
           <header class="section-header">
-            <h2>Movie Results</h2>
+            <h2 id="results-section-header">Movie Results</h2>
           </header>
 
           <p class="search-message">Please enter a movie name.</p>
 
-          <!-- JavaScript will render movies here -->
+          <!-- ========================== 
+               Movie Toolbar 
+           =========================== -->
 
+          <div class="movie-toolbar">
+            <div class="sort-control">
+              <label for="sort-select">Sort by:</label>
+              <select id="sort-select">
+                <option value="default">Default</option>
+                <option value="rating-desc">Rating: High → Low</option>
+                <option value="rating-asc">Rating: Low → High</option>
+                <option value="year-desc">Year: Newest → Oldest</option>
+                <option value="year-asc">Year: Oldest → Newest</option>
+                <option value="title-asc">Title: A → Z</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ========================== 
+           Movie Statistics 
+           =========================== -->
+
+          <div class="movie-statistics">
+            <div class="stat">
+              <span class="stat-label">Movies:</span>
+              <strong id="movie-count">0</strong>
+            </div>
+
+            <div class="stat">
+              <span class="stat-label">Average Rating:</span>
+              <strong id="average-rating">0</strong>
+            </div>
+
+            <div class="stat">
+              <span class="stat-label">Highest Rating:</span>
+              <strong id="highest-rating">0</strong>
+            </div>
+          </div>
+          
+          <!-- ========================== 
+               Movie Results 
+           =========================== -->
           <div id="movie-results" class="movie-results"></div>
         </div>
       </section>

@@ -43,6 +43,17 @@ body {
 
 .search-section {
   padding: var(--space-3xl) var(--space-xl);
+  
+  
+}
+.search-heading {
+  margin-bottom: var(--space-2xl);
+
+  text-align: center;
+
+  font-size: var(--font-size-2xl);
+
+  font-weight: var(--font-weight-bold);
 }
 
 .search-form {
@@ -73,6 +84,7 @@ body {
   border: 1px solid var(--color-border);
 
   border-radius: var(--radius-md);
+
   box-shadow: var(--shadow-sm);
 
   font: inherit;
@@ -90,16 +102,16 @@ body {
 
 .results-section {
   padding: 0 var(--space-xl) var(--space-3xl);
-  display: flex;
-  flex-direction: column;
 }
 
 .search-message {
   margin-bottom: var(--space-md);
+
   text-align: center;
 }
+
 .search-message.error {
-  color:var(--color-error);
+  color: var(--color-error);
 }
 
 .section-header {
