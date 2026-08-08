@@ -224,3 +224,272 @@ Software Engineering Student
 Learning Path:
 
 **Frontend → Java → Spring Boot → React → Full-Stack Development**
+
+
+# Stage 3 — Modern JavaScript
+
+### Status
+
+**Completed**
+
+Stage 3 focused on refreshing modern JavaScript through a realistic movie-search application.
+
+The goal was to move from JavaScript syntax and isolated exercises to building a structured frontend application using modern JavaScript and connecting it to a real backend.
+
+### Project
+
+**MovieFinder**
+
+A movie search application built with:
+
+* HTML5
+* CSS3
+* Modern JavaScript (ES6+)
+* JavaScript Modules
+* DOM API
+* Array Methods
+* Async JavaScript
+* Fetch API
+* REST API
+* Spring Boot
+
+### What I Practiced
+
+#### Modern JavaScript
+
+* `const` / `let`
+* Arrow functions
+* Template literals
+* Destructuring
+* Spread operator
+* ES modules
+* Objects and arrays
+* Array methods
+* `filter()`
+* `map()`
+* `sort()`
+* `reduce()`
+* `find()`
+* `some()`
+* `every()`
+
+#### DOM and Events
+
+* DOM selection
+* DOM manipulation
+* Event listeners
+* Form events
+* Input events
+* Click events
+* Event delegation
+* Dynamic rendering
+
+#### Async JavaScript
+
+* Promises
+* `async`
+* `await`
+* `fetch()`
+* HTTP requests
+* JSON
+* Error handling
+* Loading states
+
+### Application Features
+
+The MovieFinder application supports:
+
+* Search movies
+* Filter by title
+* Filter by genre
+* Sort by rating
+* Sort by year
+* Sort alphabetically
+* Movie statistics
+* Average rating
+* Highest rating
+* Add movies to favorites
+* Remove movies from favorites
+* Application state
+* Loading state
+* Error state
+* Empty search results
+* Responsive movie grid
+
+### Frontend Architecture
+
+The JavaScript application was organized into separate responsibilities:
+
+```text
+js/
+│
+├── main.js
+│
+├── api/
+│   └── movieApi.js
+│
+├── components/
+│   ├── movieCard.js
+│   └── movieList.js
+│
+├── services/
+│   └── movieService.js
+│
+├── state/
+│   └── appState.js
+│
+└── utils/
+```
+
+The main responsibilities are separated between:
+
+```text
+main.js
+    ↓
+Application orchestration
+
+api/
+    ↓
+Backend communication
+
+services/
+    ↓
+Movie filtering, sorting, statistics, favorites
+
+components/
+    ↓
+UI rendering
+
+state/
+    ↓
+Application state
+```
+
+### Backend Integration
+
+For the first time, the frontend was connected to a Spring Boot REST API.
+
+The architecture became:
+
+```text
+Browser
+   │
+   │ HTTP
+   ▼
+Vanilla JavaScript
+   │
+   │ fetch()
+   ▼
+Spring Boot REST API
+   │
+   ▼
+Database
+```
+
+The Spring Boot backend is included inside the same Stage 3 folder:
+
+```text
+stage-03-modern-javascript/
+│
+├── index.html
+├── css/
+├── js/
+│
+└── movie-api/
+    │
+    ├── Dockerfile
+    ├── pom.xml
+    │
+    └── src/
+        └── main/
+            ├── java/
+            └── resources/
+```
+
+The backend provides the movie REST API used by the JavaScript application.
+
+### Docker
+
+The Spring Boot backend also includes a `Dockerfile`.
+
+This makes running the backend easier without requiring the Java application to be started manually every time.
+
+The backend can be built and run using Docker:
+
+```bash
+cd movie-api
+
+docker build -t movie-api .
+
+docker run -p 8080:8080 movie-api
+```
+
+The Spring Boot API is then available at:
+
+```text
+http://localhost:8080
+```
+
+The frontend communicates with the backend through endpoints such as:
+
+```text
+GET /api/movies?search=inter
+```
+
+### Final Architecture
+
+```text
+                 MovieFinder
+                     │
+                     ▼
+              Vanilla JavaScript
+                     │
+             ┌───────┴────────┐
+             │                │
+          DOM/UI          App State
+             │                │
+             └───────┬────────┘
+                     │
+                  fetch()
+                     │
+                     ▼
+              Spring Boot API
+                     │
+                     ▼
+                  Database
+```
+
+### Key Learning Outcome
+
+The most important outcome of this stage was moving from:
+
+```text
+Learning JavaScript
+       ↓
+Writing JavaScript exercises
+```
+
+to:
+
+```text
+Building a real frontend
+       ↓
+Organizing JavaScript modules
+       ↓
+Managing application state
+       ↓
+Handling asynchronous operations
+       ↓
+Calling a REST API
+       ↓
+Connecting frontend + backend
+```
+
+This stage provides the foundation needed to move from **Vanilla JavaScript to React**.
+
+### Stage 3 Project
+
+[View Stage 3 — Modern JavaScript](stage-03-modern-javascript/)
+
+[View Stage 3 README](stage-03-modern-javascript/README.md)
+
