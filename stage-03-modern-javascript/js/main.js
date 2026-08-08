@@ -3,6 +3,8 @@ import { searchMovies } from "./api/movieApi.js";
 
 import { renderMovieList } from "./components/movieList.js";
 
+import { filterMovies } from "./services/movieService.js";
+
 console.log("MovieFinder started!");
 
 const searchForm = document.getElementById("search-form");
@@ -35,9 +37,11 @@ async function handleSearch(query) {
       searchMessage.classList.add("error");
       resultsContainer.innerHTML = "";
     } else {
-      searchMessage.textContent = `Found ${movies.length} movies for "${searchQuery}".`;
       searchMessage.classList.remove("error");
-      renderMovieList(movies, resultsContainer);
+      const filteredMovies = filterMovies(movies, searchQuery);
+      searchMessage.textContent = `Found ${filteredMovies.length} movies for "${searchQuery}".`;
+
+      renderMovieList(filteredMovies, resultsContainer);
     }
   } catch (error) {
     appState.error = error;
@@ -70,7 +74,6 @@ clearButton.addEventListener("click", () => {
 });
 
 searchInput.addEventListener("input", () => {
-
   searchMessage.classList.remove("error");
 
   if (!searchInput.value.trim()) {
