@@ -729,3 +729,697 @@ feat: define typed API contracts
 ```
 
 
+
+# Sprint 3 — HTTP Client
+
+## Goal
+
+Build the low-level HTTP communication layer.
+
+The purpose of this sprint is to create a reusable HTTP client instead of repeating `fetch()` logic throughout the application.
+
+The architecture becomes:
+
+```text
+UI
+ ↓
+Service
+ ↓
+API Client
+ ↓
+fetch()
+ ↓
+REST API
+```
+
+---
+
+## What We Built
+
+* Created a reusable `httpClient.ts`
+* Created a generic `request<T>()` function
+* Added support for `RequestInit`
+* Used `async/await`
+* Used `Promise<T>`
+* Added HTTP error handling
+* Added `unknown` for untrusted API error data
+* Added an `ApiError` type guard
+* Reused the `ApiError` contract from Sprint 2
+* Applied generic type inference
+* Kept the HTTP client independent from specific resources such as tasks or users
+
+---
+
+## HTTP Client Structure
+
+```text
+src/
+├── api/
+│   └── httpClient.ts
+│
+└── types/
+    ├── api.ts
+    ├── task.ts
+    └── user.ts
+```
+
+The `httpClient.ts` file contains generic HTTP communication logic.
+
+It does not contain task-specific operations such as:
+
+```text
+getTasks()
+createTask()
+updateTask()
+deleteTask()
+```
+
+Those will belong to the API/service layers introduced in later sprints.
+
+---
+
+# Generic Request Function
+
+The core function is:
+
+```ts
+export async function request<T>(
+  url: string,
+  options?: RequestInit
+): Promise<T> {
+  const response = await fetch(url, options);
+
+  if (!response.ok) {
+    throw await createApiError(response);
+  }
+
+  return (await response.json()) as T;
+}
+```
+
+The generic type parameter `T` represents the expected response type.
+
+For example:
+
+```ts
+request<Task>()
+```
+
+means:
+
+```text
+T = Task
+```
+
+so the function returns:
+
+```text
+Promise<Task>
+```
+
+While:
+
+```ts
+request<Task[]>()
+```
+
+means:
+
+```text
+T = Task[]
+```
+
+so the function returns:
+
+```text
+Promise<Task[]>
+```
+
+This allows one HTTP implementation to support many resources.
+
+---
+
+# Why `Promise<T>`?
+
+An HTTP request is asynchronous.
+
+Therefore:
+
+```ts
+request<Task>()
+```
+
+does not immediately return a `Task`.
+
+It returns:
+
+```text
+Promise<Task>
+```
+
+After using:
+
+```ts
+const task = await request<Task>(url);
+```
+
+the `await` resolves the Promise and gives:
+
+```text
+task → Task
+```
+
+The flow is:
+
+```text
+request<Task>()
+      ↓
+Promise<Task>
+      ↓ await
+Task
+```
+
+For an array:
+
+```text
+request<Task[]>()
+      ↓
+Promise<Task[]>
+      ↓ await
+Task[]
+```
+
+---
+
+# `async` / `await`
+
+The HTTP client uses:
+
+```ts
+async
+```
+
+because `fetch()` is asynchronous.
+
+Example:
+
+```ts
+const response = await fetch(url, options);
+```
+
+The `await` pauses the current async function until the Promise is fulfilled or rejected.
+
+This gives us readable asynchronous code without manually chaining `.then()` calls.
+
+---
+
+# Request Options
+
+The function accepts:
+
+```ts
+options?: RequestInit
+```
+
+`RequestInit` is a built-in browser type describing options accepted by `fetch()`.
+
+It can contain things such as:
+
+```ts
+{
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+}
+```
+
+The `?` means the options are optional.
+
+This allows both:
+
+```ts
+request<Task>("/api/tasks/1");
+```
+
+and:
+
+```ts
+request<Task>("/api/tasks", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(request),
+});
+```
+
+---
+
+# HTTP Error Handling
+
+The client checks:
+
+```ts
+if (!response.ok) {
+  throw await createApiError(response);
+}
+```
+
+This prevents unsuccessful HTTP responses from being treated as successful data.
+
+The response may represent errors such as:
+
+```text
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+500 Internal Server Error
+```
+
+Instead of handling these individually in every API function, the HTTP client provides one common error path.
+
+---
+
+# API Error Handling
+
+The client reuses the `ApiError` contract created in Sprint 2:
+
+```ts
+export interface ApiError {
+  success: false;
+  message: string;
+  errors: Record<string, string>;
+}
+```
+
+When an HTTP error occurs, the client attempts to read the backend's JSON error response.
+
+---
+
+# Why `unknown`?
+
+The backend response is external data.
+
+Before validation, we cannot safely assume its type.
+
+Therefore:
+
+```ts
+const errorData: unknown = await response.json();
+```
+
+is preferred over:
+
+```ts
+const errorData: any = await response.json();
+```
+
+`unknown` forces us to verify the value before using it.
+
+This supports the Stage 4 mastery goal:
+
+> **No unnecessary `any`.**
+
+---
+
+# API Error Type Guard
+
+The client uses a type guard:
+
+```ts
+function isApiError(
+  value: unknown
+): value is ApiError {
+  // validation
+}
+```
+
+The expression:
+
+```ts
+value is ApiError
+```
+
+is a TypeScript type predicate.
+
+It tells TypeScript:
+
+> If this function returns `true`, treat `value` as an `ApiError`.
+
+The validation uses techniques learned earlier:
+
+* `typeof`
+* `null` checks
+* `in` operator
+* literal value comparison
+
+For example:
+
+```ts
+if (
+  typeof value !== "object" ||
+  value === null
+) {
+  return false;
+}
+```
+
+Then required properties are checked:
+
+```ts
+if (
+  !("success" in value) ||
+  !("message" in value) ||
+  !("errors" in value)
+) {
+  return false;
+}
+```
+
+Finally, the important values are checked:
+
+```ts
+return (
+  value.success === false &&
+  typeof value.message === "string" &&
+  typeof value.errors === "object" &&
+  value.errors !== null
+);
+```
+
+---
+
+# Fallback Error
+
+The backend might fail to return valid JSON.
+
+For example:
+
+```text
+500 Internal Server Error
+```
+
+with an empty or non-JSON body.
+
+In that case, the HTTP client creates a fallback error:
+
+```ts
+return {
+  success: false,
+  message: `Request failed with status ${response.status}.`,
+  errors: {},
+};
+```
+
+This means the caller still receives a consistent `ApiError` structure.
+
+---
+
+# Important TypeScript Concept
+
+The following line:
+
+```ts
+return (await response.json()) as T;
+```
+
+uses a **type assertion**.
+
+It tells TypeScript:
+
+> Treat the parsed response as the expected type `T`.
+
+For example:
+
+```ts
+request<Task>()
+```
+
+results in:
+
+```ts
+response.json() as Task
+```
+
+However, this does **not** perform runtime validation.
+
+The frontend is expressing what it expects the backend to return.
+
+This distinction is important:
+
+```text
+TypeScript
+    ↓
+compile-time type information
+
+Backend JSON
+    ↓
+runtime data
+```
+
+If runtime schema validation is needed later, it can be introduced as a separate concern.
+
+---
+
+# Generic Reuse
+
+The main advantage of the HTTP client is that the same function can support many response types.
+
+### One Task
+
+```ts
+const task = await request<Task>(
+  "/api/tasks/1"
+);
+```
+
+Result:
+
+```text
+task → Task
+```
+
+### Multiple Tasks
+
+```ts
+const tasks = await request<Task[]>(
+  "/api/tasks"
+);
+```
+
+Result:
+
+```text
+tasks → Task[]
+```
+
+### One User
+
+```ts
+const user = await request<User>(
+  "/api/users/1"
+);
+```
+
+Result:
+
+```text
+user → User
+```
+
+### Multiple Users
+
+```ts
+const users = await request<User[]>(
+  "/api/users"
+);
+```
+
+Result:
+
+```text
+users → User[]
+```
+
+The HTTP implementation does not need separate functions for each resource.
+
+---
+
+# Architecture Decision
+
+The HTTP client remains generic.
+
+It should not contain:
+
+```text
+getTasks()
+createTask()
+deleteTask()
+```
+
+because those functions belong to the task-specific API/service layers.
+
+The separation is:
+
+```text
+httpClient.ts
+    ↓
+Generic HTTP infrastructure
+
+taskApi.ts
+    ↓
+Task-specific API operations
+
+taskService.ts
+    ↓
+Application-level task operations
+```
+
+This keeps responsibilities separated.
+
+---
+
+# Backend Connection
+
+The data flow is now:
+
+```text
+Spring Boot REST API
+        ↓
+       JSON
+        ↓
+TypeScript API Contract
+        ↓
+   request<T>()
+        ↓
+Typed application data
+```
+
+For example:
+
+```ts
+const task = await request<Task>(
+  "/api/tasks/1"
+);
+```
+
+The expected flow is:
+
+```text
+HTTP response
+      ↓
+JSON
+      ↓
+Task
+      ↓
+Promise<Task>
+      ↓ await
+Task
+```
+
+---
+
+# Concepts Applied
+
+This sprint reinforces:
+
+* Generics
+* `Promise<T>`
+* `async`
+* `await`
+* `fetch()`
+* `RequestInit`
+* Type inference
+* `unknown`
+* Type assertions
+* Type guards
+* API contracts
+* Error handling
+* ES modules
+
+---
+
+# Deliverable
+
+A reusable HTTP client:
+
+```text
+src/
+└── api/
+    └── httpClient.ts
+```
+
+The client can make typed requests such as:
+
+```ts
+request<Task>()
+request<Task[]>()
+request<User>()
+request<User[]>()
+```
+
+while keeping HTTP logic independent from specific resources.
+
+---
+
+# Verification
+
+The following should pass:
+
+```bash
+npm run type-check
+```
+
+```bash
+npm run build
+```
+
+The application should still run:
+
+```bash
+npm run dev
+```
+
+The generic client should also be testable with different types.
+
+Examples:
+
+```ts
+request<Task>()
+request<Task[]>()
+request<User>()
+request<User[]>()
+```
+
+---
+
+# Sprint Result
+
+The project now has the low-level HTTP communication layer required to communicate with a REST API.
+
+The architecture is now:
+
+```text
+UI
+ ↓
+Service
+ ↓
+API Client
+ ↓
+fetch()
+ ↓
+REST API
+```
+
+The API client is reusable and strongly typed, while task-specific API operations are intentionally left for the next sprint.
+
+---
+
+# Git Commit
+
+```text
+feat: add typed HTTP client
+```
