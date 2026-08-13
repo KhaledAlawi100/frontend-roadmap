@@ -9,6 +9,25 @@ import type {User} from "./types/user";
 
 import type {TaskResponse,TasksResponse,CreateTaskRequest,UpdateTaskRequest,ApiError} from "./types/api";
 
+import {request} from "./api/httpClient";
+
+interface ExampleUser{
+  id: number;
+  name: string;
+  email: string;
+}
+
+
+async function testRequest(): Promise<void> {
+
+  const user = await request<ExampleUser>("https://jsonplaceholder.typicode.com/users/1");
+
+  console.log("User:", user);
+}
+
+void testRequest();
+
+
 
 const CreateRequest: CreateTaskRequest = {
    title: "Learn TypeScript",
