@@ -7,6 +7,65 @@ import type {Task,TaskStatus} from "./types/task";
 
 import type {User} from "./types/user";
 
+import type {ApiResponse,TaskResponse,TasksResponse,CreateTaskRequest,UpdateTaskRequest,ApiError} from "./types/api";
+
+
+const CreateRequest: CreateTaskRequest = {
+   title: "Learn TypeScript",
+   description: "Learn the basics of TypeScript"
+};
+
+
+const UpdateRequest: UpdateTaskRequest = {
+
+  completed: true,
+  status: "COMPLETED"
+
+}
+
+const erros : ApiError = {
+  success: false,
+  message: "Validation failed",
+  errors: {
+    title: "Title is required",
+    description: "Description must be at least 10 characters"
+  }
+}
+
+const taskResponse: TaskResponse = {
+  success: true,
+  message: "Task retrieved successfully",
+  data: {
+    id: 1,
+    title: "Learn TypeScript",
+    description: "Learn the basics of TypeScript",
+    completed: false,
+    status: "IN_PROGRESS"
+  }
+}
+
+const tasksResponse: TasksResponse = {
+  success: true,
+  message: "Tasks retrieved successfully",
+  data: [
+    {
+      id: 1,
+      title: "Learn TypeScript",
+      description: "Learn the basics of TypeScript",
+      completed: false,
+      status: "IN_PROGRESS"
+    },
+    {
+      id: 2,
+      title: "Build a project",
+      description: "Build a project using TypeScript",
+      completed: false,
+      status: "TODO"
+    }
+  ]
+}
+
+
 const app = document.querySelector<HTMLDivElement>("#app");
 
 if (!app) {
@@ -35,6 +94,7 @@ const task:Task={
 }
 
 // task.id=10;// This line will cause a TypeScript error because 'id' is readonly.
+
 
 
 app.innerHTML = `
