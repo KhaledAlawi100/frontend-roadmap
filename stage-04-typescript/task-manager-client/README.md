@@ -2176,3 +2176,269 @@ using the union and discriminated-union concepts from the TypeScript lessons.
 feat: implement task API service
 ```
 
+
+# Sprint 5 — Application State
+
+## Goal
+
+Represent task loading states safely using TypeScript discriminated unions.
+
+Instead of using an unsafe generic string:
+
+```ts
+let status: string;
+```
+
+the application uses a strongly typed state model that represents the valid task loading states.
+
+---
+
+## Task State
+
+The application state is represented using a discriminated union:
+
+```ts
+export type TaskState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "success"; data: Task[] }
+  | { status: "error"; message: string };
+```
+
+The application can now safely represent four states:
+
+* `idle` — no request has started
+* `loading` — tasks are currently being loaded
+* `success` — tasks were successfully loaded
+* `error` — loading failed
+
+Each state contains only the data that makes sense for that state.
+
+---
+
+## Concepts Practiced
+
+### Union Types
+
+`TaskState` can be one of several different object types.
+
+```ts
+type TaskState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "success"; data: Task[] }
+  | { status: "error"; message: string };
+```
+
+---
+
+### Literal Types
+
+The `status` property uses specific literal values:
+
+```ts
+"idle"
+"loading"
+"success"
+"error"
+```
+
+instead of a generic:
+
+```ts
+string
+```
+
+This prevents invalid states.
+
+---
+
+### Discriminated Unions
+
+The `status` property acts as the **discriminant**.
+
+It tells TypeScript which member of the union is currently being used.
+
+```text
+TaskState
+    |
+    +-- status: "idle"
+    |
+    +-- status: "loading"
+    |
+    +-- status: "success" → data
+    |
+    +-- status: "error"   → message
+```
+
+---
+
+### Type Narrowing
+
+Checking the discriminant allows TypeScript to narrow the state to the correct type.
+
+```ts
+if (state.status === "success") {
+  state.data;
+}
+```
+
+Inside this block, TypeScript knows that `state` is:
+
+```ts
+{
+  status: "success";
+  data: Task[];
+}
+```
+
+Similarly:
+
+```ts
+if (state.status === "error") {
+  state.message;
+}
+```
+
+TypeScript knows that `message` is available.
+
+---
+
+### Exhaustive Handling
+
+The application uses `never` to make state handling exhaustive.
+
+```ts
+export function assertNever(value: never): never {
+  throw new Error(`Unexpected value: ${value}`);
+}
+```
+
+Example:
+
+```ts
+function getTaskStateMessage(state: TaskState): string {
+  if (state.status === "success") {
+    if (state.data.length === 0) {
+      return "No tasks found";
+    }
+
+    return `Loaded ${state.data.length} tasks`;
+  }
+
+  if (state.status === "error") {
+    return `Failed: ${state.message}`;
+  }
+
+  if (state.status === "loading") {
+    return "Loading tasks...";
+  }
+
+  if (state.status === "idle") {
+    return "Waiting to load tasks";
+  }
+
+  return assertNever(state);
+}
+```
+
+If a new state is added to `TaskState` without being handled, TypeScript will report an error at `assertNever(state)`.
+
+This provides compile-time protection against missing state handling.
+
+---
+
+## Files
+
+```text
+src/
+├── types/
+│   └── app.ts
+│
+├── utils/
+│   └── assertNever.ts
+│
+└── main.ts
+```
+
+### `src/types/app.ts`
+
+Contains the `TaskState` discriminated union.
+
+### `src/utils/assertNever.ts`
+
+Contains the exhaustive handling helper.
+
+### `src/main.ts`
+
+Uses `TaskState` and demonstrates type narrowing and exhaustive state handling.
+
+---
+
+## State Flow
+
+```text
+        ┌─────────┐
+        │  idle   │
+        └────┬────┘
+             │
+             ▼
+        ┌─────────┐
+        │ loading │
+        └────┬────┘
+             │
+       ┌─────┴─────┐
+       ▼           ▼
+  ┌─────────┐  ┌─────────┐
+  │ success │  │  error  │
+  └─────────┘  └─────────┘
+```
+
+---
+
+## Key Learning
+
+The main lesson from this sprint is:
+
+> Use discriminated unions when an application can be in one of several distinct states.
+
+Instead of:
+
+```ts
+status: string;
+data?: Task[];
+message?: string;
+```
+
+we model the valid states explicitly:
+
+```ts
+type TaskState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "success"; data: Task[] }
+  | { status: "error"; message: string };
+```
+
+This gives TypeScript enough information to detect invalid states and safely narrow the state during application logic.
+
+---
+
+## Deliverable
+
+* [x] Typed application state
+* [x] Task loading states
+* [x] Discriminated union
+* [x] Type narrowing
+* [x] Exhaustive handling
+* [x] `assertNever()` helper
+
+---
+
+## Git Commit
+
+```text
+feat: add typed task loading states
+```
+
+
