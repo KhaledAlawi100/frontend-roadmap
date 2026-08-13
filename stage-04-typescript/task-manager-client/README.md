@@ -1423,3 +1423,756 @@ The API client is reusable and strongly typed, while task-specific API operation
 ```text
 feat: add typed HTTP client
 ```
+
+
+# Sprint 4 — Task API Service
+
+## Goal
+
+Build the actual Task-specific API operations on top of the reusable HTTP client created in Sprint 3.
+
+The goal is to move from:
+
+```text
+Generic HTTP communication
+```
+
+to:
+
+```text
+Task-specific API operations
+```
+
+---
+
+## What We Built
+
+* Created `taskApi.ts`
+* Implemented `getTasks()`
+* Implemented `getTaskById()`
+* Implemented `createTask()`
+* Implemented `updateTask()`
+* Implemented `deleteTask()`
+* Reused the generic `request<T>()` HTTP client
+* Reused the API contract types from Sprint 2
+* Added typed function parameters
+* Added typed return values
+* Used `Promise<T>`
+* Used `async/await`
+* Added JSON request bodies for `POST` and `PATCH`
+* Added support for `204 No Content` responses
+* Kept task-specific API logic separate from generic HTTP infrastructure
+
+---
+
+# Current Project Architecture
+
+The project now follows this structure:
+
+```text
+task-manager-client/
+│
+├── src/
+│   │
+│   ├── api/
+│   │   ├── httpClient.ts
+│   │   └── taskApi.ts
+│   │
+│   ├── services/
+│   │
+│   ├── types/
+│   │   ├── api.ts
+│   │   ├── task.ts
+│   │   └── user.ts
+│   │
+│   ├── utils/
+│   │
+│   ├── main.ts
+│   └── style.css
+│
+├── public/
+│
+├── index.html
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+```
+
+---
+
+# Architecture Diagram
+
+```mermaid
+flowchart TD
+    UI["UI / main.ts"]
+    
+    SERVICE["Service Layer<br/>src/services/"]
+    
+    TASK_API["Task API<br/>src/api/taskApi.ts"]
+    
+    HTTP["Generic HTTP Client<br/>src/api/httpClient.ts"]
+    
+    FETCH["fetch()"]
+    
+    BACKEND["REST API"]
+    
+    TYPES["Type Contracts<br/>src/types/"]
+    
+    TASK["task.ts<br/>Task / TaskStatus"]
+    
+    API_TYPES["api.ts<br/>API Response / Request Types"]
+    
+    UI --> SERVICE
+    SERVICE --> TASK_API
+    TASK_API --> HTTP
+    HTTP --> FETCH
+    FETCH --> BACKEND
+    
+    TYPES --> TASK_API
+    TYPES --> SERVICE
+    
+    TASK --> TYPES
+    API_TYPES --> TYPES
+```
+
+The important flow is:
+
+```text
+UI
+ ↓
+Service Layer
+ ↓
+Task API
+ ↓
+HTTP Client
+ ↓
+fetch()
+ ↓
+REST API
+```
+
+And the type contracts support the layers:
+
+```text
+types/
+ ↓
+Task API + Services
+```
+
+---
+
+# API Layer vs HTTP Client
+
+These two files have different responsibilities.
+
+## `httpClient.ts`
+
+The HTTP client is generic.
+
+It provides:
+
+```ts
+request<T>()
+```
+
+and handles things such as:
+
+* `fetch()`
+* HTTP status checking
+* JSON parsing
+* API error handling
+* generic response typing
+* `204 No Content`
+
+It does **not** know anything about Tasks.
+
+---
+
+## `taskApi.ts`
+
+The Task API is resource-specific.
+
+It knows:
+
+* Task endpoints
+* Task request types
+* Task response types
+* HTTP methods used by Task operations
+
+For example:
+
+```ts
+getTasks()
+getTaskById()
+createTask()
+updateTask()
+deleteTask()
+```
+
+So:
+
+```text
+httpClient.ts
+    ↓
+generic infrastructure
+
+taskApi.ts
+    ↓
+Task-specific API operations
+```
+
+---
+
+# Task API Endpoints
+
+The current API contract is:
+
+| Operation     | HTTP Method | Endpoint          |
+| ------------- | ----------- | ----------------- |
+| Get all tasks | `GET`       | `/api/tasks`      |
+| Get one task  | `GET`       | `/api/tasks/{id}` |
+| Create task   | `POST`      | `/api/tasks`      |
+| Update task   | `PATCH`     | `/api/tasks/{id}` |
+| Delete task   | `DELETE`    | `/api/tasks/{id}` |
+
+These endpoints represent the current learning-project API design.
+
+The actual backend contract will be the source of truth when a real backend is connected.
+
+---
+
+# `getTasks()`
+
+The function:
+
+```ts
+export async function getTasks(): Promise<Task[]> {
+  const response = await request<TasksResponse>("/api/tasks");
+
+  return response.data;
+}
+```
+
+The important distinction is:
+
+```text
+request<TasksResponse>()
+        ↓
+Promise<TasksResponse>
+        ↓ await
+TasksResponse
+        ↓ .data
+Task[]
+```
+
+Therefore the API function exposes:
+
+```ts
+Promise<Task[]>
+```
+
+to the rest of the application instead of exposing the raw API response wrapper.
+
+---
+
+# `getTaskById()`
+
+```ts
+export async function getTaskById(
+  id: number
+): Promise<Task> {
+  const response = await request<TaskResponse>(
+    `/api/tasks/${id}`
+  );
+
+  return response.data;
+}
+```
+
+The function:
+
+* accepts a numeric task ID
+* sends a `GET` request
+* expects `TaskResponse`
+* returns the actual `Task`
+
+---
+
+# `createTask()`
+
+```ts
+export async function createTask(
+  requestData: CreateTaskRequest
+): Promise<Task> {
+  const response = await request<TaskResponse>(
+    "/api/tasks",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    }
+  );
+
+  return response.data;
+}
+```
+
+The important contract is:
+
+```text
+CreateTaskRequest
+        ↓
+JSON
+        ↓
+POST /api/tasks
+        ↓
+TaskResponse
+        ↓
+Task
+```
+
+The function doesn't accept a complete `Task` because properties such as the ID are controlled by the backend.
+
+---
+
+# `updateTask()`
+
+```ts
+export async function updateTask(
+  id: number,
+  requestData: UpdateTaskRequest
+): Promise<Task> {
+  const response = await request<TaskResponse>(
+    `/api/tasks/${id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    }
+  );
+
+  return response.data;
+}
+```
+
+`PATCH` is used because the current `UpdateTaskRequest` represents a partial update:
+
+```ts
+interface UpdateTaskRequest {
+  title?: string;
+  description?: string;
+  completed?: boolean;
+  status?: TaskStatus;
+}
+```
+
+For example:
+
+```ts
+await updateTask(10, {
+  completed: true,
+});
+```
+
+Only the changed field needs to be sent.
+
+If the real backend uses `PUT` instead, the frontend must follow the actual backend contract.
+
+---
+
+# `deleteTask()`
+
+```ts
+export async function deleteTask(
+  id: number
+): Promise<void> {
+  await request<void>(
+    `/api/tasks/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+}
+```
+
+This operation does not return meaningful data.
+
+The expected flow is:
+
+```text
+DELETE /api/tasks/10
+        ↓
+204 No Content
+        ↓
+request<void>()
+        ↓
+Promise<void>
+```
+
+---
+
+# 204 No Content
+
+Sprint 4 also exposed an important limitation in the original HTTP client.
+
+The original implementation always attempted:
+
+```ts
+response.json()
+```
+
+But a successful `204 No Content` response has no JSON body.
+
+Therefore the HTTP client was updated to handle:
+
+```ts
+if (response.status === 204) {
+  return undefined as T;
+}
+```
+
+This allows:
+
+```ts
+request<void>()
+```
+
+to be used for operations with no response body.
+
+---
+
+# TypeScript Concepts Applied
+
+This sprint combines many of the concepts from the previous lessons.
+
+## Interfaces
+
+Request and response contracts:
+
+```ts
+CreateTaskRequest
+UpdateTaskRequest
+TaskResponse
+TasksResponse
+```
+
+---
+
+## Type Aliases
+
+Specialized response types:
+
+```ts
+type TaskResponse = ApiResponse<Task>;
+
+type TasksResponse = ApiResponse<Task[]>;
+```
+
+---
+
+## Generics
+
+The HTTP client remains reusable:
+
+```ts
+request<Task>()
+request<Task[]>()
+request<User>()
+request<User[]>()
+request<void>()
+```
+
+---
+
+## `Promise<T>`
+
+Every asynchronous API operation has an explicit result type.
+
+Examples:
+
+```ts
+Promise<Task[]>
+Promise<Task>
+Promise<void>
+```
+
+---
+
+## `async/await`
+
+Used to make asynchronous HTTP code easier to read:
+
+```ts
+const response = await request<TaskResponse>(...);
+```
+
+---
+
+## Function Parameter Types
+
+Examples:
+
+```ts
+id: number
+```
+
+```ts
+requestData: CreateTaskRequest
+```
+
+This prevents invalid values from being passed to the API functions.
+
+---
+
+## Return Types
+
+Examples:
+
+```ts
+Promise<Task[]>
+Promise<Task>
+Promise<void>
+```
+
+The caller knows exactly what to expect.
+
+---
+
+# Error Handling
+
+The Task API does not duplicate error parsing.
+
+If `request<T>()` encounters an HTTP error:
+
+```text
+Task API
+   ↓
+request<T>()
+   ↓
+HTTP error
+   ↓
+ApiError
+   ↓
+throw
+```
+
+The error can then be handled by the service or UI layer.
+
+This keeps the responsibilities separated.
+
+---
+
+# Complete Type Flow
+
+## Get Tasks
+
+```text
+GET /api/tasks
+       ↓
+TasksResponse
+       ↓
+response.data
+       ↓
+Task[]
+       ↓
+Promise<Task[]>
+```
+
+## Get One Task
+
+```text
+GET /api/tasks/{id}
+       ↓
+TaskResponse
+       ↓
+response.data
+       ↓
+Task
+       ↓
+Promise<Task>
+```
+
+## Create Task
+
+```text
+CreateTaskRequest
+       ↓
+JSON
+       ↓
+POST /api/tasks
+       ↓
+TaskResponse
+       ↓
+Task
+       ↓
+Promise<Task>
+```
+
+## Update Task
+
+```text
+UpdateTaskRequest
+       ↓
+JSON
+       ↓
+PATCH /api/tasks/{id}
+       ↓
+TaskResponse
+       ↓
+Task
+       ↓
+Promise<Task>
+```
+
+## Delete Task
+
+```text
+DELETE /api/tasks/{id}
+       ↓
+204 No Content
+       ↓
+Promise<void>
+```
+
+---
+
+# Why This Layer Exists
+
+Without `taskApi.ts`, application code would repeatedly contain:
+
+```ts
+fetch(...)
+```
+
+along with:
+
+* endpoint URLs
+* HTTP methods
+* headers
+* request bodies
+* response types
+* JSON parsing
+
+Now the rest of the application can simply call:
+
+```ts
+getTasks();
+getTaskById(1);
+createTask(request);
+updateTask(1, request);
+deleteTask(1);
+```
+
+This makes the rest of the application independent from the details of HTTP communication.
+
+---
+
+# Deliverable
+
+A clean Task API layer:
+
+```text
+src/
+└── api/
+    ├── httpClient.ts
+    └── taskApi.ts
+```
+
+The layer now provides:
+
+```text
+getTasks()
+getTaskById()
+createTask()
+updateTask()
+deleteTask()
+```
+
+using the typed HTTP client and API contracts created in the previous sprints.
+
+---
+
+# Verification
+
+The following should pass:
+
+```bash
+npm run type-check
+```
+
+```bash
+npm run build
+```
+
+The application should still run with:
+
+```bash
+npm run dev
+```
+
+The API functions should have the expected types:
+
+```ts
+getTasks()
+  // Promise<Task[]>
+
+getTaskById(1)
+  // Promise<Task>
+
+createTask(...)
+  // Promise<Task>
+
+updateTask(1, ...)
+  // Promise<Task>
+
+deleteTask(1)
+  // Promise<void>
+```
+
+---
+
+# Sprint Result
+
+The project now has a complete resource-specific API layer.
+
+The architecture currently is:
+
+```text
+UI
+ ↓
+Service Layer
+ ↓
+Task API
+ ↓
+HTTP Client
+ ↓
+fetch()
+ ↓
+REST API
+```
+
+The next sprint will focus on the **Service/Application State layer**, where we start modeling states such as:
+
+```text
+idle
+loading
+success
+error
+```
+
+using the union and discriminated-union concepts from the TypeScript lessons.
+
+---
+
+# Git Commit
+
+```text
+feat: implement task API service
+```
+

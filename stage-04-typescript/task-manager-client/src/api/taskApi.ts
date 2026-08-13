@@ -51,7 +51,7 @@ export async function updateTask(
   const response: TaskResponse = await request<TaskResponse>(
     `${API_BASE_URL}/${id}`,
     {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
