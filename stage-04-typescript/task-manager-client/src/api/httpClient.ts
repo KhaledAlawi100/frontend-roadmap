@@ -12,6 +12,10 @@ export async function request<T>(
         throw apiError;
     }
 
+    if (response.status === 204) {
+     return undefined as T;
+  }
+
     return (await response.json()) as T;
 
 }
@@ -25,6 +29,7 @@ async function createApiError(response: Response): Promise<ApiError> {
             return errorData;
         }
     }catch{
+
 
     }
 
