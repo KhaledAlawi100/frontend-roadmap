@@ -2439,6 +2439,142 @@ This gives TypeScript enough information to detect invalid states and safely nar
 
 ```text
 feat: add typed task loading states
+
 ```
 
+# Sprint 6 — Task List UI
+
+## Goal
+
+Render tasks dynamically using TypeScript.
+
+The application now takes typed `Task` objects and converts them into interactive DOM elements.
+
+## What We Built
+
+* Dynamic task list rendering
+* Task cards
+* Task title
+* Task description
+* Task status
+* Completed state
+* Complete / incomplete action
+* Mark as In Progress action
+* Dynamic status styling
+* Dynamic completed styling
+* Typed DOM elements
+* DOM event handling
+
+## Concepts Applied
+
+* Arrays of interfaces
+* Functions
+* Function parameters and return types
+* DOM APIs
+* `HTMLElement`
+* `HTMLSpanElement`
+* `HTMLButtonElement`
+* Nullable values
+* Type narrowing
+* Event handling
+* Dynamic DOM updates
+* `map()`
+* Conditional rendering
+
+## Main Functions
+
+### `renderTask()`
+
+```ts
+function renderTask(task: Task): HTMLElement
+```
+
+Creates a complete task card from a typed `Task`.
+
+### `renderTasks()`
+
+```ts
+function renderTasks(tasks: Task[]): HTMLElement[]
+```
+
+Maps all tasks into task card elements.
+
+### Status Rendering
+
+The task status is represented visually using different CSS classes:
+
+```text
+TODO
+    ↓
+status-todo
+
+IN_PROGRESS
+    ↓
+status-in-progress
+
+COMPLETED
+    ↓
+status-completed
+```
+
+### Completed State
+
+When a task is completed:
+
+* The task is marked as completed.
+* The task title receives a line-through style.
+* The card becomes visually muted.
+* The status changes to `COMPLETED`.
+* The button changes to `Mark as Incomplete`.
+
+## Application Flow
+
+```text
+Task[]
+   ↓
+renderTasks()
+   ↓
+renderTask(task)
+   ↓
+Create DOM elements
+   ↓
+Task Card
+   ├── Title
+   ├── Description
+   ├── Status
+   ├── Completed State
+   └── Actions
+        ├── Mark as Complete / Incomplete
+        └── Mark as In Progress
+```
+
+## Key Learning
+
+This sprint moved TypeScript from **data modeling** into **real application behavior**.
+
+Instead of only defining:
+
+```ts
+interface Task {
+  ...
+}
+```
+
+we now use `Task` to type actual UI functions:
+
+```ts
+function renderTask(task: Task): HTMLElement
+```
+
+This gives us compile-time safety while working with the DOM.
+
+## Deliverable
+
+A working typed task list with interactive task status and completion actions.
+
+## Git Commit
+
+```text
+feat: render typed task list
+```
 
