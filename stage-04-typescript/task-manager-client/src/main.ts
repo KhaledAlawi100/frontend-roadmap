@@ -36,6 +36,7 @@ function handleTaskState(state: TaskState): string {
 }
 
 import { assertNever } from "./utils/assertNever";
+import { renderTask, renderTasks} from "./ui/taskList";
 
 function getTaskStateMessage(state: TaskState): string {
   if (state.status === "success") {
@@ -67,17 +68,18 @@ const task1: Task = {
   completed: false,
   status: "IN_PROGRESS",
 };
-const task2: Task = {
-  id: 2,
-  title: "Build a project",
-  description: "Build a project using TypeScript",
-  completed: false,
-  status: "TODO",
-};
+
+// const task2: Task = {
+//   id: 2,
+//   title: "Build a project",
+//   description: "Build a project using TypeScript",
+//   completed: false,
+//   status: "TODO",
+// };
 
 const state1: TaskState = {
   status: "success",
-  data: [task1, task2],
+  data: [task1],
 };
 
 const state2: TaskState = {
@@ -185,23 +187,52 @@ const user: User = {
 
 const status: TaskStatus = "IN_PROGRESS";
 
-const task: Task = {
-  id: 1,
-  title: "Learn TypeScript",
-  description: "Learn the basics of TypeScript",
-  completed: false,
-  status: status,
-};
+const tasks: Task[] = [
+  {
+    id: 1,
+    title: "Learn TypeScript",
+    description: "Learn the basics of TypeScript",
+    completed: false,
+    status: "IN_PROGRESS",
+  },
+  {
+    id: 2,
+    title: "Build Task Manager",
+    description: "Practice DOM APIs",
+    completed: false,
+    status: "TODO",
+  },
+  {
+    id: 3,
+    title: "Review TypeScript",
+    description: "Review unions and narrowing",
+    completed: true,
+    status: "COMPLETED",
+  },
+];
 
-// task.id=10;// This line will cause a TypeScript error because 'id' is readonly.
+
 
 app.innerHTML = `
-<mian> 
-  <h1>${config.appName} v${config.version}</h1>
-  <h2>User: ${user.name} (${user.email})</h2>
-  <h3>Task: ${task.title}</h3>
-  <p>Description: ${task.description}</p>
-  <p>Status: ${task.status}</p>
-  <p>Completed: ${task.completed}</p>
-</main>
+  <main>
+    <h1>${config.appName} v${config.version}</h1>
+    <p>User: ${user.name} (${user.email})</p>
+
+    <section>
+      <h2>Tasks</h2>
+      <div id="task-list"></div>
+    </section>
+  </main>
 `;
+
+
+const taskList = document.querySelector("#task-list");
+
+if (!taskList) {
+  throw new Error("Task list container not found");
+}
+
+const taskCards = renderTasks(tasks);
+
+taskList.append(...taskCards);
+
