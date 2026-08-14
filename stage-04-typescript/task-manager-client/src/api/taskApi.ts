@@ -8,8 +8,9 @@ import type {
 } from "../types/api";
 
 import type { Task } from "../types/task";
+import type { ID } from "../types/common";
 
-const API_BASE_URL = "https://api.example.com/tasks";
+const API_BASE_URL = "http://localhost:3000/tasks";
 
 export async function getTasks(): Promise<Task[]> {
   const response: TasksResponse = await request<TasksResponse>(
@@ -19,7 +20,7 @@ export async function getTasks(): Promise<Task[]> {
   return response.data;
 }
 
-export async function getTaskById(id: number): Promise<Task> {
+export async function getTaskById(id: ID): Promise<Task> {
   const response: TaskResponse = await request<TaskResponse>(
     `${API_BASE_URL}/${id}`,
   );
@@ -45,7 +46,7 @@ export async function createTask(
 }
 
 export async function updateTask(
-  id: number,
+  id: ID,
   requestData: UpdateTaskRequest,
 ): Promise<Task> {
   const response: TaskResponse = await request<TaskResponse>(
@@ -62,7 +63,7 @@ export async function updateTask(
 }
 
 
-export async function deleteTask(id: number): Promise<void> {
+export async function deleteTask(id: ID): Promise<void> {
   await request<void>(`${API_BASE_URL}/${id}`, {
     method: "DELETE",
   });

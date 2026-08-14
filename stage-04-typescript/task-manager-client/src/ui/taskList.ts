@@ -44,11 +44,10 @@ function createCompleteButton(
   completed: HTMLSpanElement,
   card: HTMLElement,
   status: HTMLSpanElement,
-  inProgressButton: HTMLButtonElement
+  inProgressButton: HTMLButtonElement,
 ): HTMLButtonElement {
   const button = document.createElement("button");
 
- 
   button.textContent = task.completed
     ? "Mark as Incomplete"
     : "Mark as Complete";
@@ -66,11 +65,7 @@ function createCompleteButton(
 
     task.status = task.completed ? "COMPLETED" : "TODO";
 
-    if (task.completed) {
-        inProgressButton.disabled = true;
-    } else {
-        inProgressButton.disabled = false;
-    }
+    inProgressButton.disabled = task.completed;
 
     updateStatusElement(status, task);
   });
@@ -81,7 +76,6 @@ function createCompleteButton(
 function createMakeInProgressButton(
   task: Task,
   status: HTMLSpanElement,
-  
 ): HTMLButtonElement {
   const button = document.createElement("button");
 
@@ -100,7 +94,25 @@ function createMakeInProgressButton(
   return button;
 }
 
-export function renderTask(task: Task): HTMLElement {
+function createEditButton(
+  task: Task,
+  onEdit: (task: Task) => void,
+): HTMLButtonElement {
+  const button = document.createElement("button");
+
+  button.textContent = "Edit";
+
+  button.addEventListener("click", () => {
+    onEdit(task);
+  });
+
+  return button;
+}
+
+export function renderTask(
+  task: Task,
+  onEdit: (task: Task) => void,
+): HTMLElement {
   const card = document.createElement("article");
 
   card.classList.add("task-card");
@@ -110,11 +122,9 @@ export function renderTask(task: Task): HTMLElement {
   }
 
   const title = document.createElement("h3");
-
   title.textContent = task.title;
 
   const description = document.createElement("p");
-
   description.textContent = task.description ?? "";
 
   const status = createStatusElement(task);
@@ -124,19 +134,37 @@ export function renderTask(task: Task): HTMLElement {
   completed.textContent = task.completed ? "Completed" : "Not completed";
 
   const makeInProgressButton = createMakeInProgressButton(task, status);
-  const completeButton = createCompleteButton(task, completed, card, status, makeInProgressButton);
+
+  const completeButton = createCompleteButton(
+    task,
+    completed,
+    card,
+    status,
+    makeInProgressButton,
+  );
+
+  const editButton = createEditButton(task, onEdit);
 
   const container = document.createElement("div");
 
   container.classList.add("task-actions");
 
-  container.append(status, completed, completeButton, makeInProgressButton);
+  container.append(
+    status,
+    completed,
+    completeButton,
+    makeInProgressButton,
+    editButton,
+  );
 
   card.append(title, description, container);
 
   return card;
 }
 
-export function renderTasks(tasks: Task[]): HTMLElement[] {
-  return tasks.map(renderTask);
+export function renderTasks(
+  tasks: Task[],
+  onEdit: (task: Task) => void,
+): HTMLElement[] {
+  return tasks.map((task) => renderTask(task, onEdit));
 }

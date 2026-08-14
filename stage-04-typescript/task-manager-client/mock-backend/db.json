@@ -1,0 +1,53 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Learn TypeScript 2",
+      "description": "Learn the basics of TypeScript updated",
+      "completed": false,
+      "status": "TODO"
+    },
+    {
+      "id": 2,
+      "title": "Build Task Manager",
+      "description": "Build a task manager using TypeScript",
+      "completed": false,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": 3,
+      "title": "Finish Sprint 7",
+      "description": "Complete the create and edit task functionality",
+      "completed": true,
+      "status": "COMPLETED"
+    },
+    {
+      "id": 4,
+      "title": "test",
+      "description": "test",
+      "completed": false,
+      "status": "TODO"
+    },
+    {
+      "id": 5,
+      "title": "tese2",
+      "description": "tese2",
+      "completed": false,
+      "status": "TODO"
+    },
+    {
+      "id": 6,
+      "title": "test 3",
+      "description": "test 3",
+      "completed": false,
+      "status": "TODO"
+    },
+    {
+      "id": 7,
+      "title": "tes4",
+      "description": "test4",
+      "completed": false,
+      "status": "TODO"
+    }
+  ]
+}

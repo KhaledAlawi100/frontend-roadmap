@@ -1,0 +1,25 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Learn TypeScript",
+      "description": "Learn the basics of TypeScript",
+      "completed": false,
+      "status": "TODO"
+    },
+    {
+      "id": "2",
+      "title": "Build Task Manager",
+      "description": "Build a task manager using TypeScript",
+      "completed": false,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "3",
+      "title": "Finish Sprint 7",
+      "description": "Complete the create and edit task functionality",
+      "completed": true,
+      "status": "COMPLETED"
+    }
+  ]
+}
