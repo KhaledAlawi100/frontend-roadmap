@@ -2578,3 +2578,146 @@ A working typed task list with interactive task status and completion actions.
 feat: render typed task list
 ```
 
+# Sprint 7 — Create / Edit Task
+
+## Goal
+
+Build a typed task form that supports creating new tasks and editing existing tasks.
+
+## Features
+
+* Create a new task
+* Edit an existing task
+* Populate the form when editing
+* Validate task title
+* Submit typed request objects
+* Connect the form to the Task API
+* Reload the task list after create/update
+* Handle API errors
+
+## Files
+
+```text
+src/
+├── api/
+│   └── taskApi.ts
+│
+├── types/
+│   ├── task.ts
+│   └── api.ts
+│
+└── ui/
+    └── taskForm.ts
+```
+
+## Create Task
+
+The form creates a `CreateTaskRequest`:
+
+```ts
+const request: CreateTaskRequest = {
+  title,
+  description: description || undefined,
+};
+```
+
+The request is sent through:
+
+```text
+Task Form
+    ↓
+createTask()
+    ↓
+taskApi.ts
+    ↓
+httpClient.ts
+    ↓
+Backend
+```
+
+## Edit Task
+
+When a `Task` is passed to the form:
+
+```ts
+renderTaskForm(task)
+```
+
+the form enters edit mode.
+
+The existing task data is loaded into the inputs:
+
+```ts
+titleInput.value = task.title;
+descriptionInput.value = task.description ?? "";
+```
+
+The form then creates an `UpdateTaskRequest` and calls:
+
+```ts
+updateTask(task.id, request);
+```
+
+## Validation
+
+The title is required and must contain at least three characters.
+
+```ts
+if (title.length < 3) {
+  titleInput.focus();
+  return;
+}
+```
+
+## Important TypeScript Concepts
+
+* Interfaces
+* Optional properties
+* Function parameters
+* Return types
+* DOM types
+* Form events
+* Type narrowing
+* Request DTOs
+* `async/await`
+* `Promise<T>`
+* Error handling
+
+## Important Design Concept
+
+The form does **not** use `Task` as the request object.
+
+Instead:
+
+```text
+Task
+↓
+Represents an existing task
+
+CreateTaskRequest
+↓
+Represents data needed to create a task
+
+UpdateTaskRequest
+↓
+Represents data that can be changed
+```
+
+This keeps the frontend API contracts clear and prevents accidentally sending fields such as `id` when creating a task.
+
+## Deliverable
+
+A working task form supporting:
+
+* Create Task
+* Edit Task
+* Validation
+* API integration
+* Task list refresh after changes
+
+## Git Commit
+
+```bash
+git commit -m "feat: add task create and edit forms"
+```
+
