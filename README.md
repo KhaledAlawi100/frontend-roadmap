@@ -493,3 +493,54 @@ This stage provides the foundation needed to move from **Vanilla JavaScript to R
 
 [View Stage 3 README](stage-03-modern-javascript/README.md)
 
+# Stage 4 — TypeScript
+
+This stage focuses on learning and applying TypeScript through practical frontend development.
+
+Instead of studying TypeScript only through isolated examples, the concepts are introduced while building a real Task Manager application.
+
+---
+
+## 🎯 Goal
+
+The goal of this stage is to understand how TypeScript improves JavaScript applications through:
+
+- Static typing
+- Type inference
+- Interfaces
+- Type aliases
+- Union types
+- Utility types
+- Generics
+- Type guards
+- Type narrowing
+- API contracts
+- Runtime validation
+- Error handling
+- Application state
+- Testing TypeScript logic
+- Production builds
+
+The focus is on the TypeScript concepts that provide the most practical value when building frontend applications.
+
+---
+
+# 📚 Stage Structure
+
+```text
+Stage 4 — TypeScript
+│
+├── TypeScript Fundamentals
+│
+├── Type System
+│
+├── Functions & Objects
+│
+├── Generics
+│
+├── Advanced Types
+│
+├── API & Runtime Safety
+│
+└── Task Manager Project
+
