@@ -2930,3 +2930,275 @@ git add .
 git commit -m "feat: add typed API error handling"
 ```
 
+# Sprint 11 — Loading / Empty / Error UX
+
+## Goal
+
+Make the application feel complete by handling the major UI states of the application:
+
+* Loading
+* Success
+* Empty
+* Error
+* Retry
+
+The application should no longer assume that the API request will always succeed or return data.
+
+---
+
+## What We Implemented
+
+### 1. Task State Management
+
+Introduced the `TaskState` discriminated union:
+
+```ts
+export type TaskState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "success"; data: Task[] }
+  | { status: "error"; message: string };
+```
+
+This gives the application an explicit representation of its current state.
+
+---
+
+## 2. Loading State
+
+While tasks are being loaded, the UI displays:
+
+```text
+Loading tasks...
+```
+
+The state is:
+
+```ts
+{
+  status: "loading"
+}
+```
+
+---
+
+## 3. Success State
+
+When the API successfully returns tasks:
+
+```ts
+{
+  status: "success",
+  data: Task[]
+}
+```
+
+The application renders the tasks.
+
+Search and status filtering continue to work on the loaded data.
+
+---
+
+## 4. Empty State
+
+An empty result is treated as a successful request with no tasks:
+
+```ts
+{
+  status: "success",
+  data: []
+}
+```
+
+The UI displays:
+
+```text
+No tasks found.
+```
+
+This also works when search/filtering produces zero results.
+
+---
+
+## 5. Error State
+
+When loading tasks fails:
+
+```ts
+{
+  status: "error",
+  message: "Failed to load tasks."
+}
+```
+
+The UI displays the error message instead of leaving the task list blank.
+
+---
+
+## 6. Retry
+
+The error UI provides a **Retry** button.
+
+Clicking Retry calls `loadTasks()` again and transitions the application back to:
+
+```text
+loading
+   ↓
+success
+```
+
+or:
+
+```text
+loading
+   ↓
+error
+```
+
+depending on the API result.
+
+---
+
+## 7. Centralized State Rendering
+
+Created a `renderTaskState()` function responsible for deciding what should appear in the task list.
+
+Conceptually:
+
+```text
+TaskState
+    │
+    ├── idle
+    │
+    ├── loading
+    │      └── Loading UI
+    │
+    ├── success
+    │      ├── Tasks
+    │      └── Empty UI
+    │
+    └── error
+           └── Error + Retry UI
+```
+
+This keeps the UI behavior predictable and makes the state transitions easier to understand.
+
+---
+
+## 8. Discriminated Union Narrowing
+
+TypeScript automatically narrows the state based on `status`.
+
+For example:
+
+```ts
+if (taskState.status === "success") {
+  taskState.data;
+}
+```
+
+Inside this block, TypeScript knows that `data` exists and is:
+
+```ts
+Task[]
+```
+
+Likewise:
+
+```ts
+if (taskState.status === "error") {
+  taskState.message;
+}
+```
+
+TypeScript knows that `message` exists.
+
+---
+
+## Concepts Reinforced
+
+* Discriminated unions
+* Type narrowing
+* Union types
+* Application state
+* Loading states
+* Empty states
+* Error states
+* Retry behavior
+* Reusable UI functions
+* API state management
+
+---
+
+## Important Design Decision
+
+We did **not** create a separate `"empty"` state.
+
+An empty task list is still a successful API request:
+
+```ts
+{
+  status: "success",
+  data: []
+}
+```
+
+The empty UI is determined from the successful data:
+
+```ts
+if (filteredTasks.length === 0) {
+  // Empty state
+}
+```
+
+This keeps the state model simple and accurate.
+
+---
+
+## Verification
+
+Tested:
+
+* [x] Loading state
+* [x] Successful task loading
+* [x] Empty search/filter result
+* [x] API error state
+* [x] Retry functionality
+* [x] Create task refresh
+* [x] Edit task refresh
+* [x] Search
+* [x] Status filtering
+* [x] TypeScript compilation
+* [x] Production build
+
+Build verified successfully with:
+
+```bash
+npm run build
+```
+
+---
+
+## Deliverable
+
+A task manager client that properly handles:
+
+```text
+Loading
+Success
+Empty
+Error
+Retry
+```
+
+while maintaining the existing search, filtering, creation, and editing functionality.
+
+---
+
+## Git Commit
+
+```text
+feat: handle loading empty and error states
+```
+
+
