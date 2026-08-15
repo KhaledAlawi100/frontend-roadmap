@@ -1,5 +1,7 @@
 import { request } from "./httpClient";
 
+import { isTask, isTaskArray , isApiResponse } from "../types/guards";
+
 import type {
   CreateTaskRequest,
   UpdateTaskRequest,
@@ -17,6 +19,10 @@ export async function getTasks(): Promise<Task[]> {
     `${API_BASE_URL}`,
   );
 
+  if (!isApiResponse(response, isTaskArray)) {
+    throw new Error("Failed to parse tasks data");
+  }
+
   return response.data;
 }
 
@@ -24,6 +30,10 @@ export async function getTaskById(id: ID): Promise<Task> {
   const response: TaskResponse = await request<TaskResponse>(
     `${API_BASE_URL}/${id}`,
   );
+
+  if (!isApiResponse(response, isTask)) {
+    throw new Error("Failed to parse task data");
+  }
 
   return response.data;
 }
@@ -42,6 +52,10 @@ export async function createTask(
     },
   );
 
+  if (!isApiResponse(response, isTask)) {
+    throw new Error("Failed to parse created task data");
+  }
+
   return response.data;
 }
 
@@ -59,6 +73,9 @@ export async function updateTask(
       body: JSON.stringify(requestData),
     },
   );
+  if (!isApiResponse(response, isTask)) {
+    throw new Error("Failed to parse updated task data");
+  }
   return response.data;
 }
 

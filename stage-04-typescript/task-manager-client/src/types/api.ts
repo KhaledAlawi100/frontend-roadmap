@@ -1,4 +1,4 @@
-import type { Task, TaskStatus } from "./task";
+import type { Task } from "./task";
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -14,9 +14,9 @@ export type CreateTaskRequest = Pick<Task, "title" | "description">;
 
 export type UpdateTaskRequest = Partial<Omit<Task, "id">>;
 
-
 export interface ApiError {
   success: false;
+  status: number;
   message: string;
   errors: Record<string, string>;
 }
