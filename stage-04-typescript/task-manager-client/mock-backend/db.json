@@ -4,8 +4,8 @@
       "id": 1,
       "title": "Learn TypeScript 2",
       "description": "Learn the basics of TypeScript updated",
-      "completed": false,
-      "status": "TODO"
+      "completed": true,
+      "status": "COMPLETED"
     },
     {
       "id": 2,

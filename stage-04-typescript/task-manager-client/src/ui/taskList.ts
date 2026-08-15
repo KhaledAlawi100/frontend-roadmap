@@ -1,5 +1,7 @@
 import type { Task } from "../types/task";
 
+import { updateTask } from "../api/taskApi";
+
 function createStatusElement(task: Task): HTMLSpanElement {
   const status = document.createElement("span");
 
@@ -52,8 +54,16 @@ function createCompleteButton(
     ? "Mark as Incomplete"
     : "Mark as Complete";
 
-  button.addEventListener("click", () => {
-    task.completed = !task.completed;
+  button.addEventListener("click", async () => {
+    const newCompleted = !task.completed;
+
+    const updatedTask = await updateTask(task.id, {
+      completed: newCompleted,
+      status: newCompleted ? "COMPLETED" : "TODO",
+    });
+
+    task.completed = updatedTask.completed;
+    task.status = updatedTask.status;
 
     completed.textContent = task.completed ? "Completed" : "Not completed";
 
@@ -83,8 +93,12 @@ function createMakeInProgressButton(
 
   button.disabled = task.completed || task.status === "IN_PROGRESS";
 
-  button.addEventListener("click", () => {
-    task.status = "IN_PROGRESS";
+  button.addEventListener("click",  async () => {
+    const updatedTask = await updateTask(task.id, {
+      status: "IN_PROGRESS",
+    });
+
+    task.status = updatedTask.status;
 
     button.disabled = true;
 
