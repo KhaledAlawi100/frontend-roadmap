@@ -2721,3 +2721,91 @@ A working task form supporting:
 git commit -m "feat: add task create and edit forms"
 ```
 
+
+# Sprint 8 — Search + Filtering
+
+## Goal
+
+Add task search and status filtering to the Task Manager application.
+
+## Features
+
+* Search tasks by title.
+* Filter tasks by status.
+* Combine search and status filtering.
+* Dynamically update the task list when the search or filter changes.
+
+## Implementation
+
+### Task Filter
+
+Created a `TaskFilter` union type:
+
+```ts
+type TaskFilter =
+  | "ALL"
+  | "TODO"
+  | "IN_PROGRESS"
+  | "COMPLETED";
+```
+
+### Filtering Functions
+
+Created typed utility functions:
+
+* `filterTasks()` — filters tasks by status.
+* `searchTasks()` — searches tasks by title.
+* `getFilteredTasks()` — combines status filtering and title searching.
+
+### UI
+
+Added:
+
+* Search input.
+* Status filter dropdown.
+* Dynamic task list rendering.
+
+The task list is re-rendered whenever:
+
+* The user types in the search field.
+* The user changes the status filter.
+
+## Concepts Applied
+
+* Union types
+* Type aliases
+* Arrays
+* Higher-order functions
+* `Array.filter()`
+* Type inference
+* Typed DOM elements
+* Event handling
+* Separation of UI and business logic
+
+## Application Flow
+
+```text
+Task[]
+   ↓
+getFilteredTasks()
+   ↓
+filterTasks()
+   ↓
+searchTasks()
+   ↓
+Filtered Task[]
+   ↓
+renderTasks()
+   ↓
+Task List UI
+```
+
+## Deliverable
+
+A working task search and filtering system.
+
+## Git Commit
+
+```text
+feat: add task search and filtering
+```
