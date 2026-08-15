@@ -61,7 +61,7 @@ Create the TypeScript project correctly.
 
 ## Project Structure
 
-```text
+````text
 task-manager-client/
 │
 ├── src/
@@ -143,25 +143,25 @@ Spring Boot DTO
 TypeScript API Contract
       ↓
 Frontend
-```
+````
 
 ---
 
 ## What We Built
 
-* Created `ApiResponse<T>` generic response type
-* Created `TaskResponse`
-* Created `TasksResponse`
-* Created `CreateTaskRequest`
-* Created `UpdateTaskRequest`
-* Created `ApiError`
-* Reused the existing `Task` and `TaskStatus` domain types
-* Used `Record<string, string>` for validation errors
-* Applied interfaces intentionally for object contracts
-* Applied type aliases for composed/specialized types
-* Applied generics for reusable API response structures
-* Applied optional properties for partial update requests
-* Applied union/literal types for restricted values
+- Created `ApiResponse<T>` generic response type
+- Created `TaskResponse`
+- Created `TasksResponse`
+- Created `CreateTaskRequest`
+- Created `UpdateTaskRequest`
+- Created `ApiError`
+- Reused the existing `Task` and `TaskStatus` domain types
+- Used `Record<string, string>` for validation errors
+- Applied interfaces intentionally for object contracts
+- Applied type aliases for composed/specialized types
+- Applied generics for reusable API response structures
+- Applied optional properties for partial update requests
+- Applied union/literal types for restricted values
 
 ---
 
@@ -204,7 +204,7 @@ The generic `T` represents the type of the `data` property.
 For example:
 
 ```ts
-ApiResponse<Task>
+ApiResponse<Task>;
 ```
 
 means:
@@ -216,7 +216,7 @@ data → Task
 while:
 
 ```ts
-ApiResponse<Task[]>
+ApiResponse<Task[]>;
 ```
 
 means:
@@ -416,7 +416,7 @@ because this specific contract represents a failed response.
 We already learned `Record` in the Utility Types lesson.
 
 ```ts
-Record<string, string>
+Record<string, string>;
 ```
 
 means approximately:
@@ -618,14 +618,14 @@ Frontend
 
 This sprint applies:
 
-* **Generics**
-* **Interfaces**
-* **Type aliases**
-* **Optional properties**
-* **Union/literal types**
-* **`Record`**
-* **API contracts**
-* **Backend/frontend DTO mapping**
+- **Generics**
+- **Interfaces**
+- **Type aliases**
+- **Optional properties**
+- **Union/literal types**
+- **`Record`**
+- **API contracts**
+- **Backend/frontend DTO mapping**
 
 ---
 
@@ -695,12 +695,12 @@ src/
 
 The layer now defines:
 
-* `ApiResponse<T>`
-* `TaskResponse`
-* `TasksResponse`
-* `CreateTaskRequest`
-* `UpdateTaskRequest`
-* `ApiError`
+- `ApiResponse<T>`
+- `TaskResponse`
+- `TasksResponse`
+- `CreateTaskRequest`
+- `UpdateTaskRequest`
+- `ApiError`
 
 ---
 
@@ -728,8 +728,6 @@ This gives Sprint 3 a clean foundation.
 feat: define typed API contracts
 ```
 
-
-
 # Sprint 3 — HTTP Client
 
 ## Goal
@@ -756,17 +754,17 @@ REST API
 
 ## What We Built
 
-* Created a reusable `httpClient.ts`
-* Created a generic `request<T>()` function
-* Added support for `RequestInit`
-* Used `async/await`
-* Used `Promise<T>`
-* Added HTTP error handling
-* Added `unknown` for untrusted API error data
-* Added an `ApiError` type guard
-* Reused the `ApiError` contract from Sprint 2
-* Applied generic type inference
-* Kept the HTTP client independent from specific resources such as tasks or users
+- Created a reusable `httpClient.ts`
+- Created a generic `request<T>()` function
+- Added support for `RequestInit`
+- Used `async/await`
+- Used `Promise<T>`
+- Added HTTP error handling
+- Added `unknown` for untrusted API error data
+- Added an `ApiError` type guard
+- Reused the `ApiError` contract from Sprint 2
+- Applied generic type inference
+- Kept the HTTP client independent from specific resources such as tasks or users
 
 ---
 
@@ -805,7 +803,7 @@ The core function is:
 ```ts
 export async function request<T>(
   url: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<T> {
   const response = await fetch(url, options);
 
@@ -822,7 +820,7 @@ The generic type parameter `T` represents the expected response type.
 For example:
 
 ```ts
-request<Task>()
+request<Task>();
 ```
 
 means:
@@ -840,7 +838,7 @@ Promise<Task>
 While:
 
 ```ts
-request<Task[]>()
+request<Task[]>();
 ```
 
 means:
@@ -866,7 +864,7 @@ An HTTP request is asynchronous.
 Therefore:
 
 ```ts
-request<Task>()
+request<Task>();
 ```
 
 does not immediately return a `Task`.
@@ -916,7 +914,7 @@ Task[]
 The HTTP client uses:
 
 ```ts
-async
+async;
 ```
 
 because `fetch()` is asynchronous.
@@ -1050,9 +1048,7 @@ This supports the Stage 4 mastery goal:
 The client uses a type guard:
 
 ```ts
-function isApiError(
-  value: unknown
-): value is ApiError {
+function isApiError(value: unknown): value is ApiError {
   // validation
 }
 ```
@@ -1071,18 +1067,15 @@ It tells TypeScript:
 
 The validation uses techniques learned earlier:
 
-* `typeof`
-* `null` checks
-* `in` operator
-* literal value comparison
+- `typeof`
+- `null` checks
+- `in` operator
+- literal value comparison
 
 For example:
 
 ```ts
-if (
-  typeof value !== "object" ||
-  value === null
-) {
+if (typeof value !== "object" || value === null) {
   return false;
 }
 ```
@@ -1090,11 +1083,7 @@ if (
 Then required properties are checked:
 
 ```ts
-if (
-  !("success" in value) ||
-  !("message" in value) ||
-  !("errors" in value)
-) {
+if (!("success" in value) || !("message" in value) || !("errors" in value)) {
   return false;
 }
 ```
@@ -1155,13 +1144,13 @@ It tells TypeScript:
 For example:
 
 ```ts
-request<Task>()
+request<Task>();
 ```
 
 results in:
 
 ```ts
-response.json() as Task
+response.json() as Task;
 ```
 
 However, this does **not** perform runtime validation.
@@ -1191,9 +1180,7 @@ The main advantage of the HTTP client is that the same function can support many
 ### One Task
 
 ```ts
-const task = await request<Task>(
-  "/api/tasks/1"
-);
+const task = await request<Task>("/api/tasks/1");
 ```
 
 Result:
@@ -1205,9 +1192,7 @@ task → Task
 ### Multiple Tasks
 
 ```ts
-const tasks = await request<Task[]>(
-  "/api/tasks"
-);
+const tasks = await request<Task[]>("/api/tasks");
 ```
 
 Result:
@@ -1219,9 +1204,7 @@ tasks → Task[]
 ### One User
 
 ```ts
-const user = await request<User>(
-  "/api/users/1"
-);
+const user = await request<User>("/api/users/1");
 ```
 
 Result:
@@ -1233,9 +1216,7 @@ user → User
 ### Multiple Users
 
 ```ts
-const users = await request<User[]>(
-  "/api/users"
-);
+const users = await request<User[]>("/api/users");
 ```
 
 Result:
@@ -1301,9 +1282,7 @@ Typed application data
 For example:
 
 ```ts
-const task = await request<Task>(
-  "/api/tasks/1"
-);
+const task = await request<Task>("/api/tasks/1");
 ```
 
 The expected flow is:
@@ -1326,19 +1305,19 @@ Task
 
 This sprint reinforces:
 
-* Generics
-* `Promise<T>`
-* `async`
-* `await`
-* `fetch()`
-* `RequestInit`
-* Type inference
-* `unknown`
-* Type assertions
-* Type guards
-* API contracts
-* Error handling
-* ES modules
+- Generics
+- `Promise<T>`
+- `async`
+- `await`
+- `fetch()`
+- `RequestInit`
+- Type inference
+- `unknown`
+- Type assertions
+- Type guards
+- API contracts
+- Error handling
+- ES modules
 
 ---
 
@@ -1355,10 +1334,10 @@ src/
 The client can make typed requests such as:
 
 ```ts
-request<Task>()
-request<Task[]>()
-request<User>()
-request<User[]>()
+request<Task>();
+request<Task[]>();
+request<User>();
+request<User[]>();
 ```
 
 while keeping HTTP logic independent from specific resources.
@@ -1388,10 +1367,10 @@ The generic client should also be testable with different types.
 Examples:
 
 ```ts
-request<Task>()
-request<Task[]>()
-request<User>()
-request<User[]>()
+request<Task>();
+request<Task[]>();
+request<User>();
+request<User[]>();
 ```
 
 ---
@@ -1424,7 +1403,6 @@ The API client is reusable and strongly typed, while task-specific API operation
 feat: add typed HTTP client
 ```
 
-
 # Sprint 4 — Task API Service
 
 ## Goal
@@ -1447,21 +1425,21 @@ Task-specific API operations
 
 ## What We Built
 
-* Created `taskApi.ts`
-* Implemented `getTasks()`
-* Implemented `getTaskById()`
-* Implemented `createTask()`
-* Implemented `updateTask()`
-* Implemented `deleteTask()`
-* Reused the generic `request<T>()` HTTP client
-* Reused the API contract types from Sprint 2
-* Added typed function parameters
-* Added typed return values
-* Used `Promise<T>`
-* Used `async/await`
-* Added JSON request bodies for `POST` and `PATCH`
-* Added support for `204 No Content` responses
-* Kept task-specific API logic separate from generic HTTP infrastructure
+- Created `taskApi.ts`
+- Implemented `getTasks()`
+- Implemented `getTaskById()`
+- Implemented `createTask()`
+- Implemented `updateTask()`
+- Implemented `deleteTask()`
+- Reused the generic `request<T>()` HTTP client
+- Reused the API contract types from Sprint 2
+- Added typed function parameters
+- Added typed return values
+- Used `Promise<T>`
+- Used `async/await`
+- Added JSON request bodies for `POST` and `PATCH`
+- Added support for `204 No Content` responses
+- Kept task-specific API logic separate from generic HTTP infrastructure
 
 ---
 
@@ -1507,32 +1485,32 @@ task-manager-client/
 ```mermaid
 flowchart TD
     UI["UI / main.ts"]
-    
+
     SERVICE["Service Layer<br/>src/services/"]
-    
+
     TASK_API["Task API<br/>src/api/taskApi.ts"]
-    
+
     HTTP["Generic HTTP Client<br/>src/api/httpClient.ts"]
-    
+
     FETCH["fetch()"]
-    
+
     BACKEND["REST API"]
-    
+
     TYPES["Type Contracts<br/>src/types/"]
-    
+
     TASK["task.ts<br/>Task / TaskStatus"]
-    
+
     API_TYPES["api.ts<br/>API Response / Request Types"]
-    
+
     UI --> SERVICE
     SERVICE --> TASK_API
     TASK_API --> HTTP
     HTTP --> FETCH
     FETCH --> BACKEND
-    
+
     TYPES --> TASK_API
     TYPES --> SERVICE
-    
+
     TASK --> TYPES
     API_TYPES --> TYPES
 ```
@@ -1574,17 +1552,17 @@ The HTTP client is generic.
 It provides:
 
 ```ts
-request<T>()
+request<T>();
 ```
 
 and handles things such as:
 
-* `fetch()`
-* HTTP status checking
-* JSON parsing
-* API error handling
-* generic response typing
-* `204 No Content`
+- `fetch()`
+- HTTP status checking
+- JSON parsing
+- API error handling
+- generic response typing
+- `204 No Content`
 
 It does **not** know anything about Tasks.
 
@@ -1596,19 +1574,19 @@ The Task API is resource-specific.
 
 It knows:
 
-* Task endpoints
-* Task request types
-* Task response types
-* HTTP methods used by Task operations
+- Task endpoints
+- Task request types
+- Task response types
+- HTTP methods used by Task operations
 
 For example:
 
 ```ts
-getTasks()
-getTaskById()
-createTask()
-updateTask()
-deleteTask()
+getTasks();
+getTaskById();
+createTask();
+updateTask();
+deleteTask();
 ```
 
 So:
@@ -1670,7 +1648,7 @@ Task[]
 Therefore the API function exposes:
 
 ```ts
-Promise<Task[]>
+Promise<Task[]>;
 ```
 
 to the rest of the application instead of exposing the raw API response wrapper.
@@ -1680,12 +1658,8 @@ to the rest of the application instead of exposing the raw API response wrapper.
 # `getTaskById()`
 
 ```ts
-export async function getTaskById(
-  id: number
-): Promise<Task> {
-  const response = await request<TaskResponse>(
-    `/api/tasks/${id}`
-  );
+export async function getTaskById(id: number): Promise<Task> {
+  const response = await request<TaskResponse>(`/api/tasks/${id}`);
 
   return response.data;
 }
@@ -1693,10 +1667,10 @@ export async function getTaskById(
 
 The function:
 
-* accepts a numeric task ID
-* sends a `GET` request
-* expects `TaskResponse`
-* returns the actual `Task`
+- accepts a numeric task ID
+- sends a `GET` request
+- expects `TaskResponse`
+- returns the actual `Task`
 
 ---
 
@@ -1704,18 +1678,15 @@ The function:
 
 ```ts
 export async function createTask(
-  requestData: CreateTaskRequest
+  requestData: CreateTaskRequest,
 ): Promise<Task> {
-  const response = await request<TaskResponse>(
-    "/api/tasks",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    }
-  );
+  const response = await request<TaskResponse>("/api/tasks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestData),
+  });
 
   return response.data;
 }
@@ -1744,18 +1715,15 @@ The function doesn't accept a complete `Task` because properties such as the ID 
 ```ts
 export async function updateTask(
   id: number,
-  requestData: UpdateTaskRequest
+  requestData: UpdateTaskRequest,
 ): Promise<Task> {
-  const response = await request<TaskResponse>(
-    `/api/tasks/${id}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    }
-  );
+  const response = await request<TaskResponse>(`/api/tasks/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestData),
+  });
 
   return response.data;
 }
@@ -1789,15 +1757,10 @@ If the real backend uses `PUT` instead, the frontend must follow the actual back
 # `deleteTask()`
 
 ```ts
-export async function deleteTask(
-  id: number
-): Promise<void> {
-  await request<void>(
-    `/api/tasks/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
+export async function deleteTask(id: number): Promise<void> {
+  await request<void>(`/api/tasks/${id}`, {
+    method: "DELETE",
+  });
 }
 ```
 
@@ -1824,7 +1787,7 @@ Sprint 4 also exposed an important limitation in the original HTTP client.
 The original implementation always attempted:
 
 ```ts
-response.json()
+response.json();
 ```
 
 But a successful `204 No Content` response has no JSON body.
@@ -1840,7 +1803,7 @@ if (response.status === 204) {
 This allows:
 
 ```ts
-request<void>()
+request<void>();
 ```
 
 to be used for operations with no response body.
@@ -1856,10 +1819,10 @@ This sprint combines many of the concepts from the previous lessons.
 Request and response contracts:
 
 ```ts
-CreateTaskRequest
-UpdateTaskRequest
-TaskResponse
-TasksResponse
+CreateTaskRequest;
+UpdateTaskRequest;
+TaskResponse;
+TasksResponse;
 ```
 
 ---
@@ -1881,11 +1844,11 @@ type TasksResponse = ApiResponse<Task[]>;
 The HTTP client remains reusable:
 
 ```ts
-request<Task>()
-request<Task[]>()
-request<User>()
-request<User[]>()
-request<void>()
+request<Task>();
+request<Task[]>();
+request<User>();
+request<User[]>();
+request<void>();
 ```
 
 ---
@@ -1897,9 +1860,9 @@ Every asynchronous API operation has an explicit result type.
 Examples:
 
 ```ts
-Promise<Task[]>
-Promise<Task>
-Promise<void>
+Promise<Task[]>;
+Promise<Task>;
+Promise<void>;
 ```
 
 ---
@@ -1919,11 +1882,11 @@ const response = await request<TaskResponse>(...);
 Examples:
 
 ```ts
-id: number
+id: number;
 ```
 
 ```ts
-requestData: CreateTaskRequest
+requestData: CreateTaskRequest;
 ```
 
 This prevents invalid values from being passed to the API functions.
@@ -1935,9 +1898,9 @@ This prevents invalid values from being passed to the API functions.
 Examples:
 
 ```ts
-Promise<Task[]>
-Promise<Task>
-Promise<void>
+Promise<Task[]>;
+Promise<Task>;
+Promise<void>;
 ```
 
 The caller knows exactly what to expect.
@@ -2052,12 +2015,12 @@ fetch(...)
 
 along with:
 
-* endpoint URLs
-* HTTP methods
-* headers
-* request bodies
-* response types
-* JSON parsing
+- endpoint URLs
+- HTTP methods
+- headers
+- request bodies
+- response types
+- JSON parsing
 
 Now the rest of the application can simply call:
 
@@ -2176,7 +2139,6 @@ using the union and discriminated-union concepts from the TypeScript lessons.
 feat: implement task API service
 ```
 
-
 # Sprint 5 — Application State
 
 ## Goal
@@ -2207,10 +2169,10 @@ export type TaskState =
 
 The application can now safely represent four states:
 
-* `idle` — no request has started
-* `loading` — tasks are currently being loaded
-* `success` — tasks were successfully loaded
-* `error` — loading failed
+- `idle` — no request has started
+- `loading` — tasks are currently being loaded
+- `success` — tasks were successfully loaded
+- `error` — loading failed
 
 Each state contains only the data that makes sense for that state.
 
@@ -2237,16 +2199,16 @@ type TaskState =
 The `status` property uses specific literal values:
 
 ```ts
-"idle"
-"loading"
-"success"
-"error"
+"idle";
+"loading";
+"success";
+"error";
 ```
 
 instead of a generic:
 
 ```ts
-string
+string;
 ```
 
 This prevents invalid states.
@@ -2426,12 +2388,12 @@ This gives TypeScript enough information to detect invalid states and safely nar
 
 ## Deliverable
 
-* [x] Typed application state
-* [x] Task loading states
-* [x] Discriminated union
-* [x] Type narrowing
-* [x] Exhaustive handling
-* [x] `assertNever()` helper
+- [x] Typed application state
+- [x] Task loading states
+- [x] Discriminated union
+- [x] Type narrowing
+- [x] Exhaustive handling
+- [x] `assertNever()` helper
 
 ---
 
@@ -2452,41 +2414,41 @@ The application now takes typed `Task` objects and converts them into interactiv
 
 ## What We Built
 
-* Dynamic task list rendering
-* Task cards
-* Task title
-* Task description
-* Task status
-* Completed state
-* Complete / incomplete action
-* Mark as In Progress action
-* Dynamic status styling
-* Dynamic completed styling
-* Typed DOM elements
-* DOM event handling
+- Dynamic task list rendering
+- Task cards
+- Task title
+- Task description
+- Task status
+- Completed state
+- Complete / incomplete action
+- Mark as In Progress action
+- Dynamic status styling
+- Dynamic completed styling
+- Typed DOM elements
+- DOM event handling
 
 ## Concepts Applied
 
-* Arrays of interfaces
-* Functions
-* Function parameters and return types
-* DOM APIs
-* `HTMLElement`
-* `HTMLSpanElement`
-* `HTMLButtonElement`
-* Nullable values
-* Type narrowing
-* Event handling
-* Dynamic DOM updates
-* `map()`
-* Conditional rendering
+- Arrays of interfaces
+- Functions
+- Function parameters and return types
+- DOM APIs
+- `HTMLElement`
+- `HTMLSpanElement`
+- `HTMLButtonElement`
+- Nullable values
+- Type narrowing
+- Event handling
+- Dynamic DOM updates
+- `map()`
+- Conditional rendering
 
 ## Main Functions
 
 ### `renderTask()`
 
 ```ts
-function renderTask(task: Task): HTMLElement
+function renderTask(task: Task): HTMLElement;
 ```
 
 Creates a complete task card from a typed `Task`.
@@ -2494,7 +2456,7 @@ Creates a complete task card from a typed `Task`.
 ### `renderTasks()`
 
 ```ts
-function renderTasks(tasks: Task[]): HTMLElement[]
+function renderTasks(tasks: Task[]): HTMLElement[];
 ```
 
 Maps all tasks into task card elements.
@@ -2521,11 +2483,11 @@ status-completed
 
 When a task is completed:
 
-* The task is marked as completed.
-* The task title receives a line-through style.
-* The card becomes visually muted.
-* The status changes to `COMPLETED`.
-* The button changes to `Mark as Incomplete`.
+- The task is marked as completed.
+- The task title receives a line-through style.
+- The card becomes visually muted.
+- The status changes to `COMPLETED`.
+- The button changes to `Mark as Incomplete`.
 
 ## Application Flow
 
@@ -2563,7 +2525,7 @@ interface Task {
 we now use `Task` to type actual UI functions:
 
 ```ts
-function renderTask(task: Task): HTMLElement
+function renderTask(task: Task): HTMLElement;
 ```
 
 This gives us compile-time safety while working with the DOM.
@@ -2586,14 +2548,14 @@ Build a typed task form that supports creating new tasks and editing existing ta
 
 ## Features
 
-* Create a new task
-* Edit an existing task
-* Populate the form when editing
-* Validate task title
-* Submit typed request objects
-* Connect the form to the Task API
-* Reload the task list after create/update
-* Handle API errors
+- Create a new task
+- Edit an existing task
+- Populate the form when editing
+- Validate task title
+- Submit typed request objects
+- Connect the form to the Task API
+- Reload the task list after create/update
+- Handle API errors
 
 ## Files
 
@@ -2640,7 +2602,7 @@ Backend
 When a `Task` is passed to the form:
 
 ```ts
-renderTaskForm(task)
+renderTaskForm(task);
 ```
 
 the form enters edit mode.
@@ -2671,17 +2633,17 @@ if (title.length < 3) {
 
 ## Important TypeScript Concepts
 
-* Interfaces
-* Optional properties
-* Function parameters
-* Return types
-* DOM types
-* Form events
-* Type narrowing
-* Request DTOs
-* `async/await`
-* `Promise<T>`
-* Error handling
+- Interfaces
+- Optional properties
+- Function parameters
+- Return types
+- DOM types
+- Form events
+- Type narrowing
+- Request DTOs
+- `async/await`
+- `Promise<T>`
+- Error handling
 
 ## Important Design Concept
 
@@ -2709,18 +2671,17 @@ This keeps the frontend API contracts clear and prevents accidentally sending fi
 
 A working task form supporting:
 
-* Create Task
-* Edit Task
-* Validation
-* API integration
-* Task list refresh after changes
+- Create Task
+- Edit Task
+- Validation
+- API integration
+- Task list refresh after changes
 
 ## Git Commit
 
 ```bash
 git commit -m "feat: add task create and edit forms"
 ```
-
 
 # Sprint 8 — Search + Filtering
 
@@ -2730,10 +2691,10 @@ Add task search and status filtering to the Task Manager application.
 
 ## Features
 
-* Search tasks by title.
-* Filter tasks by status.
-* Combine search and status filtering.
-* Dynamically update the task list when the search or filter changes.
+- Search tasks by title.
+- Filter tasks by status.
+- Combine search and status filtering.
+- Dynamically update the task list when the search or filter changes.
 
 ## Implementation
 
@@ -2742,45 +2703,41 @@ Add task search and status filtering to the Task Manager application.
 Created a `TaskFilter` union type:
 
 ```ts
-type TaskFilter =
-  | "ALL"
-  | "TODO"
-  | "IN_PROGRESS"
-  | "COMPLETED";
+type TaskFilter = "ALL" | "TODO" | "IN_PROGRESS" | "COMPLETED";
 ```
 
 ### Filtering Functions
 
 Created typed utility functions:
 
-* `filterTasks()` — filters tasks by status.
-* `searchTasks()` — searches tasks by title.
-* `getFilteredTasks()` — combines status filtering and title searching.
+- `filterTasks()` — filters tasks by status.
+- `searchTasks()` — searches tasks by title.
+- `getFilteredTasks()` — combines status filtering and title searching.
 
 ### UI
 
 Added:
 
-* Search input.
-* Status filter dropdown.
-* Dynamic task list rendering.
+- Search input.
+- Status filter dropdown.
+- Dynamic task list rendering.
 
 The task list is re-rendered whenever:
 
-* The user types in the search field.
-* The user changes the status filter.
+- The user types in the search field.
+- The user changes the status filter.
 
 ## Concepts Applied
 
-* Union types
-* Type aliases
-* Arrays
-* Higher-order functions
-* `Array.filter()`
-* Type inference
-* Typed DOM elements
-* Event handling
-* Separation of UI and business logic
+- Union types
+- Type aliases
+- Arrays
+- Higher-order functions
+- `Array.filter()`
+- Type inference
+- Typed DOM elements
+- Event handling
+- Separation of UI and business logic
 
 ## Application Flow
 
@@ -2809,3 +2766,167 @@ A working task search and filtering system.
 ```text
 feat: add task search and filtering
 ```
+
+# Sprint 9 — Error Handling
+
+## Goal
+
+Make the client behave like a real application by handling API and runtime errors safely.
+
+The focus of this sprint was understanding the difference between:
+
+- Compile-time TypeScript types
+- Runtime API data
+
+TypeScript cannot guarantee that external JSON data matches our TypeScript types, so the application must validate API responses at runtime.
+
+## What We Implemented
+
+### HTTP Error Handling
+
+Handled:
+
+- Network errors
+- `400 Bad Request`
+- `401 Unauthorized`
+- `404 Not Found`
+- `500 Internal Server Error`
+- Other HTTP errors
+- `204 No Content`
+- Invalid JSON responses
+
+### Typed API Errors
+
+Improved `ApiError` to include:
+
+- `success`
+- `status`
+- `message`
+- `errors`
+
+This allows the application to distinguish between different types of API failures.
+
+## Runtime Validation
+
+Created typed runtime guards:
+
+- `isTask()`
+- `isTaskArray()`
+- `isApiResponse()`
+
+These validate data received from the backend before the application uses it.
+
+### Task Validation
+
+`isTask()` validates:
+
+- `id`
+- `title`
+- `description`
+- `completed`
+- `status`
+
+### Task Array Validation
+
+`isTaskArray()` verifies that:
+
+1. The value is actually an array.
+2. Every item in the array is a valid `Task`.
+
+### API Response Validation
+
+`isApiResponse<T>()` validates:
+
+- `success`
+- `message`
+- `data`
+
+It receives a data validator so it can validate different response types.
+
+## Important TypeScript Concepts
+
+### `unknown`
+
+External API data is treated as:
+
+```ts
+unknown;
+```
+
+instead of immediately trusting it as a specific TypeScript type.
+
+### Type Predicates
+
+Example:
+
+```ts
+function isTask(value: unknown): value is Task;
+```
+
+After the guard succeeds, TypeScript knows that the value is a `Task`.
+
+### Type Narrowing
+
+```ts
+if (isTask(value)) {
+  // value is Task here
+}
+```
+
+### Runtime vs Compile-Time Safety
+
+TypeScript protects us during development and compilation, but it cannot validate JSON received from an external server.
+
+Therefore:
+
+```text
+External JSON
+     ↓
+   unknown
+     ↓
+Runtime validation
+     ↓
+   Valid Task
+     ↓
+Application
+```
+
+## Key Lesson
+
+This is unsafe by itself:
+
+```ts
+const task = data as Task;
+```
+
+The assertion does not validate the actual runtime data.
+
+Instead, we validate the data:
+
+```ts
+if (!isTask(data)) {
+  throw new Error("Invalid task response");
+}
+```
+
+Only after successful validation do we treat the value as a `Task`.
+
+## Deliverable
+
+The client now has robust typed API error handling and runtime validation for external API data.
+
+## Verification
+
+The project successfully builds with:
+
+```bash
+npm run build
+```
+
+## Git Commit
+
+```bash
+git add .
+git commit -m "feat: add typed API error handling"
+```
+
