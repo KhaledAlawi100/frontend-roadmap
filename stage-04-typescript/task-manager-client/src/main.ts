@@ -6,9 +6,17 @@ import { renderTasks } from "./ui/taskList";
 
 import { renderTaskForm } from "./ui/taskForm";
 
+import {
+  renderLoadingState,
+  renderEmptyState,
+  renderErrorState,
+} from "./ui/taskState";
+
 import type { Task } from "./types/task";
 
 import type { TaskFilter } from "./types/taskFilter";
+
+import type { TaskState } from "./types/app";
 
 import { getFilteredTasks } from "./utils/taskFilter";
 
@@ -29,7 +37,6 @@ async function init(): Promise<void> {
         <h2>Tasks</h2>
 
         <div class="task-filters">
-
           <input
             id="task-search"
             type="search"
@@ -42,7 +49,6 @@ async function init(): Promise<void> {
             <option value="IN_PROGRESS">In Progress</option>
             <option value="COMPLETED">Completed</option>
           </select>
-
         </div>
 
         <div id="task-list" class="task-list"></div>
@@ -92,24 +98,55 @@ async function init(): Promise<void> {
   // Application State
   // =========================
 
-  let tasks: Task[] = [];
 
   let currentFilter: TaskFilter = "ALL";
 
+  let taskState: TaskState = {
+    status: "idle",
+  };
+
   // =========================
-  // Render Tasks
+  // Render Task State
   // =========================
 
-  function renderFilteredTasks(): void {
-    const filteredTasks = getFilteredTasks(
-      tasks,
-      currentFilter,
-      searchInput!.value,
-    );
+  function renderTaskState(): void {
+    if (taskState.status === "idle") {
+      taskList!.replaceChildren();
 
-    const taskCards = renderTasks(filteredTasks, handleEdit);
+      return;
+    }
 
-    taskList!.replaceChildren(...taskCards);
+    if (taskState.status === "loading") {
+      taskList!.replaceChildren(renderLoadingState());
+
+      return;
+    }
+
+    if (taskState.status === "error") {
+      taskList!.replaceChildren(renderErrorState(taskState.message, loadTasks));
+
+      return;
+    }
+
+    if (taskState.status === "success") {
+      const filteredTasks = getFilteredTasks(
+        taskState.data,
+        currentFilter,
+        searchInput!.value,
+      );
+
+      if (filteredTasks.length === 0) {
+        taskList!.replaceChildren(renderEmptyState());
+
+        return;
+      }
+
+      const taskCards = renderTasks(filteredTasks, handleEdit);
+
+      taskList!.replaceChildren(...taskCards);
+
+      return;
+    }
   }
 
   // =========================
@@ -117,18 +154,35 @@ async function init(): Promise<void> {
   // =========================
 
   async function loadTasks(): Promise<void> {
+    taskState = {
+      status: "loading",
+    };
+
+    renderTaskState();
+
     try {
-      taskList!.textContent = "Loading tasks...";
+      const loadedTasks = await getTasks();
 
-      tasks = await getTasks();
+      taskState = {
+        status: "success",
+        data: loadedTasks,
+      };
 
-      renderFilteredTasks();
+      renderTaskState();
     } catch (error) {
       console.error("Failed to load tasks:", error);
 
-      taskList!.textContent = "Failed to load tasks.";
+      taskState = {
+        status: "error",
+        message: "Failed to load tasks.",
+      };
+
+      renderTaskState();
     }
   }
+  // =========================
+  // Refresh Tasks
+  // =========================
 
   const refreshTasks = (): Promise<void> => {
     return loadTasks();
@@ -153,7 +207,9 @@ async function init(): Promise<void> {
   // =========================
 
   searchInput.addEventListener("input", () => {
-    renderFilteredTasks();
+    if (taskState.status === "success") {
+      renderTaskState();
+    }
   });
 
   // =========================
@@ -163,14 +219,16 @@ async function init(): Promise<void> {
   filterSelect.addEventListener("change", () => {
     currentFilter = filterSelect.value as TaskFilter;
 
-    renderFilteredTasks();
+    if (taskState.status === "success") {
+      renderTaskState();
+    }
   });
 
   // =========================
   // Create Task
   // =========================
 
-  const createForm = renderTaskForm(undefined, loadTasks);
+  const createForm = renderTaskForm(undefined, refreshTasks);
 
   createTaskForm.append(createForm);
 
@@ -187,7 +245,7 @@ init().catch((error) => {
   appRoot.innerHTML = `
     <main>
       <h1>Task Manager</h1>
-      <p>Failed to load tasks.</p>
+      <p>Failed to initialize application.</p>
     </main>
   `;
 });

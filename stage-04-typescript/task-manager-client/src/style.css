@@ -289,5 +289,36 @@ button:disabled {
   .task-actions button {
     flex: 1;
   }
-  
+
+  /* =========================
+   Task States
+   ========================= */
+
+  .task-state {
+    padding: 32px;
+    margin-top: 24px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: white;
+    text-align: center;
+  }
+
+  .task-state p {
+    margin: 0;
+  }
+
+  .task-state-error {
+    border-color: #fca5a5;
+  }
+
+  .task-state-error p {
+    margin-bottom: 16px;
+  }
+
+  .task-state button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
 }
