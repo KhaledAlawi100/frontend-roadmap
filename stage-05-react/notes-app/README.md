@@ -173,3 +173,110 @@ The Notes App can now display multiple notes dynamically from an array of typed 
 ## Next Sprint
 
 Manage the notes using React state and implement note operations such as adding, deleting, and updating notes.
+
+
+# Sprint 3 — Notes State
+
+## Overview
+
+This sprint introduces React state into the Notes App.
+
+The notes are now managed using `useState`, allowing the UI to update when notes are modified.
+
+## What Was Implemented
+
+### Notes State
+
+Moved the notes collection into React state:
+
+```tsx
+const [notes, setNotes] = useState<Note[]>([]);
+```
+
+The `App` component owns the notes state.
+
+### Delete
+
+Implemented note deletion using `filter()`.
+
+The selected note is removed while creating a new array.
+
+### Pin / Unpin
+
+Implemented toggling the `pinned` property using `map()`.
+
+A note can switch between:
+
+```text
+pinned: false
+pinned: true
+```
+
+### Archive / Unarchive
+
+Implemented toggling the `archived` property using `map()`.
+
+A note can switch between:
+
+```text
+archived: false
+archived: true
+```
+
+## React Concepts Practiced
+
+### State
+
+Used `useState` to allow the notes collection to change over time.
+
+### State Updates
+
+Used `setNotes()` to update the notes state.
+
+### Functional Updates
+
+Used the previous state when calculating the next state:
+
+```tsx
+setNotes((previousNotes) => ...)
+```
+
+This is useful when the new state depends on the previous state.
+
+### Immutable Arrays
+
+Used methods such as:
+
+```text
+filter()
+map()
+```
+
+instead of modifying the existing notes array directly.
+
+## Component Communication
+
+The `App` component owns the state and passes callback functions to child components.
+
+```text
+App
+ ↓
+NoteList
+ ↓
+NoteCard
+```
+
+Callbacks such as `onDelete`, `onTogglePin`, and `onToggleArchive` allow child components to request changes from the parent.
+
+## Result
+
+The Notes App can now:
+
+* Display notes
+* Delete notes
+* Pin and unpin notes
+* Archive and unarchive notes
+
+The project now has dynamic state-driven behavior instead of static data.
+
+

@@ -3,5 +3,7 @@ export type Note = {
   title: string;
   content: string;
   category: string;
+  pinned: boolean;
+  archived: boolean;
 };
 

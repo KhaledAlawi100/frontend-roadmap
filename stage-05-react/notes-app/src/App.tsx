@@ -1,31 +1,70 @@
 import Header from "./components/Header";
 
 import type { Note } from "./types/note";
+import { useState } from "react";
 
 import NoteList from "./components/NoteList";
 
-const notes: Note[] = [
-  {
-    id: 1,
-    title: "Learn React",
-    content: "Study components, props, and state.",
-    category: "Study",
-  },
-  {
-    id: 2,
-    title: "Shopping",
-    content: "Buy milk, bread, and coffee.",
-    category: "Personal",
-  },
-  {
-    id: 3,
-    title: "Project Ideas",
-    content: "Build a Notes application with React.",
-    category: "Projects",
-  },
-];
-
 function App() {
+  const [notes, setNotes] = useState<Note[]>([
+    {
+      id: 1,
+      title: "Learn React",
+      content: "Study components, props, and state.",
+      category: "Study",
+      pinned: false,
+      archived: false,
+    },
+    {
+      id: 2,
+      title: "Shopping",
+      content: "Buy milk, bread, and coffee.",
+      category: "Personal",
+      pinned: false,
+      archived: false,
+    },
+    {
+      id: 3,
+      title: "Project Ideas",
+      content: "Build a Notes application with React.",
+      category: "Projects",
+      pinned: false,
+      archived: false,
+    },
+  ]);
+
+  function handleDelete(noteId: number) {
+    setNotes((previousNotes) =>
+      previousNotes.filter((note) => note.id !== noteId),
+    );
+  }
+
+  function handleTogglePin(noteId: number) {
+    setNotes((previousNotes) =>
+      previousNotes.map((note) =>
+        note.id === noteId
+          ? {
+              ...note,
+              pinned: !note.pinned,
+            }
+          : note,
+      ),
+    );
+  }
+
+  function handleToggleArchive(noteId: number) {
+    setNotes((previousNotes) =>
+      previousNotes.map((note) =>
+        note.id === noteId
+          ? {
+              ...note,
+              archived: !note.archived,
+            }
+          : note,
+      ),
+    );
+  }
+
   return (
     <div className="min-h-screen  bg-gray-100">
       <Header />
@@ -37,7 +76,12 @@ function App() {
             Keep track of your important notes.
           </p>
         </div>
-        <NoteList notes={notes}/>
+        <NoteList
+          notes={notes}
+          onDelete={handleDelete}
+          onToggleArchive={handleToggleArchive}
+          onTogglePin={handleTogglePin}
+        />
       </main>
     </div>
   );
