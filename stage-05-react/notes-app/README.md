@@ -10,10 +10,10 @@ The goal was to understand the basic React application structure and create the 
 
 ## Tech Stack
 
-* React
-* TypeScript
-* Vite
-* Tailwind CSS
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
 
 ## Project Structure
 
@@ -42,9 +42,9 @@ It provides the main application layout and composes the `Header` component with
 
 The application contains:
 
-* Header
-* Main content area
-* Notes section placeholder
+- Header
+- Main content area
+- Notes section placeholder
 
 Tailwind CSS utility classes are used for the initial styling.
 
@@ -89,10 +89,10 @@ The application now renders a collection of notes using reusable React component
 
 Created a `Note` TypeScript type containing:
 
-* `id`
-* `title`
-* `content`
-* `category`
+- `id`
+- `title`
+- `content`
+- `category`
 
 ### NoteCard
 
@@ -125,13 +125,13 @@ App
 `NoteList` receives:
 
 ```tsx
-notes
+notes;
 ```
 
 and `NoteCard` receives:
 
 ```tsx
-note
+note;
 ```
 
 ### Lists
@@ -173,7 +173,6 @@ The Notes App can now display multiple notes dynamically from an array of typed 
 ## Next Sprint
 
 Manage the notes using React state and implement note operations such as adding, deleting, and updating notes.
-
 
 # Sprint 3 — Notes State
 
@@ -272,11 +271,122 @@ Callbacks such as `onDelete`, `onTogglePin`, and `onToggleArchive` allow child c
 
 The Notes App can now:
 
-* Display notes
-* Delete notes
-* Pin and unpin notes
-* Archive and unarchive notes
+- Display notes
+- Delete notes
+- Pin and unpin notes
+- Archive and unarchive notes
 
 The project now has dynamic state-driven behavior instead of static data.
 
+# Sprint 4 — Create Note
 
+## Overview
+
+This sprint adds the ability to create new notes through a React form.
+
+The form uses controlled inputs and React state to manage the user's input before creating a new note.
+
+## What Was Implemented
+
+### NoteForm
+
+Created a reusable `NoteForm` component with three fields:
+
+- Title
+- Content
+- Category
+
+### Controlled Inputs
+
+Each input is controlled by React state.
+
+The form state is stored as:
+
+```tsx
+const [formData, setFormData] = useState<NoteFormData>(initialFormData);
+```
+
+The input value comes from state, and `onChange` updates that state.
+
+### Form Validation
+
+Added validation to ensure:
+
+- Title is required
+- Content is required
+- Category is required
+
+Invalid submissions display an error message and do not create a note.
+
+### Submit Handling
+
+The form uses `onSubmit` and prevents the browser's default form submission behavior.
+
+The submission flow is:
+
+```text
+Form
+ ↓
+onSubmit
+ ↓
+Validation
+ ↓
+onCreateNote()
+ ↓
+App
+ ↓
+setNotes()
+ ↓
+React re-renders
+```
+
+### Creating Notes
+
+`App` owns the notes state.
+
+`NoteForm` sends the form data to `App` through the `onCreateNote` callback.
+
+`App` creates the new `Note` and adds it to the notes array using an immutable state update.
+
+### Form Reset
+
+After successfully creating a note, the form state is reset to its initial values.
+
+## React Concepts Practiced
+
+- Controlled inputs
+- Form state
+- `useState`
+- `onChange`
+- `onSubmit`
+- Form validation
+- Callback props
+- Parent → child communication
+- Immutable state updates
+
+## Architecture
+
+```text
+App
+ │
+ │ owns notes state
+ │
+ ├── NoteForm
+ │     │
+ │     ├── form state
+ │     ├── validation
+ │     └── onCreateNote()
+ │              │
+ │              ↓
+ │           App
+ │              │
+ │          setNotes()
+ │
+ └── NoteList
+       │
+       └── NoteCard
+```
+
+## Result
+
+The Notes App can now create new notes dynamically instead of relying only on initial notes.

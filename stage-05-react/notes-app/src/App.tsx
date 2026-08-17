@@ -5,6 +5,9 @@ import { useState } from "react";
 
 import NoteList from "./components/NoteList";
 
+import NoteForm from "./components/NoteForm";
+import type { NoteFormData } from "./types/noteFormData";
+
 function App() {
   const [notes, setNotes] = useState<Note[]>([
     {
@@ -32,6 +35,19 @@ function App() {
       archived: false,
     },
   ]);
+
+  function handleCreateNote(formData: NoteFormData) {
+    const newNote: Note = {
+      id: Date.now(),
+      title: formData.title,
+      content: formData.content,
+      category: formData.category,
+      pinned: false,
+      archived: false,
+    };
+
+    setNotes((previousNotes) => [...previousNotes, newNote]);
+  }
 
   function handleDelete(noteId: number) {
     setNotes((previousNotes) =>
@@ -76,6 +92,7 @@ function App() {
             Keep track of your important notes.
           </p>
         </div>
+        <NoteForm onCreateNote={handleCreateNote} />
         <NoteList
           notes={notes}
           onDelete={handleDelete}
