@@ -544,3 +544,554 @@ Stage 4 — TypeScript
 │
 └── Task Manager Project
 
+
+# Stage 5 — React Fundamentals
+
+## Overview
+
+**Stage:** 5
+**Project:** Notes App
+
+# Project — Notes App
+The main project for this stage is a Notes App.
+
+The application allows users to:
+
+* Create notes
+* Edit notes
+* Delete notes
+* Pin notes
+* Archive notes
+* Search notes
+* Filter notes
+* Persist notes using `localStorage`
+
+---
+
+# Project Architecture
+
+```text
+Notes App
+│
+├── Header
+│
+├── NoteForm
+│
+├── NoteFilters
+│
+├── NoteList
+│   └── NoteCard
+│
+└── ConfirmDialog
+```
+
+The project is built incrementally so that each feature reinforces a React concept.
+
+---
+
+# Phase 1 — Project Foundation
+
+## Sprint 1 — Project Setup
+
+Set up:
+
+* React
+* TypeScript
+* Tailwind CSS
+
+Create:
+
+* `App`
+* `Header`
+* Main layout
+
+### Concepts
+
+* JSX
+* Components
+
+---
+
+# Phase 2 — Notes Display
+
+## Sprint 2 — Note Components
+
+Create:
+
+* `NoteList`
+* `NoteCard`
+
+Render notes using:
+
+```tsx
+notes.map(...)
+```
+
+### Practice
+
+* Components
+* Props
+* Lists
+* Keys
+* Component composition
+
+---
+
+# Phase 3 — State
+
+## Sprint 3 — Notes State
+
+Move notes into:
+
+```tsx
+useState<Note[]>([])
+```
+
+Implement:
+
+* Delete
+* Pin / Unpin
+* Archive / Unarchive
+
+### Practice
+
+* State
+* State updates
+* Functional updates
+* Immutable arrays
+* Callback props
+* Parent → child communication
+* Child → parent communication
+
+---
+
+# Phase 4 — Forms
+
+## Sprint 4 — Create Note
+
+Build:
+
+`NoteForm`
+
+Fields:
+
+* Title
+* Content
+* Category
+
+Implement:
+
+* Controlled inputs
+* Form state
+* Validation
+* Submit handling
+
+### Data Flow
+
+```text
+Form
+ ↓
+onSubmit
+ ↓
+Create Note
+ ↓
+setNotes()
+ ↓
+UI updates
+```
+
+---
+
+# Phase 5 — Editing
+
+## Sprint 5 — Edit Note
+
+Reuse the same form for:
+
+* Create
+* Edit
+
+### Flow
+
+```text
+NoteCard
+   ↓
+Edit
+   ↓
+NoteForm
+   ↓
+Update Note
+   ↓
+setNotes()
+   ↓
+UI updates
+```
+
+### Practice
+
+* Component reuse
+* Composition
+* Conditional rendering
+* Editing state
+* Form reuse
+
+---
+
+# Phase 6 — Search + Filtering
+
+## Sprint 6 — Search and Filters
+
+Add:
+
+* Search
+* Category filter
+* Archived filter
+* Pinned filter
+
+Example filters:
+
+```text
+All
+Work
+Study
+Personal
+Archived
+```
+
+### Practice
+
+* Controlled inputs
+* Derived data
+* Array methods
+* State → UI flow
+
+### Important Principle
+
+Do not store data that can be calculated from existing state.
+
+For example, avoid:
+
+```tsx
+const [filteredNotes, setFilteredNotes] = useState(...)
+```
+
+Instead:
+
+```text
+notes
+ +
+searchTerm
+ +
+filters
+ ↓
+filteredNotes
+```
+
+`filteredNotes` is derived from existing state.
+
+---
+
+# Phase 7 — Loading / Empty / Error
+
+## Sprint 7 — Loading / Empty / Error
+
+Implement:
+
+```text
+Loading
+   ↓
+Success
+   ↓
+Notes
+```
+
+and:
+
+```text
+Loading
+   ↓
+Empty
+```
+
+and:
+
+```text
+Loading
+   ↓
+Error
+   ↓
+Retry
+```
+
+The loading process is simulated because the application does not have a real backend yet.
+
+### Practice
+
+* `useEffect`
+* Conditional rendering
+* Loading states
+* Empty states
+* Error states
+* Retry handling
+* Effect cleanup
+
+A `NoteState` type is used to represent the current state.
+
+---
+
+# Phase 8 — Persistence
+
+## Sprint 8 — Persistence
+
+Persist notes using:
+
+`localStorage`
+
+### Save Flow
+
+```text
+notes change
+    ↓
+useEffect
+    ↓
+localStorage
+```
+
+### Restore Flow
+
+```text
+App starts
+    ↓
+Initialize notes
+    ↓
+Read localStorage
+    ↓
+Restore notes
+```
+
+Notes are converted to JSON when saving:
+
+```tsx
+JSON.stringify(notes)
+```
+
+and converted back when restoring:
+
+```tsx
+JSON.parse(savedNotes)
+```
+
+### Practice
+
+* `useEffect`
+* Dependency arrays
+* Lazy `useState` initialization
+* `localStorage`
+* JSON serialization
+* Synchronizing React state with an external browser API
+
+---
+
+# React Mental Model
+
+The main idea throughout this project is:
+
+```text
+State
+  ↓
+React renders UI
+  ↓
+User interacts
+  ↓
+Event handler
+  ↓
+State update
+  ↓
+React renders again
+```
+
+For example:
+
+```text
+User clicks Delete
+       ↓
+onDelete()
+       ↓
+setNotes()
+       ↓
+notes changes
+       ↓
+React re-renders
+       ↓
+Note disappears
+```
+
+---
+
+# State Flow
+
+The Notes App follows a simple state flow:
+
+```text
+                App
+                 │
+        ┌────────┼────────┐
+        ↓        ↓        ↓
+      notes    filters   form state
+        │        │
+        │        ↓
+        │   filteredNotes
+        │        │
+        └────┬───┘
+             ↓
+         NoteList
+             ↓
+         NoteCard
+```
+
+`App` owns the main notes state and passes data and callback functions to child components.
+
+---
+
+# Key React Principles Practiced
+
+## 1. State Is the Source of Truth
+
+The notes array is kept in React state:
+
+```tsx
+const [notes, setNotes] = useState<Note[]>(...)
+```
+
+---
+
+## 2. Update State Immutably
+
+Instead of modifying the existing array, create a new array.
+
+Example:
+
+```tsx
+setNotes((previousNotes) =>
+  previousNotes.filter((note) => note.id !== noteId)
+);
+```
+
+---
+
+## 3. Functional State Updates
+
+When the next state depends on the previous state:
+
+```tsx
+setNotes((previousNotes) => ...)
+```
+
+This ensures the update uses the correct previous state.
+
+---
+
+## 4. Derived Data
+
+Do not create unnecessary state.
+
+Instead:
+
+```text
+notes + filters
+      ↓
+filteredNotes
+```
+
+---
+
+## 5. Effects Synchronize With External Systems
+
+`useEffect` is used when React needs to synchronize with something outside React.
+
+In this project:
+
+```text
+React
+  ↕
+localStorage
+```
+
+---
+
+# Mastery Checklist
+
+By the end of this stage, you should be able to:
+
+* [x] Understand JSX
+* [x] Create React components
+* [x] Pass props
+* [x] Manage state with `useState`
+* [x] Update arrays immutably
+* [x] Use functional state updates
+* [x] Handle user events
+* [x] Build controlled forms
+* [x] Validate form input
+* [x] Render lists with `.map()`
+* [x] Understand why React needs `key`
+* [x] Use conditional rendering
+* [x] Handle loading, empty, and error states
+* [x] Use `useEffect`
+* [x] Understand dependency arrays
+* [x] Persist state using `localStorage`
+* [x] Calculate derived data
+* [x] Split UI into components
+* [x] Reuse components
+* [x] Understand basic parent → child and child → parent communication
+
+---
+
+# Final Result
+
+The completed Notes App demonstrates the core React fundamentals through one practical project.
+
+```text
+React Fundamentals
+       ↓
+Components
+       ↓
+Props
+       ↓
+State
+       ↓
+Events
+       ↓
+Forms
+       ↓
+Lists + Keys
+       ↓
+Conditional Rendering
+       ↓
+useEffect
+       ↓
+Persistence
+       ↓
+Notes App
+```
+
+## Stage Goal
+
+**✓ Can split UI into components**
+
+**✓ Can manage React state**
+
+**✓ Can pass data and callbacks through props**
+
+**✓ Can handle user interactions**
+
+**✓ Can build controlled forms**
+
+**✓ Can render and filter collections**
+
+**✓ Can handle loading and empty states**
+
+**✓ Can use effects for synchronization**
+
+**✓ Can persist application state**
+
+**✓ Understands how state flows through a React application**
