@@ -8,6 +8,7 @@ import NoteList from "./components/NoteList";
 import NoteForm from "./components/NoteForm";
 import type { NoteFormData } from "./types/noteFormData";
 import ConfirmDialog from "./components/ConfirmDialog";
+import NoteFilters from "./components/NoteFilters";
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([
@@ -38,8 +39,17 @@ function App() {
   ]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("ALL");
+
+  const [archiveFilter, setArchiveFilter] = useState<
+    "ALL" | "ACTIVE" | "ARCHIVED"
+  >("ALL");
+
+  const [showPinned, setShowPinned] = useState(false);
 
   function handleCreateNote(formData: NoteFormData) {
     const newNote: Note = {
@@ -53,7 +63,7 @@ function App() {
 
     setNotes((previousNotes) => [...previousNotes, newNote]);
   }
-  
+
   function handleEditNote(note: Note) {
     setEditingNote(note);
     setIsFormOpen(true);
@@ -122,6 +132,24 @@ function App() {
     );
   }
 
+  const filterNotes = notes.filter((note) => {
+    const matchesSearch =
+      note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.content.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesCategory =
+      categoryFilter === "ALL" || note.category === categoryFilter;
+
+    const matchesArchive =
+      archiveFilter === "ALL" ||
+      (archiveFilter === "ACTIVE" && !note.archived) ||
+      (archiveFilter === "ARCHIVED" && note.archived);
+
+    const matchesPinned = !showPinned || note.pinned;
+
+    return matchesSearch && matchesCategory && matchesArchive && matchesPinned;
+  });
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Header />
@@ -136,19 +164,32 @@ function App() {
             </p>
           </div>
 
-          {/* Add Note Button */}
-          {!isFormOpen && (
-            <button
-              type="button"
-              onClick={() => {
-                setEditingNote(null);
-                setIsFormOpen(true);
-              }}
-              className="rounded-lg bg-black px-4 py-2 text-white"
-            >
-              Add Note
-            </button>
-          )}
+          <div className="flex items-center gap-2 flex-col md:flex-row">
+            {/* Add Note Button */}
+            {!isFormOpen && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingNote(null);
+                  setIsFormOpen(true);
+                }}
+                className="rounded-lg bg-black px-4 py-2 text-white"
+              >
+                Add Note
+              </button>
+            )}
+
+            {/* Search Button */}
+            {!isFormOpen && (
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="ml-4 rounded-lg bg-gray-200 px-4 py-2 text-gray-800"
+              >
+                {isSearchOpen ? "Close Search" : "Open Search"}
+              </button>
+            )}
+          </div>
         </div>
 
         {/*====== Form ========  */}
@@ -162,9 +203,24 @@ function App() {
           />
         )}
 
+        {/*====== Note Filters ========  */}
+
+        {isSearchOpen && (
+          <NoteFilters
+            searchTerm={searchTerm}
+            categoryFilter={categoryFilter}
+            archiveFilter={archiveFilter}
+            showPinned={showPinned}
+            onSearchChange={setSearchTerm}
+            onCategoryChange={setCategoryFilter}
+            onArchiveChange={setArchiveFilter}
+            onPinnedChange={setShowPinned}
+          />
+        )}
+
         {/*====== Note List ========  */}
         <NoteList
-          notes={notes}
+          notes={filterNotes}
           onDelete={handleDelete}
           onToggleArchive={handleToggleArchive}
           onTogglePin={handleTogglePin}

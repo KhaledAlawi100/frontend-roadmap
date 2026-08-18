@@ -555,3 +555,157 @@ The Notes App can now create and edit notes using a single reusable form compone
 
 This sprint demonstrates how React components can be reused while their behavior is controlled through props and callbacks.
 
+# Sprint 6 — Search + Filtering
+
+## Overview
+
+This sprint adds search and filtering functionality to the Notes App.
+
+Users can now search notes and filter them by category, archive status, and pinned status.
+
+## Features Implemented
+
+### Search
+
+Users can search notes by:
+
+* Title
+* Content
+
+The search is case-insensitive.
+
+### Category Filter
+
+Users can filter notes by category:
+
+* All
+* Study
+* Personal
+* Projects
+* Work
+
+### Archive Filter
+
+Users can filter notes by:
+
+* All notes
+* Active
+* Archived
+
+### Pinned Filter
+
+Users can enable **Pinned only** to display only pinned notes.
+
+## NoteFilters Component
+
+A new `NoteFilters` component was created to contain all filtering controls.
+
+```text
+App
+ │
+ └── NoteFilters
+      ├── Search
+      ├── Category
+      ├── Archive
+      └── Pinned
+```
+
+The filter values are controlled by state in `App`.
+
+## Derived Data
+
+The application does not store `filteredNotes` as state.
+
+Instead:
+
+```text
+notes
+  +
+searchTerm
+  +
+categoryFilter
+  +
+archiveFilter
+  +
+showPinned
+  ↓
+filteredNotes
+```
+
+`filteredNotes` is calculated using `Array.filter()`.
+
+This avoids duplicating state and keeps `notes` as the single source of truth.
+
+## Filtering Logic
+
+Each note is checked against four conditions:
+
+```text
+Search
+   AND
+Category
+   AND
+Archive
+   AND
+Pinned
+```
+
+A note is displayed only when it satisfies all active filters.
+
+## React Concepts Practiced
+
+* Controlled inputs
+* `useState`
+* Props
+* Callback props
+* Parent → child data flow
+* Child → parent communication
+* Derived data
+* `Array.filter()`
+* Combining conditions
+* State → UI flow
+* Single source of truth
+* Conditional filtering
+
+## Data Flow
+
+```text
+User
+ ↓
+NoteFilters
+ ↓
+Callback
+ ↓
+App state
+ ↓
+Calculate filteredNotes
+ ↓
+NoteList
+ ↓
+NoteCard
+ ↓
+UI
+```
+
+## Important React Principle
+
+Do not create state for data that can be calculated from existing state.
+
+Instead of:
+
+```tsx
+const [filteredNotes, setFilteredNotes] = useState(...);
+```
+
+we calculate:
+
+```tsx
+const filteredNotes = notes.filter(...);
+```
+
+This keeps the application simpler and prevents state synchronization problems.
+
+## Result
+
+The Notes App now allows users to quickly find and organize notes using search and multiple filters while keeping `notes` as the single source of truth.
+
