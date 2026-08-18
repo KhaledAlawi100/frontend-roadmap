@@ -1,7 +1,6 @@
 import Header from "./components/Header";
 
 import type { Note } from "./types/note";
-import { useState } from "react";
 
 import NoteList from "./components/NoteList";
 
@@ -9,6 +8,8 @@ import NoteForm from "./components/NoteForm";
 import type { NoteFormData } from "./types/noteFormData";
 import ConfirmDialog from "./components/ConfirmDialog";
 import NoteFilters from "./components/NoteFilters";
+import type { NoteState } from "./types/noteState";
+import { useEffect, useState } from "react";
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([
@@ -44,6 +45,47 @@ function App() {
   const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("ALL");
+  const [noteState, setNoteState] = useState<NoteState>({
+    status: "loading",
+  });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (notes.length === 0) {
+        setNoteState({
+          status: "empty",
+        });
+
+        return;
+      }
+
+      setNoteState({
+        status: "success",
+      });
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  function handleRetry() {
+    setNoteState({
+      status: "loading",
+    });
+
+    setTimeout(() => {
+      if (notes.length === 0) {
+        setNoteState({
+          status: "empty",
+        });
+
+        return;
+      }
+
+      setNoteState({
+        status: "success",
+      });
+    }, 1500);
+  }
 
   const [archiveFilter, setArchiveFilter] = useState<
     "ALL" | "ACTIVE" | "ARCHIVED"
@@ -150,6 +192,44 @@ function App() {
     return matchesSearch && matchesCategory && matchesArchive && matchesPinned;
   });
 
+  function renderNotes() {
+    if (noteState.status === "loading") {
+      return (
+        <p className="py-10 text-center text-gray-600">Loading notes...</p>
+      );
+    }
+
+    if (noteState.status === "empty") {
+      return <p className="py-10 text-center text-gray-600">No notes found.</p>;
+    }
+
+    if (noteState.status === "error") {
+      return (
+        <div className="flex flex-col items-center gap-4 py-10">
+          <p className="text-red-600">{noteState.message}</p>
+
+          <button
+            type="button"
+            onClick={handleRetry}
+            className="rounded-lg bg-black px-4 py-2 text-white"
+          >
+            Retry
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <NoteList
+        notes={filterNotes}
+        onDelete={handleDelete}
+        onToggleArchive={handleToggleArchive}
+        onTogglePin={handleTogglePin}
+        onEdit={handleEditNote}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Header />
@@ -219,13 +299,7 @@ function App() {
         )}
 
         {/*====== Note List ========  */}
-        <NoteList
-          notes={filterNotes}
-          onDelete={handleDelete}
-          onToggleArchive={handleToggleArchive}
-          onTogglePin={handleTogglePin}
-          onEdit={handleEditNote}
-        />
+        {renderNotes()}
 
         {/*====== Confirm Dialog ========  */}
         {noteToDelete && (

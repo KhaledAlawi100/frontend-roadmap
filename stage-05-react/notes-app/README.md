@@ -709,3 +709,164 @@ This keeps the application simpler and prevents state synchronization problems.
 
 The Notes App now allows users to quickly find and organize notes using search and multiple filters while keeping `notes` as the single source of truth.
 
+# Sprint 7 — Loading / Empty / Error
+
+## Overview
+
+This sprint adds loading states to the Notes App.
+
+Although the application does not have a real backend yet, the loading process is simulated to practice how a React application handles asynchronous data.
+
+## States Implemented
+
+The Notes App now supports four possible states:
+
+* Loading
+* Success
+* Empty
+* Error
+
+The state is represented using the `NoteState` type.
+
+```text id="qj8w1h"
+Loading
+   ↓
+Success
+   ↓
+Notes displayed
+```
+
+If there are no notes:
+
+```text id="m1e5n4"
+Loading
+   ↓
+Empty
+   ↓
+"No notes found"
+```
+
+If an error occurs:
+
+```text id="l2s8d4"
+Loading
+   ↓
+Error
+   ↓
+Retry
+   ↓
+Loading
+```
+
+## NoteState
+
+A discriminated union is used to represent the current state:
+
+```tsx id="r4q1t7"
+type NoteState =
+  | { status: "loading" }
+  | { status: "success" }
+  | { status: "empty" }
+  | { status: "error"; message: string };
+```
+
+This makes the possible UI states explicit and type-safe.
+
+## Simulated Loading
+
+The application uses a timeout to simulate an asynchronous loading operation.
+
+```text id="p6f3k2"
+App starts
+   ↓
+Loading
+   ↓
+Wait 1.5 seconds
+   ↓
+Check notes
+   ↓
+Success / Empty
+```
+
+## Retry
+
+The error state includes a Retry button.
+
+When Retry is clicked:
+
+```text id="v8d2n1"
+Retry
+  ↓
+Loading
+  ↓
+Wait
+  ↓
+Success / Empty
+```
+
+## useEffect
+
+`useEffect` is used to start the simulated loading process when the application mounts.
+
+The effect also cleans up the timer when the component is removed.
+
+## Conditional Rendering
+
+The UI is rendered according to the current `noteState`.
+
+```text id="e5n9q2"
+noteState
+    ↓
+┌──────────┬─────────┬────────┬─────────┐
+Loading   Success    Empty    Error
+   ↓         ↓         ↓        ↓
+Loading   NoteList   Message   Retry
+```
+
+## Important Architecture
+
+`noteState` and `filterNotes` have different responsibilities.
+
+### noteState
+
+Determines **whether the notes can currently be displayed**.
+
+### filterNotes
+
+Determines **which notes should be displayed**.
+
+```text id="h7k3p1"
+noteState
+    ↓
+Success
+    ↓
+filterNotes
+    ↓
+NoteList
+    ↓
+NoteCard
+```
+
+`filterNotes` remains derived data and is not stored in state.
+
+## React Concepts Practiced
+
+* `useEffect`
+* `useState`
+* Conditional rendering
+* Discriminated unions
+* Loading states
+* Empty states
+* Error states
+* Retry handling
+* Effect cleanup
+* Simulating asynchronous operations
+* State → UI flow
+* Derived data
+
+## Result
+
+The Notes App now behaves more like a real application by explicitly handling loading, success, empty, and error states instead of assuming that notes are always immediately available.
+
+
+
