@@ -391,7 +391,6 @@ App
 
 The Notes App can now create new notes dynamically instead of relying only on initial notes.
 
-
 # Sprint 5 — Edit Note
 
 ## Overview
@@ -426,8 +425,8 @@ The selected note is passed to `NoteForm`, where its existing data is displayed 
 
 `NoteForm` now supports two modes:
 
-* Create
-* Edit
+- Create
+- Edit
 
 The form determines the mode based on whether an existing note was provided.
 
@@ -505,23 +504,23 @@ The NoteCard actions were reorganized to improve the UI.
 
 The main Edit action remains visible, while secondary actions are placed inside a menu:
 
-* Pin / Unpin
-* Archive / Unarchive
-* Delete
+- Pin / Unpin
+- Archive / Unarchive
+- Delete
 
 ## React Concepts Practiced
 
-* Component reuse
-* Component composition
-* Props
-* Callback props
-* `useState`
-* Conditional rendering
-* Controlled forms
-* Immutable state updates
-* `map()`
-* Component identity with `key`
-* Reusable components
+- Component reuse
+- Component composition
+- Props
+- Callback props
+- `useState`
+- Conditional rendering
+- Controlled forms
+- Immutable state updates
+- `map()`
+- Component identity with `key`
+- Reusable components
 
 ## Final Flow
 
@@ -569,8 +568,8 @@ Users can now search notes and filter them by category, archive status, and pinn
 
 Users can search notes by:
 
-* Title
-* Content
+- Title
+- Content
 
 The search is case-insensitive.
 
@@ -578,19 +577,19 @@ The search is case-insensitive.
 
 Users can filter notes by category:
 
-* All
-* Study
-* Personal
-* Projects
-* Work
+- All
+- Study
+- Personal
+- Projects
+- Work
 
 ### Archive Filter
 
 Users can filter notes by:
 
-* All notes
-* Active
-* Archived
+- All notes
+- Active
+- Archived
 
 ### Pinned Filter
 
@@ -654,18 +653,18 @@ A note is displayed only when it satisfies all active filters.
 
 ## React Concepts Practiced
 
-* Controlled inputs
-* `useState`
-* Props
-* Callback props
-* Parent → child data flow
-* Child → parent communication
-* Derived data
-* `Array.filter()`
-* Combining conditions
-* State → UI flow
-* Single source of truth
-* Conditional filtering
+- Controlled inputs
+- `useState`
+- Props
+- Callback props
+- Parent → child data flow
+- Child → parent communication
+- Derived data
+- `Array.filter()`
+- Combining conditions
+- State → UI flow
+- Single source of truth
+- Conditional filtering
 
 ## Data Flow
 
@@ -721,10 +720,10 @@ Although the application does not have a real backend yet, the loading process i
 
 The Notes App now supports four possible states:
 
-* Loading
-* Success
-* Empty
-* Error
+- Loading
+- Success
+- Empty
+- Error
 
 The state is represented using the `NoteState` type.
 
@@ -851,22 +850,159 @@ NoteCard
 
 ## React Concepts Practiced
 
-* `useEffect`
-* `useState`
-* Conditional rendering
-* Discriminated unions
-* Loading states
-* Empty states
-* Error states
-* Retry handling
-* Effect cleanup
-* Simulating asynchronous operations
-* State → UI flow
-* Derived data
+- `useEffect`
+- `useState`
+- Conditional rendering
+- Discriminated unions
+- Loading states
+- Empty states
+- Error states
+- Retry handling
+- Effect cleanup
+- Simulating asynchronous operations
+- State → UI flow
+- Derived data
 
 ## Result
 
 The Notes App now behaves more like a real application by explicitly handling loading, success, empty, and error states instead of assuming that notes are always immediately available.
 
+# Sprint 8 — Persistence
 
+## Overview
 
+This sprint adds persistence to the Notes App using the browser's `localStorage`.
+
+Before this sprint, notes were stored only in React state, so refreshing the browser removed them.
+
+Now notes are restored automatically and saved whenever they change.
+
+## Persistence Flow
+
+### Restore Notes
+
+When the application starts:
+
+```text
+App starts
+   ↓
+useState initializer
+   ↓
+Read localStorage
+   ↓
+Saved notes?
+   ├── Yes → Restore notes
+   └── No  → Use default notes
+```
+
+### Save Notes
+
+Whenever the `notes` state changes:
+
+```text
+notes changes
+     ↓
+useEffect
+     ↓
+JSON.stringify(notes)
+     ↓
+localStorage
+```
+
+## localStorage
+
+`localStorage` stores values as strings.
+
+Therefore, notes are converted to JSON before saving:
+
+```tsx
+localStorage.setItem("notes", JSON.stringify(notes));
+```
+
+When restoring the notes, the JSON string is converted back into an array:
+
+```tsx
+JSON.parse(savedNotes);
+```
+
+## Lazy State Initialization
+
+The application uses a function inside `useState`:
+
+```tsx
+useState<Note[]>(() => {
+  // read localStorage
+});
+```
+
+This allows the initial notes to be loaded when the state is initialized.
+
+If saved notes exist, they are restored.
+
+Otherwise, the application uses the default notes.
+
+## useEffect
+
+A second effect is responsible for saving notes:
+
+```tsx
+useEffect(() => {
+  localStorage.setItem("notes", JSON.stringify(notes));
+}, [notes]);
+```
+
+The dependency array:
+
+```text
+[notes]
+```
+
+means the effect runs whenever the `notes` state changes.
+
+Therefore, changes such as:
+
+- Creating a note
+- Editing a note
+- Deleting a note
+- Pinning a note
+- Archiving a note
+
+are automatically persisted.
+
+## Important React Concept
+
+This sprint demonstrates a practical purpose of `useEffect`.
+
+`useEffect` is useful when React needs to synchronize with something outside React.
+
+In this case:
+
+```text
+React State
+    ↕
+localStorage
+```
+
+`localStorage` is an external browser API, so `useEffect` is appropriate for keeping it synchronized with the notes state.
+
+## React Concepts Practiced
+
+- `useEffect`
+- Dependency arrays
+- Lazy `useState` initialization
+- `localStorage`
+- `JSON.stringify()`
+- `JSON.parse()`
+- State persistence
+- Synchronizing React state with an external system
+
+## Result
+
+The Notes App now keeps notes after a browser refresh.
+
+The application can:
+
+1. Restore saved notes when it starts.
+2. Detect changes to the notes.
+3. Save the updated notes to `localStorage`.
+4. Preserve note creation, editing, deletion, pinning, and archiving across refreshes.

@@ -12,33 +12,40 @@ import type { NoteState } from "./types/noteState";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [notes, setNotes] = useState<Note[]>([
-    {
-      id: 1,
-      title: "Learn React",
-      content: "Study components, props, and state.",
-      category: "Study",
-      pinned: false,
-      archived: false,
-    },
-    {
-      id: 2,
-      title: "Shopping",
-      content: "Buy milk, bread, and coffee.",
-      category: "Personal",
-      pinned: false,
-      archived: false,
-    },
-    {
-      id: 3,
-      title: "Project Ideas",
-      content: "Build a Notes application with React.",
-      category: "Projects",
-      pinned: false,
-      archived: false,
-    },
-  ]);
+  const [notes, setNotes] = useState<Note[]>(() => {
+    const savedNotes = localStorage.getItem("notes");
 
+    if (savedNotes) {
+      return JSON.parse(savedNotes) as Note[];
+    }
+
+    return [
+      {
+        id: 1,
+        title: "Learn React",
+        content: "Study components, props, and state.",
+        category: "Study",
+        pinned: false,
+        archived: false,
+      },
+      {
+        id: 2,
+        title: "Shopping",
+        content: "Buy milk, bread, and coffee.",
+        category: "Personal",
+        pinned: false,
+        archived: false,
+      },
+      {
+        id: 3,
+        title: "Project Ideas",
+        content: "Build a Notes application with React.",
+        category: "Projects",
+        pinned: false,
+        archived: false,
+      },
+    ];
+  });
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<Note | null>(null);
@@ -66,6 +73,10 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   function handleRetry() {
     setNoteState({
