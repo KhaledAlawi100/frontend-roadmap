@@ -7,6 +7,7 @@ import NoteList from "./components/NoteList";
 
 import NoteForm from "./components/NoteForm";
 import type { NoteFormData } from "./types/noteFormData";
+import ConfirmDialog from "./components/ConfirmDialog";
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([
@@ -36,6 +37,10 @@ function App() {
     },
   ]);
 
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingNote, setEditingNote] = useState<Note | null>(null);
+  const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
+
   function handleCreateNote(formData: NoteFormData) {
     const newNote: Note = {
       id: Date.now(),
@@ -48,11 +53,47 @@ function App() {
 
     setNotes((previousNotes) => [...previousNotes, newNote]);
   }
+  
+  function handleEditNote(note: Note) {
+    setEditingNote(note);
+    setIsFormOpen(true);
+  }
+  function handleCancelForm() {
+    setEditingNote(null);
+    setIsFormOpen(false);
+  }
 
-  function handleDelete(noteId: number) {
+  function handleUpdateNote(noteId: number, formData: NoteFormData) {
     setNotes((previousNotes) =>
-      previousNotes.filter((note) => note.id !== noteId),
+      previousNotes.map((note) =>
+        note.id === noteId
+          ? {
+              ...note,
+              title: formData.title,
+              content: formData.content,
+              category: formData.category,
+            }
+          : note,
+      ),
     );
+    setEditingNote(null);
+    setIsFormOpen(false);
+  }
+
+  function handleDelete(note: Note) {
+    setNoteToDelete(note);
+  }
+
+  function confirmDelete() {
+    if (!noteToDelete) {
+      return;
+    }
+
+    setNotes((previousNotes) =>
+      previousNotes.filter((note) => note.id !== noteToDelete.id),
+    );
+
+    setNoteToDelete(null);
   }
 
   function handleTogglePin(noteId: number) {
@@ -82,23 +123,63 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen  bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <Header />
 
       <main className="mx-auto max-w-6xl px-6 py-8">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">My Notes</h2>
-          <p className="mt-1 text-gray-600">
-            Keep track of your important notes.
-          </p>
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">My Notes</h2>
+
+            <p className="mt-1 text-gray-600">
+              Keep track of your important notes.
+            </p>
+          </div>
+
+          {/* Add Note Button */}
+          {!isFormOpen && (
+            <button
+              type="button"
+              onClick={() => {
+                setEditingNote(null);
+                setIsFormOpen(true);
+              }}
+              className="rounded-lg bg-black px-4 py-2 text-white"
+            >
+              Add Note
+            </button>
+          )}
         </div>
-        <NoteForm onCreateNote={handleCreateNote} />
+
+        {/*====== Form ========  */}
+        {isFormOpen && (
+          <NoteForm
+            key={editingNote?.id ?? "create"}
+            note={editingNote}
+            onCreateNote={handleCreateNote}
+            onUpdateNote={handleUpdateNote}
+            onCancel={handleCancelForm}
+          />
+        )}
+
+        {/*====== Note List ========  */}
         <NoteList
           notes={notes}
           onDelete={handleDelete}
           onToggleArchive={handleToggleArchive}
           onTogglePin={handleTogglePin}
+          onEdit={handleEditNote}
         />
+
+        {/*====== Confirm Dialog ========  */}
+        {noteToDelete && (
+          <ConfirmDialog
+            title="Delete Note"
+            message={`Are you sure you want to delete "${noteToDelete.title}"?`}
+            onConfirm={confirmDelete}
+            onCancel={() => setNoteToDelete(null)}
+          />
+        )}
       </main>
     </div>
   );

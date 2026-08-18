@@ -390,3 +390,168 @@ App
 ## Result
 
 The Notes App can now create new notes dynamically instead of relying only on initial notes.
+
+
+# Sprint 5 — Edit Note
+
+## Overview
+
+This sprint adds the ability to edit existing notes.
+
+The existing `NoteForm` component is reused for both creating and editing notes instead of creating a separate edit form.
+
+## What Was Implemented
+
+### Edit Note
+
+Each `NoteCard` now provides an **Edit** button.
+
+When the user clicks Edit:
+
+```text
+NoteCard
+   ↓
+Edit
+   ↓
+App
+   ↓
+editingNote
+   ↓
+NoteForm
+```
+
+The selected note is passed to `NoteForm`, where its existing data is displayed in the form.
+
+### Reusable NoteForm
+
+`NoteForm` now supports two modes:
+
+* Create
+* Edit
+
+The form determines the mode based on whether an existing note was provided.
+
+```text
+note === null
+     ↓
+Create Mode
+
+note !== null
+     ↓
+Edit Mode
+```
+
+The same form is therefore reused for both operations.
+
+### Updating a Note
+
+When editing a note, submitting the form calls:
+
+```text
+NoteForm
+   ↓
+onUpdateNote()
+   ↓
+App
+   ↓
+setNotes()
+   ↓
+UI updates
+```
+
+The note is updated using `map()` without modifying the original array.
+
+### Conditional Rendering
+
+The form is shown only when needed:
+
+```text
+isFormOpen === true
+        ↓
+Show NoteForm
+
+isFormOpen === false
+        ↓
+Hide NoteForm
+```
+
+The application also conditionally changes the form's behavior and labels between Create and Edit modes.
+
+### Cancel
+
+A Cancel button was added to close the form without changing the notes.
+
+## Additional UI Improvements
+
+### Confirmation Dialog
+
+A reusable `ConfirmDialog` component was added to prevent accidental deletion.
+
+The flow is:
+
+```text
+Delete
+  ↓
+ConfirmDialog
+  ↓
+Cancel / Confirm
+  ↓
+Delete note if confirmed
+```
+
+### Note Actions Menu
+
+The NoteCard actions were reorganized to improve the UI.
+
+The main Edit action remains visible, while secondary actions are placed inside a menu:
+
+* Pin / Unpin
+* Archive / Unarchive
+* Delete
+
+## React Concepts Practiced
+
+* Component reuse
+* Component composition
+* Props
+* Callback props
+* `useState`
+* Conditional rendering
+* Controlled forms
+* Immutable state updates
+* `map()`
+* Component identity with `key`
+* Reusable components
+
+## Final Flow
+
+```text
+                     App
+                      │
+              ┌───────┴────────┐
+              ↓                ↓
+          Add Note          NoteCard
+              │                │
+              ↓                ↓
+          NoteForm            Edit
+              │                │
+              │                ↓
+              │            NoteForm
+              │                │
+              └───────┬────────┘
+                      ↓
+                 Submit Form
+                      ↓
+              Create / Update
+                      ↓
+                  setNotes()
+                      ↓
+                 UI updates
+```
+
+## Result
+
+The Notes App can now create and edit notes using a single reusable form component.
+
+This sprint demonstrates how React components can be reused while their behavior is controlled through props and callbacks.
+
