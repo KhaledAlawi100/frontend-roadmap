@@ -435,3 +435,62 @@ Data    Retry
 ↓         ↓
 Empty   Loading
 ```
+
+# Sprint 6 — Custom Hooks
+
+## Goal
+
+Move product-fetching and API state logic out of `ProductsPage` and into a reusable custom hook.
+
+The main goal is to separate:
+
+- UI logic
+- React state logic
+- API communication
+
+---
+
+## Architecture
+
+Before:
+```
+ProductsPage
+    ↓
+useState
+useEffect
+API logic
+    ↓
+productService
+    ↓
+Axios
+    ↓
+Fake Store API
+```
+After:
+```
+ProductsPage
+    ↓
+useProducts()
+    ↓
+productService
+    ↓
+Axios
+    ↓
+Fake Store API
+```
+
+The page is now mainly responsible for displaying the UI.
+
+The custom hook is responsible for managing the product request state.
+
+---
+
+## Files
+
+Added:
+
+```text
+src/
+└── hooks/
+    └── useProducts.ts
+```

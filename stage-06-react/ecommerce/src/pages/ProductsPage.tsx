@@ -1,32 +1,8 @@
-import type { Product } from "../types/product";
 import ProductList from "../components/ProductList";
-import { useState, useEffect, useCallback, useRef } from "react";
-import productService from "../services/productService";
-
-type RequestStatus = "idle" | "loading" | "success" | "error";
+import useProducts from "../hooks/useProducts";
 
 function ProductsPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [status, setStatus] = useState<RequestStatus>("loading");
-  const hasMounted = useRef(false);
-
-  const fetchProducts = useCallback(async () => {
-    try {
-      setStatus("loading");
-      const data = await productService.getProducts();
-      setProducts(data);
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!hasMounted.current) {
-      hasMounted.current = true;
-      fetchProducts();
-    }
-  }, [fetchProducts]);
+  const { products, status, retry } = useProducts();
 
   if (status === "loading") {
     return <p>Loading products...</p>;
@@ -36,26 +12,27 @@ function ProductsPage() {
     return (
       <div>
         <p>Failed to load products.</p>
+
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={fetchProducts}
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          onClick={retry}
         >
           Retry
         </button>
       </div>
     );
   }
+
   if (status === "success" && products.length === 0) {
     return <p>No products found.</p>;
   }
 
   return (
     <section>
-      <h2 className="text-3xl mb-2 font-bold">Products</h2>
+      <h2 className="mb-2 text-3xl font-bold">Products</h2>
 
       <ProductList products={products} />
     </section>
   );
 }
-
 export default ProductsPage;
