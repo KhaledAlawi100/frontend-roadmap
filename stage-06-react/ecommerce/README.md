@@ -8,13 +8,13 @@ The goal was to establish a clean React architecture and configure the main tool
 
 ## Technologies
 
-* React
-* TypeScript
-* Vite
-* Tailwind CSS
-* React Router
-* Axios
-* Vite Environment Variables
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
+- Vite Environment Variables
 
 ## Project Structure
 
@@ -43,18 +43,18 @@ src/
 
 ### Project Setup
 
-* Created the React + TypeScript project using Vite.
-* Configured Tailwind CSS.
-* Installed React Router and Axios.
-* Removed the default Vite starter content.
+- Created the React + TypeScript project using Vite.
+- Configured Tailwind CSS.
+- Installed React Router and Axios.
+- Removed the default Vite starter content.
 
 ### Application Layout
 
 Created a reusable `MainLayout` containing:
 
-* Header
-* Main content area
-* Footer
+- Header
+- Main content area
+- Footer
 
 The main content is rendered using React Router's `Outlet`.
 
@@ -104,20 +104,20 @@ An `.env.example` file is also provided as a configuration template.
 
 ## Concepts Practiced
 
-* React component structure
-* JSX
-* Component composition
-* React Router
-* `BrowserRouter`
-* `Routes`
-* `Route`
-* `NavLink`
-* Nested/layout routes
-* `Outlet`
-* Tailwind CSS
-* Axios instances
-* Environment variables
-* Professional frontend folder organization
+- React component structure
+- JSX
+- Component composition
+- React Router
+- `BrowserRouter`
+- `Routes`
+- `Route`
+- `NavLink`
+- Nested/layout routes
+- `Outlet`
+- Tailwind CSS
+- Axios instances
+- Environment variables
+- Professional frontend folder organization
 
 ## Sprint Result
 
@@ -149,12 +149,12 @@ That will be introduced in the next sprint.
 
 Focus:
 
-* Refine application routing
-* Product details route
-* URL parameters
-* 404 route
-* Nested routes
-* Route structure
+- Refine application routing
+- Product details route
+- URL parameters
+- 404 route
+- Nested routes
+- Route structure
 
 # Sprint 2 — Routes + Layout
 
@@ -200,3 +200,158 @@ BrowserRouter
  │     └── NotFoundPage
  │
  └── Footer
+```
+
+# Sprint 3 — Product API
+
+## Goal
+
+Build a clean API layer for communicating with the Fake Store API.
+
+The application now separates React UI from API communication using:
+
+React
+
+↓
+
+productService
+
+↓
+
+api
+
+↓
+
+Axios
+
+↓
+
+Fake Store API
+
+---
+
+## API Endpoints
+
+The product service supports:
+
+- Get all products
+- Get product by ID
+- Get all product categories
+
+Endpoints:
+
+GET /products
+
+GET /products/:id
+
+GET /products/categories
+
+---
+
+## Environment Variables
+
+The API base URL is configured using a Vite environment variable:
+
+VITE_API_URL=https://fakestoreapi.com
+
+The application accesses it through:
+
+import.meta.env.VITE_API_URL
+
+The actual `.env` file contains the local configuration, while `.env.example` documents the required variable.
+
+Frontend environment variables are not secrets.
+
+---
+
+## Axios Instance
+
+The application uses a centralized Axios instance in:
+
+src/services/api.ts
+
+The Axios instance uses the API URL from the environment variables.
+
+This avoids repeating the API base URL throughout the application.
+
+---
+
+## Product Service
+
+Product API operations are centralized in:
+
+src/services/productService.ts
+
+Available methods:
+
+- `getProducts()`
+- `getProductById(id)`
+- `getCategories()`
+
+The service returns the actual API data instead of exposing the complete Axios response.
+
+---
+
+## TypeScript Types
+
+The Product model is defined in:
+
+src/types/product.ts
+
+It represents the structure returned by the Fake Store API.
+
+The product contains:
+
+- id
+- title
+- price
+- description
+- category
+- image
+- rating
+
+---
+
+## Folder Structure
+
+```test
+src/
+├── components/
+├── pages/
+├── layouts/
+├── hooks/
+├── services/
+│ ├── api.ts
+│ └── productService.ts
+├── types/
+│ └── product.ts
+├── App.tsx
+├── main.tsx
+└── index.css
+```
+
+---
+
+## Key Learning
+
+```text
+The main concept of this sprint is API/service separation.
+
+Instead of:
+
+React Component
+↓
+Axios
+
+the application uses:
+
+React Component
+↓
+Service
+↓
+Axios
+↓
+API
+```
+
+This keeps API communication separate from UI code and provides a cleaner foundation for the next sprints.
