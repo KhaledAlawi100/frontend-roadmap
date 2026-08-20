@@ -155,3 +155,48 @@ Focus:
 * 404 route
 * Nested routes
 * Route structure
+
+# Sprint 2 — Routes + Layout
+
+## Goal
+
+Build the application's routing system using React Router.
+
+The goal of this sprint is to understand how React applications manage multiple pages while keeping a shared layout.
+
+---
+
+## Routes
+
+The application currently supports:
+
+- `/` — Home
+- `/products` — Products
+- `/products/:id` — Product Details
+- `/cart` — Shopping Cart
+- `*` — 404 Not Found
+
+---
+
+## Architecture
+
+```text
+BrowserRouter
+      │
+      ▼
+    Routes
+      │
+      ▼
+ MainLayout
+      │
+ ├── Header
+ │
+ ├── Outlet
+ │     │
+ │     ├── HomePage
+ │     ├── ProductsPage
+ │     ├── ProductDetailsPage
+ │     ├── CartPage
+ │     └── NotFoundPage
+ │
+ └── Footer
