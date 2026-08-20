@@ -1,62 +1,53 @@
-// import { Link } from "react-router-dom";
 import type { Product } from "../types/product";
 import ProductList from "../components/ProductList";
+import { useState, useEffect, useCallback, useRef } from "react";
+import productService from "../services/productService";
+
+type RequestStatus = "idle" | "loading" | "success" | "error";
 
 function ProductsPage() {
-  const products: Product[] = [
-    {
-      id: 1,
-      title: "Example Product",
-      price: 29.99,
-      description: "Example product description",
-      category: "electronics",
-      image:
-        "https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg",
-      rating: {
-        rate: 4.5,
-        count: 100,
-      },
-    },
-    {
-      id: 2,
-      title: "Example Product",
-      price: 29.99,
-      description: "Example product description",
-      category: "electronics",
-      image:
-        "https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg",
-      rating: {
-        rate: 4.5,
-        count: 100,
-      },
-    },
-    {
-      id: 3,
-      title: "Example Product",
-      price: 29.99,
-      description: "Example product description",
-      category: "electronics",
-      image:
-        "https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg",
-      rating: {
-        rate: 4.5,
-        count: 100,
-      },
-    },
-    {
-      id: 4,
-      title: "Example Product",
-      price: 29.99,
-      description: "Example product description",
-      category: "electronics",
-      image:
-        "https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg",
-      rating: {
-        rate: 4.5,
-        count: 100,
-      },
-    },
-  ];
+  const [products, setProducts] = useState<Product[]>([]);
+  const [status, setStatus] = useState<RequestStatus>("loading");
+  const hasMounted = useRef(false);
+
+  const fetchProducts = useCallback(async () => {
+    try {
+      setStatus("loading");
+      const data = await productService.getProducts();
+      setProducts(data);
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      fetchProducts();
+    }
+  }, [fetchProducts]);
+
+  if (status === "loading") {
+    return <p>Loading products...</p>;
+  }
+
+  if (status === "error") {
+    return (
+      <div>
+        <p>Failed to load products.</p>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={fetchProducts}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+  if (status === "success" && products.length === 0) {
+    return <p>No products found.</p>;
+  }
 
   return (
     <section>

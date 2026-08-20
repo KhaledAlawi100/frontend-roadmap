@@ -395,6 +395,43 @@ It uses:
 ```tsx
 products.map(...)
 ```
+
 ## Screenshot
 
 ![Sprint 4 — Product Display](./docs/screenshots/sprint-04-product-display.png)
+
+# Sprint 5 — Product Loading & API State
+
+## Goal
+
+Handle the different states of an asynchronous product API request.
+
+The Products page now handles:
+
+- Loading
+- Success
+- Empty
+- Error
+- Retry
+
+---
+
+## API State Flow
+
+```text
+ProductsPage
+     ↓
+fetchProducts()
+     ↓
+productService
+     ↓
+Fake Store API
+     ↓
+┌────┴────┐
+↓         ↓
+Success  Error
+↓         ↓
+Data    Retry
+↓         ↓
+Empty   Loading
+```
