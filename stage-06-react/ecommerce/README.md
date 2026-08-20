@@ -355,3 +355,46 @@ API
 ```
 
 This keeps API communication separate from UI code and provides a cleaner foundation for the next sprints.
+
+# Sprint 4 — Product Display
+
+## Goal
+
+Build reusable React components for displaying products.
+
+The product UI is organized using component composition:
+
+```
+ProductsPage
+↓
+ProductList
+↓
+ProductCard
+↓
+ProductImage
+ProductPrice
+```
+
+---
+
+## Product Components
+
+Created the following reusable components:
+
+- `ProductList`
+- `ProductCard`
+- `ProductImage`
+- `ProductPrice`
+
+### ProductList
+
+Responsible for rendering the collection of products.
+
+It uses:
+
+```tsx
+products.map(...)
+```
+## Screenshot
+
+![Sprint 4 — Product Display](./docs/screenshots/sprint-04-product-display.png)
