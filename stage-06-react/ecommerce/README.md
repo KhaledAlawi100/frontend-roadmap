@@ -525,3 +525,56 @@ React Router extracts the product ID using:
 ```tsx
 const { id } = useParams<{ id: string }>();
 ```
+
+
+# Sprint 8 — Cart State
+
+## Overview
+
+In this sprint, we introduced application-level state management for the shopping cart.
+
+The goal was to allow different components and pages to access and modify the same cart state without passing props through multiple component levels.
+
+---
+
+## What was Implemented
+
+- Cart state using React `useState`
+- React Context using `createContext`
+- Cart consumption using `useContext`
+- Custom `useCartContext` hook
+- `CartProvider`
+- Add product to cart
+- Remove product from cart
+- Increase product quantity
+- Decrease product quantity
+- Clear cart
+- Calculate cart total
+- Calculate total item count
+- Empty cart state
+- Immutable state updates
+- Functional state updates
+- Connected `ProductCard` to the cart
+- Connected `CartPage` to the cart
+
+---
+
+## Cart Architecture
+
+```text
+ProductCard
+     |
+     | addToCart(product)
+     ↓
+Cart Context
+     |
+     ↓
+CartProvider
+     |
+     ↓
+Cart State
+     |
+     ↓
+CartPage
+```
+
