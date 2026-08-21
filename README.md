@@ -543,7 +543,7 @@ Stage 4 — TypeScript
 ├── API & Runtime Safety
 │
 └── Task Manager Project
-
+```
 
 # Stage 5 — React Fundamentals
 
