@@ -578,3 +578,26 @@ Cart State
 CartPage
 ```
 
+## Sprint 10 — Product Discovery (Search + Category Filtering)
+
+**Goal:** Add search and category filtering to the products page without storing derived data in state.
+
+**What was implemented:**
+
+-  **Search input** – filters products by title (case‑insensitive).
+-  **Category dropdown** – populated dynamically from the Fake Store API.
+-  **Derived data pattern** – `filteredProducts` is computed using `useMemo` from `products`, `searchTerm`, and `selectedCategory` (no extra state for filtered results).
+-  **Controlled components** – both inputs are controlled with `useState`.
+-  **Responsive filters** – stack on mobile, row on larger screens.
+-  **Empty state** – shows a friendly message when no products match the criteria.
+
+**Files modified:**
+
+- `src/pages/ProductsPage.tsx`
+
+**Key learning:**
+
+> **Don't store filtered products in state.**  
+> Derive them from the source data + filter criteria. This keeps state minimal, avoids bugs from stale data, and makes the data flow predictable.
+
+
