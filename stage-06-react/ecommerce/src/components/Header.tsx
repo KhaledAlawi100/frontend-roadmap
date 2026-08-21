@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { useCartContext } from "../context/useCartContext";
 
 function Header() {
+  const { itemCount } = useCartContext();
+
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive ? "font-bold text-black" : "text-gray-600 hover:text-black";
 
@@ -29,7 +32,18 @@ function Header() {
           </NavLink>
 
           <NavLink to="/cart" className={navLinkClass}>
-            Cart
+            Cart{" "}
+            {itemCount > 0 && (
+              <span
+                className={
+                  itemCount
+                    ? "ml-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 px-1 text-xs font-bold text-white"
+                    : ""
+                }
+              >
+                {itemCount}
+              </span>
+            )}
           </NavLink>
         </nav>
 

@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 
 import useProduct from "../hooks/useProduct";
+import AddToCartButton from "../components/AddToCartButton";
 
 function ProductDetailsPage() {
- 
   const { id } = useParams<{ id: string }>();
 
   const productId = Number(id);
@@ -53,9 +53,7 @@ function ProductDetailsPage() {
 
         <p className="mb-6">Rating: {product.rating.rate} / 5</p>
 
-        <button className="rounded bg-black px-6 py-3 font-bold text-white hover:bg-gray-800">
-          Add to Cart
-        </button>
+        <AddToCartButton product={product} />
       </div>
     </section>
   );

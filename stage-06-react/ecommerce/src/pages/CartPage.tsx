@@ -1,3 +1,6 @@
+import ViewDetailsButton from "../components/ViewDetailsButton";
+import QuantityControl from "../components/QuantityControl";
+import RemoveButton from "../components/RemoveButton";
 import { useCartContext } from "../context/useCartContext";
 
 function CartPage() {
@@ -29,47 +32,48 @@ function CartPage() {
         {items.map((item) => (
           <div
             key={item.product.id}
-            className="flex w-full items-center justify-between rounded-lg bg-white p-4 shadow"
+            className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow transition hover:shadow-lg md:flex-row md:items-center md:justify-between"
           >
-            <div>
-              <h3 className="font-semibold">{item.product.title}</h3>
+            {/* Product information */}
+            <div className="flex min-w-0 items-center gap-4">
+              <img
+                src={item.product.image}
+                alt={item.product.title}
+                className="h-20 w-20 shrink-0 rounded-md object-contain"
+              />
 
-              <p className="text-gray-600">${item.product.price.toFixed(2)}</p>
+              <div className="min-w-0">
+                <h3 className="line-clamp-2 font-semibold">
+                  {item.product.title}
+                </h3>
 
-              <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                <p className="mt-1 text-gray-600">
+                  ${item.product.price.toFixed(2)}
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  Quantity: {item.quantity}
+                </p>
+              </div>
             </div>
 
-            <div className=" mt-7 flex items-center  gap-2">
-              <button
-                type="button"
-                onClick={() => decreaseQuantity(item.product.id)}
-                className="rounded bg-gray-200 px-3 py-1 hover:bg-gray-300"
-              >
-                -
-              </button>
+            {/* Cart controls */}
+            <div className="flex flex-wrap items-center gap-3">
+              <QuantityControl
+                quantity={item.quantity}
+                onDecrease={() => decreaseQuantity(item.product.id)}
+                onIncrease={() => increaseQuantity(item.product.id)}
+              />
 
-              <span>{item.quantity}</span>
+              <ViewDetailsButton productId={item.product.id} />
 
-              <button
-                type="button"
-                onClick={() => increaseQuantity(item.product.id)}
-                className="rounded bg-gray-200 px-3 py-1 hover:bg-gray-300"
-              >
-                +
-              </button>
-
-              <button
-                type="button"
-                onClick={() => removeFromCart(item.product.id)}
-                className="ml-2 rounded bg-red-500 px-3 py-1 text-white hover:bg-red-600"
-              >
-                Remove
-              </button>
+              <RemoveButton onClick={() => removeFromCart(item.product.id)} />
             </div>
           </div>
         ))}
       </div>
 
+      {/* Cart summary */}
       <div className="mt-8 rounded-lg bg-white p-6 shadow">
         <p className="text-gray-600">
           Items: <span className="font-semibold">{itemCount}</span>
@@ -80,7 +84,7 @@ function CartPage() {
         <button
           type="button"
           onClick={clearCart}
-          className="mt-4 rounded bg-black px-4 py-2 text-white hover:bg-gray-800"
+          className="mt-4 h-9 rounded-md bg-gray-900 px-4 text-sm font-medium text-white transition hover:bg-gray-700"
         >
           Clear Cart
         </button>
