@@ -8,6 +8,7 @@ function ProductsPage() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [sortOption, setSortOption] = useState("default");
 
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -15,8 +16,9 @@ function ProductsPage() {
     productService.getCategories().then(setCategories).catch(console.error);
   }, []);
 
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
+  const displayProducts = useMemo(() => {
+    // Filter
+    const filtered = products.filter((product) => {
       if (selectedCategory && product.category !== selectedCategory) {
         return false;
       }
@@ -28,7 +30,19 @@ function ProductsPage() {
       }
       return true;
     });
-  }, [products, searchTerm, selectedCategory]);
+
+    // Sort
+    switch (sortOption) {
+      case "price-asc":
+        return [...filtered].sort((a, b) => a.price - b.price);
+      case "price-desc":
+        return [...filtered].sort((a, b) => b.price - a.price);
+      case "name-asc":
+        return [...filtered].sort((a, b) => a.title.localeCompare(b.title));
+      default:
+        return filtered;
+    }
+  }, [products, searchTerm, selectedCategory, sortOption]);
 
   if (status === "loading") {
     return <p>Loading products...</p>;
@@ -78,15 +92,26 @@ function ProductsPage() {
             </option>
           ))}
         </select>
+
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-48"
+        >
+          <option value="default">Sort by: Default</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="name-asc">Name: A → Z</option>
+        </select>
       </div>
 
       {/* Product list or empty state */}
-      {filteredProducts.length === 0 ? (
+      {displayProducts.length === 0 ? (
         <p className="mt-8 text-center text-gray-500">
           No products match your criteria.
         </p>
       ) : (
-        <ProductList products={filteredProducts} />
+        <ProductList products={displayProducts} />
       )}
     </section>
   );

@@ -526,7 +526,6 @@ React Router extracts the product ID using:
 const { id } = useParams<{ id: string }>();
 ```
 
-
 # Sprint 8 — Cart State
 
 ## Overview
@@ -584,12 +583,12 @@ CartPage
 
 **What was implemented:**
 
--  **Search input** – filters products by title (case‑insensitive).
--  **Category dropdown** – populated dynamically from the Fake Store API.
--  **Derived data pattern** – `filteredProducts` is computed using `useMemo` from `products`, `searchTerm`, and `selectedCategory` (no extra state for filtered results).
--  **Controlled components** – both inputs are controlled with `useState`.
--  **Responsive filters** – stack on mobile, row on larger screens.
--  **Empty state** – shows a friendly message when no products match the criteria.
+- **Search input** – filters products by title (case‑insensitive).
+- **Category dropdown** – populated dynamically from the Fake Store API.
+- **Derived data pattern** – `filteredProducts` is computed using `useMemo` from `products`, `searchTerm`, and `selectedCategory` (no extra state for filtered results).
+- **Controlled components** – both inputs are controlled with `useState`.
+- **Responsive filters** – stack on mobile, row on larger screens.
+- **Empty state** – shows a friendly message when no products match the criteria.
 
 **Files modified:**
 
@@ -599,5 +598,25 @@ CartPage
 
 > **Don't store filtered products in state.**  
 > Derive them from the source data + filter criteria. This keeps state minimal, avoids bugs from stale data, and makes the data flow predictable.
+
+## Sprint 11 — Product Sorting
+
+**Goal:** Add sorting options to the products page.
+
+**What was implemented:**
+
+- **Sort dropdown** – options for default, price (low→high, high→low), and name (A→Z).
+- **Derived data pattern** – sorting is applied after filtering, all computed in a single `useMemo`.
+- **Immutable sorting** – creates a copy of the array before sorting (`[...array].sort()`) to avoid mutating state.
+- **Combined filters** – search, category, and sort all work together seamlessly.
+
+**Files modified:**
+
+- `src/pages/ProductsPage.tsx`
+
+**Key learning:**
+
+> **Don't store sorted products in state.**  
+> Sorting, like filtering, is a **derived value**. Compute it from the source data + filter criteria + sort option. This keeps state minimal and avoids bugs.
 
 
