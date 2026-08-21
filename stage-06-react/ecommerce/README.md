@@ -453,6 +453,7 @@ The main goal is to separate:
 ## Architecture
 
 Before:
+
 ```
 ProductsPage
     ↓
@@ -466,7 +467,9 @@ Axios
     ↓
 Fake Store API
 ```
+
 After:
+
 ```
 ProductsPage
     ↓
@@ -493,4 +496,32 @@ Added:
 src/
 └── hooks/
     └── useProducts.ts
+```
+
+# Sprint 7 — Product Details
+
+## Goal
+
+Implement a product details page using React Router URL parameters and a reusable custom hook.
+
+The user can navigate from a product card to:
+
+`/products/:id`
+
+and view the selected product's details.
+
+---
+
+## What Was Implemented
+
+### Product Details Route
+
+Added:
+
+- `/products/:id`
+
+React Router extracts the product ID using:
+
+```tsx
+const { id } = useParams<{ id: string }>();
 ```
