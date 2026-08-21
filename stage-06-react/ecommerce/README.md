@@ -620,3 +620,28 @@ CartPage
 > Sorting, like filtering, is a **derived value**. Compute it from the source data + filter criteria + sort option. This keeps state minimal and avoids bugs.
 
 
+## Sprint 13 — Application Safety (Error Boundary)
+
+**Goal:** Add a global error boundary to catch unexpected JavaScript errors during rendering and display a fallback UI instead of crashing the whole application.
+
+**What was implemented:**
+
+-  **ErrorBoundary class component** – uses `getDerivedStateFromError` to update state and `componentDidCatch` to log errors.
+- **ErrorFallback UI** – user-friendly error page with a warning icon, error message display, and "Try Again" button (refreshes or resets the boundary).
+-  **Global placement** – wrapped around the Router in `App.tsx` to catch errors in any page or component.
+-  **Console logging** – errors are logged to the console for debugging (can be extended to send to an error reporting service).
+
+**Files created/modified:**
+
+- `src/components/ErrorBoundary.tsx` (new)
+- `src/components/ErrorFallback.tsx` (new)
+- `src/App.tsx` (updated to wrap Router with ErrorBoundary)
+
+**Key learning:**
+
+> **API errors vs. Rendering errors are different:**
+> - **API errors** (network failures, 404s, 500s) are *expected* — handle them in components with loading/error states and retry buttons.
+> - **Rendering errors** (e.g., `Cannot read property of null`, `undefined is not a function`) are *unexpected* — catch them with Error Boundaries to prevent the whole app from crashing.
+
+> Error Boundaries are React's way of providing a try/catch for the component tree.
+

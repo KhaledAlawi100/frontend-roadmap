@@ -5,22 +5,25 @@ import ProductsPage from "./pages/ProductsPage";
 import CartPage from "./pages/CartPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<HomePage />} />
+    <ErrorBoundary>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
 
-        <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products" element={<ProductsPage />} />
 
-        <Route path="/products/:id" element={<ProductDetailsPage />} />
+          <Route path="/products/:id" element={<ProductDetailsPage />} />
 
-        <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={<CartPage />} />
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </ErrorBoundary>
   );
 }
 
